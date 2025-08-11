@@ -2894,3 +2894,13 @@
 {"level":"info","message":{"ip":"::1","method":"GET","timestamp":"2025-07-25T17:02:58.807Z","url":"/api/institutes/all-institutes"},"timestamp":"2025-07-25T17:02:58.807Z"}
 {"level":"info","message":{"ip":"::1","method":"GET","timestamp":"2025-07-25T17:03:00.292Z","url":"/api/institutes/all-institutes"},"timestamp":"2025-07-25T17:03:00.292Z"}
 {"level":"info","message":{"ip":"::1","method":"GET","timestamp":"2025-07-25T17:03:05.933Z","url":"/api/institutes/all-institutes"},"timestamp":"2025-07-25T17:03:05.933Z"}
+{"level":"info","message":{"ip":"::1","method":"GET","timestamp":"2025-08-11T07:53:42.835Z","url":"/api/institutes/all-institutes"},"timestamp":"2025-08-11T07:53:42.836Z"}
+{"level":"info","message":{"ip":"::1","method":"GET","timestamp":"2025-08-11T07:54:00.705Z","url":"/api/institutes/profile"},"timestamp":"2025-08-11T07:54:00.705Z"}
+{"level":"info","message":{"ip":"::1","method":"GET","timestamp":"2025-08-11T07:54:07.535Z","url":"/api/institutes/profile"},"timestamp":"2025-08-11T07:54:07.535Z"}
+{"level":"info","message":{"ip":"::1","method":"GET","timestamp":"2025-08-11T07:54:12.282Z","url":"/api/institutes/all-institutes"},"timestamp":"2025-08-11T07:54:12.282Z"}
+{"level":"info","message":{"ip":"::1","method":"POST","timestamp":"2025-08-11T07:54:26.450Z","url":"/api/institutes/logout"},"timestamp":"2025-08-11T07:54:26.450Z"}
+{"level":"info","message":{"ip":"::1","method":"GET","timestamp":"2025-08-11T07:55:02.130Z","url":"/api/institutes/4f3f523d-8885-4097-92a0-31997328f9a7"},"timestamp":"2025-08-11T07:55:02.130Z"}
+{"level":"info","message":{"ip":"::1","method":"GET","timestamp":"2025-08-11T07:55:25.424Z","url":"/api/institutes/4f3f523d-8885-4097-92a0-31997328f9a7"},"timestamp":"2025-08-11T07:55:25.424Z"}
+{"level":"info","message":{"ip":"::1","method":"POST","timestamp":"2025-08-11T07:56:14.655Z","url":"/api/students/auth/login"},"timestamp":"2025-08-11T07:56:14.655Z"}
+{"level":"info","message":{"ip":"::1","method":"GET","timestamp":"2025-08-11T07:56:18.840Z","url":"/api/institutes/ad6e1d5d-8129-4521-adb2-0c3162df5782"},"timestamp":"2025-08-11T07:56:18.840Z"}
+{"level":"info","message":{"ip":"::1","method":"POST","timestamp":"2025-08-11T07:56:32.034Z","url":"/api/feedback/reviews"},"timestamp":"2025-08-11T07:56:32.034Z"}
