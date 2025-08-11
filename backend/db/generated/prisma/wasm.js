@@ -172,6 +172,17 @@ exports.Prisma.SubscriptionScalarFieldEnum = {
   updated_at: 'updated_at'
 };
 
+exports.Prisma.ReviewScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  reviewerType: 'reviewerType',
+  rating: 'rating',
+  title: 'title',
+  comment: 'comment',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -202,7 +213,8 @@ exports.Prisma.NullsOrder = {
 exports.Prisma.ModelName = {
   Institute: 'Institute',
   Student: 'Student',
-  Subscription: 'Subscription'
+  Subscription: 'Subscription',
+  Review: 'Review'
 };
 
 /**

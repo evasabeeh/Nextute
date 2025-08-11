@@ -161,7 +161,7 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-[#f2fffc]">
       <img
         src={assets.logo || "/fallback-logo.png"}
         alt="Company Logo"

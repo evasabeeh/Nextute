@@ -3,7 +3,7 @@ import { nanoid } from "nanoid";
 
 const createInstitute = async (institute) => {
   const institute_id = `NXI_${nanoid(6)}`;
-  return await prisma.Institute.create({
+  return await prisma.institute.create({
     data: {
       institute_id,
       institute_name: institute.institute_name,
@@ -33,46 +33,53 @@ const updateInstituteSection = async (id, column, data) => {
     throw new Error("Invalid section");
   }
 
-  return await prisma.Institute.update({
+  return await prisma.institute.update({
     where: { id },
     data: { [column]: data, updated_at: new Date() },
   });
 };
 
 const findInstituteByEmail = async (email) => {
-  return await prisma.Institute.findUnique({
+  return await prisma.institute.findUnique({
     where: { email },
   });
 };
 
 const findInstituteByPhone = async (phone) => {
-  return await prisma.Institute.findFirst({
+  return await prisma.institute.findFirst({
     where: { contact: phone },
   });
 };
 
 const verifyInstitute = async (email) => {
-  return await prisma.Institute.update({
+  return await prisma.institute.update({
     where: { email },
     data: { is_verified: true, code: null, code_expires_at: null },
   });
 };
 
+const updateInstituteResendVerificationCode = async (email, code, expiresAt) => {
+  return await prisma.institute.update({
+    where: {email},
+    data:  {code, code_expires_at: expiresAt},
+  })
+}
+
 const isInstituteIdUnique = async (institute_id) => {
-  const institute = await prisma.Institute.findUnique({
+  const institute = await prisma.institute.findUnique({
     where: { institute_id },
   });
   return !institute;
 };
 
 const findInstituteById = async (id) => {
-  return await prisma.Institute.findUnique({
+  return await prisma.institute.findUnique({
     where: { id },
   });
 };
 
 const getAllInstitutes = async () => {
-  const allInstitutes = await prisma.Institute.findMany();
+  const allInstitutes = await prisma.institute.findMany();
   return allInstitutes;
 };
 
@@ -83,6 +90,7 @@ export {
   findInstituteByEmail,
   findInstituteByPhone,
   verifyInstitute,
+  updateInstituteResendVerificationCode,
   isInstituteIdUnique,
   findInstituteById,
   getAllInstitutes,

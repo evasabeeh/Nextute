@@ -1,8 +1,8 @@
 import prisma from "../db/index.js";
 import bcrypt from "bcrypt";
+import crypto from "crypto";
 import { sendResetPasswordEmail } from "../utils/sendResetPasswordEmail.js";
 
-// FORGOT PASSWORD - Sends reset link
 export const forgotPassword = async (req, res) => {
   const { email } = req.body;
 
@@ -11,13 +11,52 @@ export const forgotPassword = async (req, res) => {
   }
 
   try {
-    await sendResetPasswordEmail({ email });
+    // Step 1: Find user (institute or student)
+    let user = await prisma.institute.findUnique({ where: { email } });
+    let userType = "institute";
+
+    if (!user) {
+      user = await prisma.student.findUnique({ where: { email } });
+      userType = "student";
+    }
+
+    if (!user) {
+      return res.status(404).json({ error: "No user found with this email." });
+    }
+
+    // Step 2: Generate token and expiry
+    const token = crypto.randomBytes(32).toString("hex");
+    const expiry = new Date(Date.now() + 60 * 60 * 1000); // 1 hour from now
+
+    // Step 3: Save token to DB
+    if (userType === "institute") {
+      await prisma.Institute.update({
+        where: { email },
+        data: {
+          password_reset_token: token,
+          password_reset_expires: expiry,
+        },
+      });
+    } else {
+      await prisma.Student.update({
+        where: { email },
+        data: {
+          password_reset_token: token,
+          password_reset_expires: expiry,
+        },
+      });
+    }
+
+    // Step 4: Send email with token
+    await sendResetPasswordEmail({ email, token });
 
     return res.status(200).json({ message: "Reset password email sent." });
   } catch (error) {
-    return res.status(500).json({ error: error.message });
+    console.error("Forgot password error:", error);
+    return res.status(500).json({ error: "Internal server error." });
   }
 };
+
 
 // RESET PASSWORD - Validates token and sets new password
 export const resetPassword = async (req, res) => {
@@ -78,3 +117,5 @@ export const resetPassword = async (req, res) => {
     return res.status(500).json({ error: error.message });
   }
 };
+
+

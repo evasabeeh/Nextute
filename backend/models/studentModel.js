@@ -3,7 +3,7 @@ import { nanoid } from "nanoid";
 
 const createStudent = async (student) => {
   const student_id = `NXS_${nanoid(6)}`;
-  return await prisma.Student.create({
+  return await prisma.student.create({
     data: {
       student_id,
       name: student.name,
@@ -20,26 +20,33 @@ const createStudent = async (student) => {
 };
 
 const findStudentByEmail = async (email) => {
-  return await prisma.Student.findUnique({
+  return await prisma.student.findUnique({
     where: { email },
   });
 };
 
 const findStudentByPhone = async (phone) => {
-  return await prisma.Student.findFirst({
+  return await prisma.student.findFirst({
     where: { phone_number: phone },
   });
 };
 
 const verifyStudent = async (email) => {
-  return await prisma.Student.update({
+  return await prisma.student.update({
     where: { email },
     data: { is_verified: true, code: null, code_expires_at: null },
   });
 };
 
+const updateStudentResendVerificationCode = async (email, code, expiresAt) => {
+  return await prisma.student.update({
+    where: {email},
+    data:  {code, code_expires_at: expiresAt},
+  })
+}
+
 const findStudentById = async (student_id) => {
-  return await prisma.Student.findUnique({
+  return await prisma.student.findUnique({
     where: { student_id },
   });
 };
@@ -54,6 +61,7 @@ export {
   findStudentByEmail,
   findStudentByPhone,
   verifyStudent,
+  updateStudentResendVerificationCode,
   isStudentIdUnique,
   findStudentById,
 };

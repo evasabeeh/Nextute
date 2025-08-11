@@ -36,7 +36,7 @@ model Institute {
 model Student {
   id                     String    @id @default(uuid()) @db.Uuid
   name                   String
-  email                  String    @unique
+  email                  String    @unique @db.VarChar(255)
   password               String
   gender                 String
   phone_number           String    @unique @map("phone_number")
@@ -58,4 +58,15 @@ model Subscription {
   email      String   @unique
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
+}
+
+model Review {
+  id           String   @id @default(uuid()) @db.Uuid
+  email        String   @unique
+  reviewerType String   @db.VarChar(50) // 'student' or 'institute'
+  rating       Int      @default(0)
+  title        String   @db.VarChar(255)
+  comment      String   @db.Text
+  created_at   DateTime @default(now())
+  updated_at   DateTime @default(now()) @updatedAt
 }
