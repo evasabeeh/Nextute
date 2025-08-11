@@ -8,6 +8,9 @@ import { handleError } from "./utils/errorHandler.js";
 
 import studentAuthRoutes from "./routes/studentAuthRoutes.js";
 import instituteAuthRoutes from "./routes/instituteAuthRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
+import emailSubscriptionRoutes from "./routes/emailSubscriptionRoutes.js";
+import reviewRoutes from "./routes/reviewRoute.js";
 
 dotenv.config();
 
@@ -46,15 +49,6 @@ app.use(
 app.use(express.json({ limit: "10mb" }));
 app.use(cookieParser());
 
-
-// Rate limiting
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per window
-  message: "Too many requests from this IP, please try again later.",
-});
-app.use(limiter);
-
 // Request logging
 app.use((req, res, next) => {
   logger.info({
@@ -73,6 +67,9 @@ app.get("/test", (req, res) => {
 
 app.use("/api/students", studentAuthRoutes);
 app.use("/api/institutes", instituteAuthRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/subscribe", emailSubscriptionRoutes);
+app.use("/api/feedback", reviewRoutes);
 
 // 404 handler
 app.use((req, res) => {
