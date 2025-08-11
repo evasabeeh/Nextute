@@ -34,39 +34,26 @@ model Institute {
 }
 
 model Student {
-  id                     String    @id @default(uuid()) @db.Uuid
-  name                   String
-  email                  String    @unique @db.VarChar(255)
-  password               String
-  gender                 String
-  phone_number           String    @unique @map("phone_number")
-  address                String?
-  course                 String?
-  date_of_birth          DateTime  @map("date_of_birth")
-  is_verified            Boolean   @default(false)
-  code                   String?
-  created_at             DateTime  @default(now())
-  updated_at             DateTime  @default(now()) @updatedAt
-  code_expires_at        DateTime?
-  student_id             String    @unique @db.VarChar(10)
-  password_reset_token   String?   @db.VarChar(255)
-  password_reset_expires DateTime?
+  id              String    @id @default(uuid()) @db.Uuid
+  name            String
+  email           String    @unique
+  password        String
+  gender          String
+  phone_number    String    @unique @map("phone_number")
+  address         String?
+  course          String?
+  date_of_birth   DateTime  @map("date_of_birth")
+  is_verified     Boolean   @default(false)
+  code            String?
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @default(now()) @updatedAt
+  code_expires_at DateTime?
+  student_id      String    @unique @db.VarChar(10)
 }
 
 model Subscription {
-  id         String   @id @default(uuid()) @db.Uuid
-  email      String   @unique
+  id        String   @id @default(uuid()) @db.Uuid
+  email     String   @unique
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
-}
-
-model Review {
-  id           String   @id @default(uuid()) @db.Uuid
-  email        String   @unique
-  reviewerType String   @db.VarChar(50) // 'student' or 'institute'
-  rating       Int      @default(0)
-  title        String   @db.VarChar(255)
-  comment      String   @db.Text
-  created_at   DateTime @default(now())
-  updated_at   DateTime @default(now()) @updatedAt
 }
