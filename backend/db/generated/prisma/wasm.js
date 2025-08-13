@@ -161,6 +161,13 @@ exports.Prisma.StudentScalarFieldEnum = {
   student_id: 'student_id'
 };
 
+exports.Prisma.SubscriptionScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -190,7 +197,8 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   Institute: 'Institute',
-  Student: 'Student'
+  Student: 'Student',
+  Subscription: 'Subscription'
 };
 
 /**
