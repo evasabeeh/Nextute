@@ -10,6 +10,7 @@ import {
   findInstituteById,
   getAllInstitutes,
   updateInstituteResendVerificationCode,
+  deleteInstituteByEmail,
 } from "../models/instituteModel.js";
 import { handleError } from "../utils/errorHandler.js";
 import { body, param, validationResult } from "express-validator";
@@ -556,5 +557,36 @@ export const getInstituteById = async (req, res) => {
   } catch (err) {
     console.error("Get institute by ID error:", err);
     return handleError(res, 500, "Internal server error", "INSTITUTE_ERROR");
+  }
+};
+
+// Delete institute
+export const deleteInstitute = async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const institute = await findInstituteByEmail(email);
+    if (!institute) {
+      return handleError(
+        res,
+        404,
+        "Institute not found",
+        "INSTITUTE_NOT_FOUND"
+      );
+    }
+
+    await deleteInstituteByEmail(email);
+
+    return res
+      .status(200)
+      .json({ status: true, message: "Institute deleted successfully" });
+  } catch (err) {
+    console.error("Delete institute error:", err);
+    return handleError(
+      res,
+      500,
+      "Server error during institute deletion",
+      "DELETE_ERROR"
+    );
   }
 };

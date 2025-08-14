@@ -7,6 +7,7 @@ import {
   findStudentByPhone,
   updateStudentResendVerificationCode,
   verifyStudent,
+  deleteStudentByEmail,
 } from "../models/studentModel.js";
 import { handleError } from "../utils/errorHandler.js";
 import { body, validationResult } from "express-validator";
@@ -355,5 +356,31 @@ export const logout = async (req, res) => {
   } catch (err) {
     console.error("Logout error:", err);
     return handleError(res, 500, "Server error during logout", "LOGOUT_ERROR");
+  }
+};
+
+// Delete student
+export const deleteStudent = async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const student = await findStudentByEmail(email);
+    if (!student) {
+      return handleError(res, 404, "Student not found", "STUDENT_NOT_FOUND");
+    }
+
+    await deleteStudentByEmail(email);
+
+    return res
+      .status(200)
+      .json({ status: true, message: "Student deleted successfully" });
+  } catch (err) {
+    console.error("Delete student error:", err);
+    return handleError(
+      res,
+      500,
+      "Server error during student deletion",
+      "DELETE_ERROR"
+    );
   }
 };
