@@ -2954,3 +2954,15 @@
 {"level":"info","message":{"ip":"::1","method":"POST","timestamp":"2025-08-13T16:05:17.605Z","url":"/api/students/signup"},"timestamp":"2025-08-13T16:05:17.605Z"}
 {"level":"info","message":{"ip":"::1","method":"POST","timestamp":"2025-08-13T16:05:39.873Z","url":"/api/students/verify"},"timestamp":"2025-08-13T16:05:39.873Z"}
 {"level":"info","message":{"ip":"::1","method":"GET","timestamp":"2025-08-13T16:05:46.384Z","url":"/api/students/profile"},"timestamp":"2025-08-13T16:05:46.384Z"}
+{"level":"info","message":{"ip":"::1","method":"GET","timestamp":"2025-08-15T16:46:00.658Z","url":"/api/employees/members"},"timestamp":"2025-08-15T16:46:00.659Z"}
+{"level":"info","message":{"ip":"::1","method":"GET","timestamp":"2025-08-15T16:46:23.096Z","url":"/api/employees/members/CERT001"},"timestamp":"2025-08-15T16:46:23.096Z"}
+{"level":"info","message":{"ip":"::1","method":"GET","timestamp":"2025-08-15T16:46:54.366Z","url":"/api/employees/members/:CERT001"},"timestamp":"2025-08-15T16:46:54.366Z"}
+{"level":"info","message":{"ip":"::1","method":"GET","timestamp":"2025-08-15T16:47:07.836Z","url":"/api/employees/member/CERT001"},"timestamp":"2025-08-15T16:47:07.836Z"}
+{"level":"info","message":{"ip":"::1","method":"POST","timestamp":"2025-08-15T16:47:38.291Z","url":"/api/employees/member/EMP001/generate-qr"},"timestamp":"2025-08-15T16:47:38.291Z"}
+{"level":"info","message":{"ip":"::1","method":"POST","timestamp":"2025-08-15T16:50:00.905Z","url":"/api/employees/member/EMP001/generate-qr"},"timestamp":"2025-08-15T16:50:00.906Z"}
+{"level":"info","message":{"ip":"::1","method":"POST","timestamp":"2025-08-15T16:52:05.159Z","url":"/api/employees/member/EMP001/generate-qr"},"timestamp":"2025-08-15T16:52:05.160Z"}
+{"level":"info","message":{"ip":"::1","method":"POST","timestamp":"2025-08-15T16:54:38.526Z","url":"/api/employees/member/EMP001/generate-qr"},"timestamp":"2025-08-15T16:54:38.526Z"}
+{"level":"info","message":{"ip":"::1","method":"POST","timestamp":"2025-08-15T16:56:05.269Z","url":"/api/employees/member/EMP001/generate-qr"},"timestamp":"2025-08-15T16:56:05.270Z"}
+{"level":"info","message":{"ip":"::1","method":"POST","timestamp":"2025-08-15T16:57:11.960Z","url":"/api/employees/member/:EMP001/generate-qr"},"timestamp":"2025-08-15T16:57:11.960Z"}
+{"level":"info","message":{"ip":"::1","method":"POST","timestamp":"2025-08-15T17:00:14.735Z","url":"/api/employees/member/:EMP001/generate-qr"},"timestamp":"2025-08-15T17:00:14.736Z"}
+{"level":"info","message":{"ip":"::1","method":"POST","timestamp":"2025-08-15T17:00:20.695Z","url":"/api/employees/member/EMP001/generate-qr"},"timestamp":"2025-08-15T17:00:20.695Z"}

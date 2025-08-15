@@ -77,3 +77,17 @@ model Admin {
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
 }
+
+model Employee {
+  id            String   @id @default(uuid()) @db.Uuid
+  name          String
+  employeeId    String   @unique
+  certificateId String   @unique
+  role          String
+  email         String   @unique
+  image         String?
+  details       String?
+  qrCodeUrl     String?
+  created_at    DateTime @default(now())
+  updated_at    DateTime @default(now()) @updatedAt
+}
