@@ -192,14 +192,15 @@ exports.Prisma.AdminScalarFieldEnum = {
 
 exports.Prisma.EmployeeScalarFieldEnum = {
   id: 'id',
-  name: 'name',
-  employeeId: 'employeeId',
-  certificateId: 'certificateId',
-  role: 'role',
+  idNo: 'idNo',
+  certificateNo: 'certificateNo',
+  fullName: 'fullName',
   email: 'email',
+  phoneNumber: 'phoneNumber',
+  joiningDate: 'joiningDate',
+  designation: 'designation',
+  department: 'department',
   image: 'image',
-  details: 'details',
-  qrCodeUrl: 'qrCodeUrl',
   created_at: 'created_at',
   updated_at: 'updated_at'
 };

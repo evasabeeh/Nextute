@@ -6699,42 +6699,45 @@ export namespace Prisma {
 
   export type EmployeeMinAggregateOutputType = {
     id: string | null
-    name: string | null
-    employeeId: string | null
-    certificateId: string | null
-    role: string | null
+    idNo: string | null
+    certificateNo: string | null
+    fullName: string | null
     email: string | null
+    phoneNumber: string | null
+    joiningDate: Date | null
+    designation: string | null
+    department: string | null
     image: string | null
-    details: string | null
-    qrCodeUrl: string | null
     created_at: Date | null
     updated_at: Date | null
   }
 
   export type EmployeeMaxAggregateOutputType = {
     id: string | null
-    name: string | null
-    employeeId: string | null
-    certificateId: string | null
-    role: string | null
+    idNo: string | null
+    certificateNo: string | null
+    fullName: string | null
     email: string | null
+    phoneNumber: string | null
+    joiningDate: Date | null
+    designation: string | null
+    department: string | null
     image: string | null
-    details: string | null
-    qrCodeUrl: string | null
     created_at: Date | null
     updated_at: Date | null
   }
 
   export type EmployeeCountAggregateOutputType = {
     id: number
-    name: number
-    employeeId: number
-    certificateId: number
-    role: number
+    idNo: number
+    certificateNo: number
+    fullName: number
     email: number
+    phoneNumber: number
+    joiningDate: number
+    designation: number
+    department: number
     image: number
-    details: number
-    qrCodeUrl: number
     created_at: number
     updated_at: number
     _all: number
@@ -6743,42 +6746,45 @@ export namespace Prisma {
 
   export type EmployeeMinAggregateInputType = {
     id?: true
-    name?: true
-    employeeId?: true
-    certificateId?: true
-    role?: true
+    idNo?: true
+    certificateNo?: true
+    fullName?: true
     email?: true
+    phoneNumber?: true
+    joiningDate?: true
+    designation?: true
+    department?: true
     image?: true
-    details?: true
-    qrCodeUrl?: true
     created_at?: true
     updated_at?: true
   }
 
   export type EmployeeMaxAggregateInputType = {
     id?: true
-    name?: true
-    employeeId?: true
-    certificateId?: true
-    role?: true
+    idNo?: true
+    certificateNo?: true
+    fullName?: true
     email?: true
+    phoneNumber?: true
+    joiningDate?: true
+    designation?: true
+    department?: true
     image?: true
-    details?: true
-    qrCodeUrl?: true
     created_at?: true
     updated_at?: true
   }
 
   export type EmployeeCountAggregateInputType = {
     id?: true
-    name?: true
-    employeeId?: true
-    certificateId?: true
-    role?: true
+    idNo?: true
+    certificateNo?: true
+    fullName?: true
     email?: true
+    phoneNumber?: true
+    joiningDate?: true
+    designation?: true
+    department?: true
     image?: true
-    details?: true
-    qrCodeUrl?: true
     created_at?: true
     updated_at?: true
     _all?: true
@@ -6858,14 +6864,15 @@ export namespace Prisma {
 
   export type EmployeeGroupByOutputType = {
     id: string
-    name: string
-    employeeId: string
-    certificateId: string
-    role: string
-    email: string
+    idNo: string
+    certificateNo: string | null
+    fullName: string
+    email: string | null
+    phoneNumber: string | null
+    joiningDate: Date
+    designation: string
+    department: string
     image: string | null
-    details: string | null
-    qrCodeUrl: string | null
     created_at: Date
     updated_at: Date
     _count: EmployeeCountAggregateOutputType | null
@@ -6889,75 +6896,80 @@ export namespace Prisma {
 
   export type EmployeeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    name?: boolean
-    employeeId?: boolean
-    certificateId?: boolean
-    role?: boolean
+    idNo?: boolean
+    certificateNo?: boolean
+    fullName?: boolean
     email?: boolean
+    phoneNumber?: boolean
+    joiningDate?: boolean
+    designation?: boolean
+    department?: boolean
     image?: boolean
-    details?: boolean
-    qrCodeUrl?: boolean
     created_at?: boolean
     updated_at?: boolean
   }, ExtArgs["result"]["employee"]>
 
   export type EmployeeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    name?: boolean
-    employeeId?: boolean
-    certificateId?: boolean
-    role?: boolean
+    idNo?: boolean
+    certificateNo?: boolean
+    fullName?: boolean
     email?: boolean
+    phoneNumber?: boolean
+    joiningDate?: boolean
+    designation?: boolean
+    department?: boolean
     image?: boolean
-    details?: boolean
-    qrCodeUrl?: boolean
     created_at?: boolean
     updated_at?: boolean
   }, ExtArgs["result"]["employee"]>
 
   export type EmployeeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    name?: boolean
-    employeeId?: boolean
-    certificateId?: boolean
-    role?: boolean
+    idNo?: boolean
+    certificateNo?: boolean
+    fullName?: boolean
     email?: boolean
+    phoneNumber?: boolean
+    joiningDate?: boolean
+    designation?: boolean
+    department?: boolean
     image?: boolean
-    details?: boolean
-    qrCodeUrl?: boolean
     created_at?: boolean
     updated_at?: boolean
   }, ExtArgs["result"]["employee"]>
 
   export type EmployeeSelectScalar = {
     id?: boolean
-    name?: boolean
-    employeeId?: boolean
-    certificateId?: boolean
-    role?: boolean
+    idNo?: boolean
+    certificateNo?: boolean
+    fullName?: boolean
     email?: boolean
+    phoneNumber?: boolean
+    joiningDate?: boolean
+    designation?: boolean
+    department?: boolean
     image?: boolean
-    details?: boolean
-    qrCodeUrl?: boolean
     created_at?: boolean
     updated_at?: boolean
   }
 
-  export type EmployeeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "employeeId" | "certificateId" | "role" | "email" | "image" | "details" | "qrCodeUrl" | "created_at" | "updated_at", ExtArgs["result"]["employee"]>
+  export type EmployeeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "idNo" | "certificateNo" | "fullName" | "email" | "phoneNumber" | "joiningDate" | "designation" | "department" | "image" | "created_at" | "updated_at", ExtArgs["result"]["employee"]>
 
   export type $EmployeePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Employee"
     objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      name: string
-      employeeId: string
-      certificateId: string
-      role: string
-      email: string
+      idNo: string
+      certificateNo: string | null
+      fullName: string
+      email: string | null
+      phoneNumber: string | null
+      joiningDate: Date
+      designation: string
+      department: string
       image: string | null
-      details: string | null
-      qrCodeUrl: string | null
       created_at: Date
       updated_at: Date
     }, ExtArgs["result"]["employee"]>
@@ -7384,14 +7396,15 @@ export namespace Prisma {
    */
   interface EmployeeFieldRefs {
     readonly id: FieldRef<"Employee", 'String'>
-    readonly name: FieldRef<"Employee", 'String'>
-    readonly employeeId: FieldRef<"Employee", 'String'>
-    readonly certificateId: FieldRef<"Employee", 'String'>
-    readonly role: FieldRef<"Employee", 'String'>
+    readonly idNo: FieldRef<"Employee", 'String'>
+    readonly certificateNo: FieldRef<"Employee", 'String'>
+    readonly fullName: FieldRef<"Employee", 'String'>
     readonly email: FieldRef<"Employee", 'String'>
+    readonly phoneNumber: FieldRef<"Employee", 'String'>
+    readonly joiningDate: FieldRef<"Employee", 'DateTime'>
+    readonly designation: FieldRef<"Employee", 'String'>
+    readonly department: FieldRef<"Employee", 'String'>
     readonly image: FieldRef<"Employee", 'String'>
-    readonly details: FieldRef<"Employee", 'String'>
-    readonly qrCodeUrl: FieldRef<"Employee", 'String'>
     readonly created_at: FieldRef<"Employee", 'DateTime'>
     readonly updated_at: FieldRef<"Employee", 'DateTime'>
   }
@@ -7861,14 +7874,15 @@ export namespace Prisma {
 
   export const EmployeeScalarFieldEnum: {
     id: 'id',
-    name: 'name',
-    employeeId: 'employeeId',
-    certificateId: 'certificateId',
-    role: 'role',
+    idNo: 'idNo',
+    certificateNo: 'certificateNo',
+    fullName: 'fullName',
     email: 'email',
+    phoneNumber: 'phoneNumber',
+    joiningDate: 'joiningDate',
+    designation: 'designation',
+    department: 'department',
     image: 'image',
-    details: 'details',
-    qrCodeUrl: 'qrCodeUrl',
     created_at: 'created_at',
     updated_at: 'updated_at'
   };
@@ -8419,59 +8433,63 @@ export namespace Prisma {
     OR?: EmployeeWhereInput[]
     NOT?: EmployeeWhereInput | EmployeeWhereInput[]
     id?: UuidFilter<"Employee"> | string
-    name?: StringFilter<"Employee"> | string
-    employeeId?: StringFilter<"Employee"> | string
-    certificateId?: StringFilter<"Employee"> | string
-    role?: StringFilter<"Employee"> | string
-    email?: StringFilter<"Employee"> | string
+    idNo?: StringFilter<"Employee"> | string
+    certificateNo?: StringNullableFilter<"Employee"> | string | null
+    fullName?: StringFilter<"Employee"> | string
+    email?: StringNullableFilter<"Employee"> | string | null
+    phoneNumber?: StringNullableFilter<"Employee"> | string | null
+    joiningDate?: DateTimeFilter<"Employee"> | Date | string
+    designation?: StringFilter<"Employee"> | string
+    department?: StringFilter<"Employee"> | string
     image?: StringNullableFilter<"Employee"> | string | null
-    details?: StringNullableFilter<"Employee"> | string | null
-    qrCodeUrl?: StringNullableFilter<"Employee"> | string | null
     created_at?: DateTimeFilter<"Employee"> | Date | string
     updated_at?: DateTimeFilter<"Employee"> | Date | string
   }
 
   export type EmployeeOrderByWithRelationInput = {
     id?: SortOrder
-    name?: SortOrder
-    employeeId?: SortOrder
-    certificateId?: SortOrder
-    role?: SortOrder
-    email?: SortOrder
+    idNo?: SortOrder
+    certificateNo?: SortOrderInput | SortOrder
+    fullName?: SortOrder
+    email?: SortOrderInput | SortOrder
+    phoneNumber?: SortOrderInput | SortOrder
+    joiningDate?: SortOrder
+    designation?: SortOrder
+    department?: SortOrder
     image?: SortOrderInput | SortOrder
-    details?: SortOrderInput | SortOrder
-    qrCodeUrl?: SortOrderInput | SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
   }
 
   export type EmployeeWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    employeeId?: string
-    certificateId?: string
+    idNo?: string
+    certificateNo?: string
     email?: string
+    phoneNumber?: string
     AND?: EmployeeWhereInput | EmployeeWhereInput[]
     OR?: EmployeeWhereInput[]
     NOT?: EmployeeWhereInput | EmployeeWhereInput[]
-    name?: StringFilter<"Employee"> | string
-    role?: StringFilter<"Employee"> | string
+    fullName?: StringFilter<"Employee"> | string
+    joiningDate?: DateTimeFilter<"Employee"> | Date | string
+    designation?: StringFilter<"Employee"> | string
+    department?: StringFilter<"Employee"> | string
     image?: StringNullableFilter<"Employee"> | string | null
-    details?: StringNullableFilter<"Employee"> | string | null
-    qrCodeUrl?: StringNullableFilter<"Employee"> | string | null
     created_at?: DateTimeFilter<"Employee"> | Date | string
     updated_at?: DateTimeFilter<"Employee"> | Date | string
-  }, "id" | "employeeId" | "certificateId" | "email">
+  }, "id" | "idNo" | "certificateNo" | "email" | "phoneNumber">
 
   export type EmployeeOrderByWithAggregationInput = {
     id?: SortOrder
-    name?: SortOrder
-    employeeId?: SortOrder
-    certificateId?: SortOrder
-    role?: SortOrder
-    email?: SortOrder
+    idNo?: SortOrder
+    certificateNo?: SortOrderInput | SortOrder
+    fullName?: SortOrder
+    email?: SortOrderInput | SortOrder
+    phoneNumber?: SortOrderInput | SortOrder
+    joiningDate?: SortOrder
+    designation?: SortOrder
+    department?: SortOrder
     image?: SortOrderInput | SortOrder
-    details?: SortOrderInput | SortOrder
-    qrCodeUrl?: SortOrderInput | SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     _count?: EmployeeCountOrderByAggregateInput
@@ -8484,14 +8502,15 @@ export namespace Prisma {
     OR?: EmployeeScalarWhereWithAggregatesInput[]
     NOT?: EmployeeScalarWhereWithAggregatesInput | EmployeeScalarWhereWithAggregatesInput[]
     id?: UuidWithAggregatesFilter<"Employee"> | string
-    name?: StringWithAggregatesFilter<"Employee"> | string
-    employeeId?: StringWithAggregatesFilter<"Employee"> | string
-    certificateId?: StringWithAggregatesFilter<"Employee"> | string
-    role?: StringWithAggregatesFilter<"Employee"> | string
-    email?: StringWithAggregatesFilter<"Employee"> | string
+    idNo?: StringWithAggregatesFilter<"Employee"> | string
+    certificateNo?: StringNullableWithAggregatesFilter<"Employee"> | string | null
+    fullName?: StringWithAggregatesFilter<"Employee"> | string
+    email?: StringNullableWithAggregatesFilter<"Employee"> | string | null
+    phoneNumber?: StringNullableWithAggregatesFilter<"Employee"> | string | null
+    joiningDate?: DateTimeWithAggregatesFilter<"Employee"> | Date | string
+    designation?: StringWithAggregatesFilter<"Employee"> | string
+    department?: StringWithAggregatesFilter<"Employee"> | string
     image?: StringNullableWithAggregatesFilter<"Employee"> | string | null
-    details?: StringNullableWithAggregatesFilter<"Employee"> | string | null
-    qrCodeUrl?: StringNullableWithAggregatesFilter<"Employee"> | string | null
     created_at?: DateTimeWithAggregatesFilter<"Employee"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"Employee"> | Date | string
   }
@@ -8988,98 +9007,105 @@ export namespace Prisma {
 
   export type EmployeeCreateInput = {
     id?: string
-    name: string
-    employeeId: string
-    certificateId: string
-    role: string
-    email: string
+    idNo: string
+    certificateNo?: string | null
+    fullName: string
+    email?: string | null
+    phoneNumber?: string | null
+    joiningDate: Date | string
+    designation: string
+    department: string
     image?: string | null
-    details?: string | null
-    qrCodeUrl?: string | null
     created_at?: Date | string
     updated_at?: Date | string
   }
 
   export type EmployeeUncheckedCreateInput = {
     id?: string
-    name: string
-    employeeId: string
-    certificateId: string
-    role: string
-    email: string
+    idNo: string
+    certificateNo?: string | null
+    fullName: string
+    email?: string | null
+    phoneNumber?: string | null
+    joiningDate: Date | string
+    designation: string
+    department: string
     image?: string | null
-    details?: string | null
-    qrCodeUrl?: string | null
     created_at?: Date | string
     updated_at?: Date | string
   }
 
   export type EmployeeUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    employeeId?: StringFieldUpdateOperationsInput | string
-    certificateId?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    idNo?: StringFieldUpdateOperationsInput | string
+    certificateNo?: NullableStringFieldUpdateOperationsInput | string | null
+    fullName?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    joiningDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    designation?: StringFieldUpdateOperationsInput | string
+    department?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    details?: NullableStringFieldUpdateOperationsInput | string | null
-    qrCodeUrl?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type EmployeeUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    employeeId?: StringFieldUpdateOperationsInput | string
-    certificateId?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    idNo?: StringFieldUpdateOperationsInput | string
+    certificateNo?: NullableStringFieldUpdateOperationsInput | string | null
+    fullName?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    joiningDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    designation?: StringFieldUpdateOperationsInput | string
+    department?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    details?: NullableStringFieldUpdateOperationsInput | string | null
-    qrCodeUrl?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type EmployeeCreateManyInput = {
     id?: string
-    name: string
-    employeeId: string
-    certificateId: string
-    role: string
-    email: string
+    idNo: string
+    certificateNo?: string | null
+    fullName: string
+    email?: string | null
+    phoneNumber?: string | null
+    joiningDate: Date | string
+    designation: string
+    department: string
     image?: string | null
-    details?: string | null
-    qrCodeUrl?: string | null
     created_at?: Date | string
     updated_at?: Date | string
   }
 
   export type EmployeeUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    employeeId?: StringFieldUpdateOperationsInput | string
-    certificateId?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    idNo?: StringFieldUpdateOperationsInput | string
+    certificateNo?: NullableStringFieldUpdateOperationsInput | string | null
+    fullName?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    joiningDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    designation?: StringFieldUpdateOperationsInput | string
+    department?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    details?: NullableStringFieldUpdateOperationsInput | string | null
-    qrCodeUrl?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type EmployeeUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    employeeId?: StringFieldUpdateOperationsInput | string
-    certificateId?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    idNo?: StringFieldUpdateOperationsInput | string
+    certificateNo?: NullableStringFieldUpdateOperationsInput | string | null
+    fullName?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    joiningDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    designation?: StringFieldUpdateOperationsInput | string
+    department?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    details?: NullableStringFieldUpdateOperationsInput | string | null
-    qrCodeUrl?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9523,42 +9549,45 @@ export namespace Prisma {
 
   export type EmployeeCountOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
-    employeeId?: SortOrder
-    certificateId?: SortOrder
-    role?: SortOrder
+    idNo?: SortOrder
+    certificateNo?: SortOrder
+    fullName?: SortOrder
     email?: SortOrder
+    phoneNumber?: SortOrder
+    joiningDate?: SortOrder
+    designation?: SortOrder
+    department?: SortOrder
     image?: SortOrder
-    details?: SortOrder
-    qrCodeUrl?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
   }
 
   export type EmployeeMaxOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
-    employeeId?: SortOrder
-    certificateId?: SortOrder
-    role?: SortOrder
+    idNo?: SortOrder
+    certificateNo?: SortOrder
+    fullName?: SortOrder
     email?: SortOrder
+    phoneNumber?: SortOrder
+    joiningDate?: SortOrder
+    designation?: SortOrder
+    department?: SortOrder
     image?: SortOrder
-    details?: SortOrder
-    qrCodeUrl?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
   }
 
   export type EmployeeMinOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
-    employeeId?: SortOrder
-    certificateId?: SortOrder
-    role?: SortOrder
+    idNo?: SortOrder
+    certificateNo?: SortOrder
+    fullName?: SortOrder
     email?: SortOrder
+    phoneNumber?: SortOrder
+    joiningDate?: SortOrder
+    designation?: SortOrder
+    department?: SortOrder
     image?: SortOrder
-    details?: SortOrder
-    qrCodeUrl?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
   }

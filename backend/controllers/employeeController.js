@@ -1,10 +1,45 @@
 import {
+  addEmployee,
   getAllEmployees,
   getEmployeeByCertificateId,
   getEmployeeById,
 } from "../models/employeeModel.js";
 import QRCode from "qrcode";
 import prisma from "../db/index.js";
+
+// Add Employee
+const createEmployee = async (req, res) => {
+  let {
+    idNo,
+    certificateNo,
+    fullName,
+    email,
+    phoneNumber,
+    joiningDate,
+    designation,
+    department,
+    image,
+  } = req.body;
+
+  const employeeData = {
+    idNo,
+    certificateNo,
+    fullName,
+    email,
+    phoneNumber,
+    joiningDate: new Date(joiningDate),
+    designation,
+    department,
+    image,
+  };
+
+  try {
+    const newEmployee = await addEmployee(employeeData);
+    return res.status(201).json(newEmployee);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+};
 
 // Get All Employees
 const getEmployees = async (req, res) => {
@@ -52,4 +87,4 @@ const generateQRCode = async (req, res) => {
   }
 };
 
-export { getEmployees, getEmployee, generateQRCode };
+export { createEmployee, getEmployees, getEmployee, generateQRCode };

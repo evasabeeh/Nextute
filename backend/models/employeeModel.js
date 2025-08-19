@@ -1,5 +1,26 @@
 import prisma from "../db/index.js";
 
+const addEmployee = async (employeeData) => {
+  try {
+    const newEmployee = await prisma.employee.create({
+      data: {
+        idNo: employeeData.idNo,
+        certificateNo: employeeData.certificateNo,
+        fullName: employeeData.fullName,
+        email: employeeData.email,
+        phoneNumber: employeeData.phoneNumber,
+        joiningDate: employeeData.joiningDate,
+        designation: employeeData.designation,
+        department: employeeData.department,
+        image: employeeData.image,
+      },
+    });
+    return newEmployee;
+  } catch (error) {
+    throw new Error("Error adding employee");
+  }
+};
+
 const getAllEmployees = async () => {
   try {
     const employees = await prisma.employee.findMany();
@@ -31,4 +52,4 @@ const getEmployeeByCertificateId = async (certificateId) => {
   }
 };
 
-export { getAllEmployees, getEmployeeByCertificateId, getEmployeeById };
+export { addEmployee, getAllEmployees, getEmployeeByCertificateId, getEmployeeById };
