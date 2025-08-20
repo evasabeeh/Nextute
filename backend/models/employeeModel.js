@@ -30,10 +30,10 @@ const getAllEmployees = async () => {
   }
 };
 
-const getEmployeeById = async (employeeId) => {
+const getEmployeeById = async (idNo) => {
   try {
     const employee = await prisma.employee.findUnique({
-      where: { employeeId },
+      where: { idNo },
     });
     return employee;
   } catch (error) {
@@ -41,10 +41,10 @@ const getEmployeeById = async (employeeId) => {
   }
 };
 
-const getEmployeeByCertificateId = async (certificateId) => {
+const getEmployeeByCertificateNo = async (certificateNo) => {
   try {
     const employee = await prisma.employee.findUnique({
-      where: { certificateId },
+      where: { certificateNo },
     });
     return employee;
   } catch (error) {
@@ -52,4 +52,4 @@ const getEmployeeByCertificateId = async (certificateId) => {
   }
 };
 
-export { addEmployee, getAllEmployees, getEmployeeByCertificateId, getEmployeeById };
+export { addEmployee, getAllEmployees, getEmployeeByCertificateNo, getEmployeeById };

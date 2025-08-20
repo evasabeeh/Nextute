@@ -1,7 +1,7 @@
 import {
   addEmployee,
   getAllEmployees,
-  getEmployeeByCertificateId,
+  getEmployeeByCertificateNo,
   getEmployeeById,
 } from "../models/employeeModel.js";
 import QRCode from "qrcode";
@@ -53,9 +53,10 @@ const getEmployees = async (req, res) => {
 
 // Get Employee by Certificate ID
 const getEmployee = async (req, res) => {
-  const { certificateId } = req.params;
+  const { certificateNo } = req.params;
+
   try {
-    const employee = await getEmployeeByCertificateId(certificateId);
+    const employee = await getEmployeeByCertificateNo(certificateNo);
     if (employee) {
       return res.json(employee);
     } else {
@@ -68,17 +69,17 @@ const getEmployee = async (req, res) => {
 
 // Generate QR Code for Employee
 const generateQRCode = async (req, res) => {
-  const { employeeId } = req.params;
+  const { employeeIdNo } = req.params;
   try {
-    const member = await getEmployeeById(employeeId);
+    const member = await getEmployeeById(employeeIdNo);
     if (!member) {
       return res.status(404).json({ message: "Member not found" });
     }
 
-    const url = `http://wwww.nextute.com/team/${member.certificateId}`;
+    const url = `http://wwww.nextute.com/team/${member.certificateNo}`;
     const qrCodeUrl = await QRCode.toDataURL(url);
     await prisma.employee.update({
-      where: { employeeId },
+      where: { idNo: employeeIdNo },
       data: { qrCodeUrl },
     });
     return res.json({ qrCodeUrl });

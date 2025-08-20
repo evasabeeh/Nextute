@@ -9,9 +9,9 @@ import {
 const router = express.Router();
 
 router.get("/members", getEmployees);
-router.get("/member/:certificateId", getEmployee);
+router.get("/member/:certificateNo", getEmployee);
 
 router.post("/member/new", createEmployee);
-router.post("/member/:employeeId/generate-qr", generateQRCode);
+router.post("/member/:employeeIdNo/generate-qr", generateQRCode);
 
 export default router;
