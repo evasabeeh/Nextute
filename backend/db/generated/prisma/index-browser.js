@@ -201,7 +201,6 @@ exports.Prisma.EmployeeScalarFieldEnum = {
   designation: 'designation',
   department: 'department',
   image: 'image',
-  qrCodeUrl: 'qrCodeUrl',
   created_at: 'created_at',
   updated_at: 'updated_at'
 };

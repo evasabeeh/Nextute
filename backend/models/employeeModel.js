@@ -17,6 +17,7 @@ const addEmployee = async (employeeData) => {
     });
     return newEmployee;
   } catch (error) {
+    console.error("Error adding employee:", error);
     throw new Error("Error adding employee");
   }
 };
@@ -26,30 +27,41 @@ const getAllEmployees = async () => {
     const employees = await prisma.employee.findMany();
     return employees;
   } catch (error) {
+    console.error("Error fetching employees:", error);
     throw new Error("Error fetching employees");
   }
 };
 
-const getEmployeeById = async (idNo) => {
+const getEmployeeById = async (id) => {
   try {
     const employee = await prisma.employee.findUnique({
-      where: { idNo },
+      where: { id }, // Changed from employeeId to id
     });
     return employee;
   } catch (error) {
+    console.error(`Error fetching employee by id ${id}:`, error);
     throw new Error("Error fetching employee");
   }
 };
 
-const getEmployeeByCertificateNo = async (certificateNo) => {
+const getEmployeeByCertificateId = async (certificateNo) => {
   try {
     const employee = await prisma.employee.findUnique({
-      where: { certificateNo },
+      where: { certificateNo }, // Changed from certificateId to certificateNo
     });
     return employee;
   } catch (error) {
+    console.error(
+      `Error fetching employee by certificateNo ${certificateNo}:`,
+      error
+    );
     throw new Error("Error fetching employee");
   }
 };
 
-export { addEmployee, getAllEmployees, getEmployeeByCertificateNo, getEmployeeById };
+export {
+  addEmployee,
+  getAllEmployees,
+  getEmployeeByCertificateId,
+  getEmployeeById,
+};

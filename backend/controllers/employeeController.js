@@ -1,11 +1,10 @@
 import {
   addEmployee,
   getAllEmployees,
-  getEmployeeByCertificateNo,
+  getEmployeeByCertificateId,
   getEmployeeById,
 } from "../models/employeeModel.js";
 import QRCode from "qrcode";
-import prisma from "../db/index.js";
 
 // Add Employee
 const createEmployee = async (req, res) => {
@@ -37,6 +36,7 @@ const createEmployee = async (req, res) => {
     const newEmployee = await addEmployee(employeeData);
     return res.status(201).json(newEmployee);
   } catch (error) {
+    console.error("Error in createEmployee:", error);
     return res.status(500).json({ error: error.message });
   }
 };
@@ -47,45 +47,35 @@ const getEmployees = async (req, res) => {
     const employees = await getAllEmployees();
     return res.json(employees);
   } catch (error) {
+    console.error("Error in getEmployees:", error);
     return res.status(500).json({ error: error.message });
   }
 };
 
 // Get Employee by Certificate ID
 const getEmployee = async (req, res) => {
-  const { certificateNo } = req.params;
-
+  const { certificateNo } = req.params; // Changed from certificateId to certificateNo
+  if (!certificateNo || certificateNo === "undefined") {
+    console.error(`Invalid certificateNo received: ${certificateNo}`);
+    return res.status(400).json({ error: "Invalid certificateNo" });
+  }
   try {
-    const employee = await getEmployeeByCertificateNo(certificateNo);
+    const employee = await getEmployeeByCertificateId(certificateNo);
     if (employee) {
       return res.json(employee);
     } else {
+      console.warn(`No employee found for certificateNo: ${certificateNo}`);
       return res.status(404).json({ error: "Employee not found" });
     }
   } catch (error) {
-    return res.status(500).json({ error: error.message });
+    console.error(
+      `Error in getEmployee for certificateNo ${certificateNo}:`,
+      error
+    );
+    return res
+      .status(500)
+      .json({ error: `Internal server error: ${error.message}` });
   }
 };
 
-// Generate QR Code for Employee
-const generateQRCode = async (req, res) => {
-  const { employeeIdNo } = req.params;
-  try {
-    const member = await getEmployeeById(employeeIdNo);
-    if (!member) {
-      return res.status(404).json({ message: "Member not found" });
-    }
-
-    const url = `http://wwww.nextute.com/team/${member.certificateNo}`;
-    const qrCodeUrl = await QRCode.toDataURL(url);
-    await prisma.employee.update({
-      where: { idNo: employeeIdNo },
-      data: { qrCodeUrl },
-    });
-    return res.json({ qrCodeUrl });
-  } catch (err) {
-    return res.status(500).json({ message: err.message });
-  }
-};
-
-export { createEmployee, getEmployees, getEmployee, generateQRCode };
+export { createEmployee, getEmployees, getEmployee };

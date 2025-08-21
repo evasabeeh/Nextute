@@ -80,15 +80,13 @@ model Admin {
 
 model Employee {
   id            String   @id @default(uuid()) @db.Uuid
-  idNo          String   @unique
-  certificateNo String?  @unique
-  fullName      String
-  email         String?  @unique
-  phoneNumber   String?  @unique
-  joiningDate   DateTime
-  designation   String
-  department    String
+  name          String
+  employeeId    String   @unique
+  certificateId String   @unique
+  role          String
+  email         String   @unique
   image         String?
+  details       String?
   qrCodeUrl     String?
   created_at    DateTime @default(now())
   updated_at    DateTime @default(now()) @updatedAt

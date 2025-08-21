@@ -63,10 +63,10 @@ model Subscription {
 model Review {
   id           String   @id @default(uuid()) @db.Uuid
   email        String   @unique
-  reviewerType String   @db.VarChar(50) // 'student' or 'institute'
+  reviewerType String   @db.VarChar(50)
   rating       Int      @default(0)
   title        String   @db.VarChar(255)
-  comment      String   @db.Text
+  comment      String
   created_at   DateTime @default(now())
   updated_at   DateTime @default(now()) @updatedAt
 }
@@ -89,7 +89,6 @@ model Employee {
   designation   String
   department    String
   image         String?
-  qrCodeUrl     String?
   created_at    DateTime @default(now())
   updated_at    DateTime @default(now()) @updatedAt
 }

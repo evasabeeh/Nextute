@@ -3,15 +3,14 @@ import {
   createEmployee,
   getEmployees,
   getEmployee,
-  generateQRCode,
+  
 } from "../controllers/employeeController.js";
 
 const router = express.Router();
 
+router.post("/", createEmployee);
 router.get("/members", getEmployees);
-router.get("/member/:certificateNo", getEmployee);
+router.get("/member/:certificateNo", getEmployee); // Changed from :certificateId to :certificateNo
 
-router.post("/member/new", createEmployee);
-router.post("/member/:employeeIdNo/generate-qr", generateQRCode);
 
 export default router;

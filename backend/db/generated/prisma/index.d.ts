@@ -6708,7 +6708,6 @@ export namespace Prisma {
     designation: string | null
     department: string | null
     image: string | null
-    qrCodeUrl: string | null
     created_at: Date | null
     updated_at: Date | null
   }
@@ -6724,7 +6723,6 @@ export namespace Prisma {
     designation: string | null
     department: string | null
     image: string | null
-    qrCodeUrl: string | null
     created_at: Date | null
     updated_at: Date | null
   }
@@ -6740,7 +6738,6 @@ export namespace Prisma {
     designation: number
     department: number
     image: number
-    qrCodeUrl: number
     created_at: number
     updated_at: number
     _all: number
@@ -6758,7 +6755,6 @@ export namespace Prisma {
     designation?: true
     department?: true
     image?: true
-    qrCodeUrl?: true
     created_at?: true
     updated_at?: true
   }
@@ -6774,7 +6770,6 @@ export namespace Prisma {
     designation?: true
     department?: true
     image?: true
-    qrCodeUrl?: true
     created_at?: true
     updated_at?: true
   }
@@ -6790,7 +6785,6 @@ export namespace Prisma {
     designation?: true
     department?: true
     image?: true
-    qrCodeUrl?: true
     created_at?: true
     updated_at?: true
     _all?: true
@@ -6879,7 +6873,6 @@ export namespace Prisma {
     designation: string
     department: string
     image: string | null
-    qrCodeUrl: string | null
     created_at: Date
     updated_at: Date
     _count: EmployeeCountAggregateOutputType | null
@@ -6912,7 +6905,6 @@ export namespace Prisma {
     designation?: boolean
     department?: boolean
     image?: boolean
-    qrCodeUrl?: boolean
     created_at?: boolean
     updated_at?: boolean
   }, ExtArgs["result"]["employee"]>
@@ -6928,7 +6920,6 @@ export namespace Prisma {
     designation?: boolean
     department?: boolean
     image?: boolean
-    qrCodeUrl?: boolean
     created_at?: boolean
     updated_at?: boolean
   }, ExtArgs["result"]["employee"]>
@@ -6944,7 +6935,6 @@ export namespace Prisma {
     designation?: boolean
     department?: boolean
     image?: boolean
-    qrCodeUrl?: boolean
     created_at?: boolean
     updated_at?: boolean
   }, ExtArgs["result"]["employee"]>
@@ -6960,12 +6950,11 @@ export namespace Prisma {
     designation?: boolean
     department?: boolean
     image?: boolean
-    qrCodeUrl?: boolean
     created_at?: boolean
     updated_at?: boolean
   }
 
-  export type EmployeeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "idNo" | "certificateNo" | "fullName" | "email" | "phoneNumber" | "joiningDate" | "designation" | "department" | "image" | "qrCodeUrl" | "created_at" | "updated_at", ExtArgs["result"]["employee"]>
+  export type EmployeeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "idNo" | "certificateNo" | "fullName" | "email" | "phoneNumber" | "joiningDate" | "designation" | "department" | "image" | "created_at" | "updated_at", ExtArgs["result"]["employee"]>
 
   export type $EmployeePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Employee"
@@ -6981,7 +6970,6 @@ export namespace Prisma {
       designation: string
       department: string
       image: string | null
-      qrCodeUrl: string | null
       created_at: Date
       updated_at: Date
     }, ExtArgs["result"]["employee"]>
@@ -7417,7 +7405,6 @@ export namespace Prisma {
     readonly designation: FieldRef<"Employee", 'String'>
     readonly department: FieldRef<"Employee", 'String'>
     readonly image: FieldRef<"Employee", 'String'>
-    readonly qrCodeUrl: FieldRef<"Employee", 'String'>
     readonly created_at: FieldRef<"Employee", 'DateTime'>
     readonly updated_at: FieldRef<"Employee", 'DateTime'>
   }
@@ -7896,7 +7883,6 @@ export namespace Prisma {
     designation: 'designation',
     department: 'department',
     image: 'image',
-    qrCodeUrl: 'qrCodeUrl',
     created_at: 'created_at',
     updated_at: 'updated_at'
   };
@@ -8456,7 +8442,6 @@ export namespace Prisma {
     designation?: StringFilter<"Employee"> | string
     department?: StringFilter<"Employee"> | string
     image?: StringNullableFilter<"Employee"> | string | null
-    qrCodeUrl?: StringNullableFilter<"Employee"> | string | null
     created_at?: DateTimeFilter<"Employee"> | Date | string
     updated_at?: DateTimeFilter<"Employee"> | Date | string
   }
@@ -8472,7 +8457,6 @@ export namespace Prisma {
     designation?: SortOrder
     department?: SortOrder
     image?: SortOrderInput | SortOrder
-    qrCodeUrl?: SortOrderInput | SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
   }
@@ -8491,7 +8475,6 @@ export namespace Prisma {
     designation?: StringFilter<"Employee"> | string
     department?: StringFilter<"Employee"> | string
     image?: StringNullableFilter<"Employee"> | string | null
-    qrCodeUrl?: StringNullableFilter<"Employee"> | string | null
     created_at?: DateTimeFilter<"Employee"> | Date | string
     updated_at?: DateTimeFilter<"Employee"> | Date | string
   }, "id" | "idNo" | "certificateNo" | "email" | "phoneNumber">
@@ -8507,7 +8490,6 @@ export namespace Prisma {
     designation?: SortOrder
     department?: SortOrder
     image?: SortOrderInput | SortOrder
-    qrCodeUrl?: SortOrderInput | SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     _count?: EmployeeCountOrderByAggregateInput
@@ -8529,7 +8511,6 @@ export namespace Prisma {
     designation?: StringWithAggregatesFilter<"Employee"> | string
     department?: StringWithAggregatesFilter<"Employee"> | string
     image?: StringNullableWithAggregatesFilter<"Employee"> | string | null
-    qrCodeUrl?: StringNullableWithAggregatesFilter<"Employee"> | string | null
     created_at?: DateTimeWithAggregatesFilter<"Employee"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"Employee"> | Date | string
   }
@@ -9035,7 +9016,6 @@ export namespace Prisma {
     designation: string
     department: string
     image?: string | null
-    qrCodeUrl?: string | null
     created_at?: Date | string
     updated_at?: Date | string
   }
@@ -9051,7 +9031,6 @@ export namespace Prisma {
     designation: string
     department: string
     image?: string | null
-    qrCodeUrl?: string | null
     created_at?: Date | string
     updated_at?: Date | string
   }
@@ -9067,7 +9046,6 @@ export namespace Prisma {
     designation?: StringFieldUpdateOperationsInput | string
     department?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    qrCodeUrl?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9083,7 +9061,6 @@ export namespace Prisma {
     designation?: StringFieldUpdateOperationsInput | string
     department?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    qrCodeUrl?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9099,7 +9076,6 @@ export namespace Prisma {
     designation: string
     department: string
     image?: string | null
-    qrCodeUrl?: string | null
     created_at?: Date | string
     updated_at?: Date | string
   }
@@ -9115,7 +9091,6 @@ export namespace Prisma {
     designation?: StringFieldUpdateOperationsInput | string
     department?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    qrCodeUrl?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9131,7 +9106,6 @@ export namespace Prisma {
     designation?: StringFieldUpdateOperationsInput | string
     department?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    qrCodeUrl?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9584,7 +9558,6 @@ export namespace Prisma {
     designation?: SortOrder
     department?: SortOrder
     image?: SortOrder
-    qrCodeUrl?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
   }
@@ -9600,7 +9573,6 @@ export namespace Prisma {
     designation?: SortOrder
     department?: SortOrder
     image?: SortOrder
-    qrCodeUrl?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
   }
@@ -9616,7 +9588,6 @@ export namespace Prisma {
     designation?: SortOrder
     department?: SortOrder
     image?: SortOrder
-    qrCodeUrl?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
   }
