@@ -183,6 +183,28 @@ exports.Prisma.ReviewScalarFieldEnum = {
   updated_at: 'updated_at'
 };
 
+exports.Prisma.AdminScalarFieldEnum = {
+  email: 'email',
+  password: 'password',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.EmployeeScalarFieldEnum = {
+  id: 'id',
+  idNo: 'idNo',
+  certificateNo: 'certificateNo',
+  fullName: 'fullName',
+  email: 'email',
+  phoneNumber: 'phoneNumber',
+  joiningDate: 'joiningDate',
+  designation: 'designation',
+  department: 'department',
+  image: 'image',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -214,7 +236,9 @@ exports.Prisma.ModelName = {
   Institute: 'Institute',
   Student: 'Student',
   Subscription: 'Subscription',
-  Review: 'Review'
+  Review: 'Review',
+  Admin: 'Admin',
+  Employee: 'Employee'
 };
 
 /**

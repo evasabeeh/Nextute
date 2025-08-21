@@ -11,6 +11,8 @@ import instituteAuthRoutes from "./routes/instituteAuthRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import emailSubscriptionRoutes from "./routes/emailSubscriptionRoutes.js";
 import reviewRoutes from "./routes/reviewRoute.js";
+import adminRoutes from "./routes/adminRoutes.js";
+import employeeRoutes from "./routes/employeeRoutes.js";
 
 dotenv.config();
 
@@ -70,6 +72,8 @@ app.use("/api/institutes", instituteAuthRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/subscribe", emailSubscriptionRoutes);
 app.use("/api/feedback", reviewRoutes);
+app.use("/api/admin", adminRoutes);
+app.use("/api/employees", employeeRoutes);
 
 // 404 handler
 app.use((req, res) => {
