@@ -83,6 +83,12 @@ const getAllInstitutes = async () => {
   return allInstitutes;
 };
 
+const deleteInstituteByEmail = async (email) => {
+  return await prisma.institute.delete({
+    where: { email },
+  });
+};
+
 
 export {
   createInstitute,
@@ -94,4 +100,5 @@ export {
   isInstituteIdUnique,
   findInstituteById,
   getAllInstitutes,
+  deleteInstituteByEmail
 };

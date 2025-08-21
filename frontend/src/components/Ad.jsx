@@ -69,7 +69,7 @@ const Ad = () => {
 
   return (
     <>
-      {/* Advertisement Section */}
+      {/* horizontal card Section */}
       <div className="w-full max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 flex flex-col md:flex-row gap-4 sm:gap-6 lg:gap-8 items-center justify-center">
         {[...parsedInstitutes]
           .sort(() => Math.random() - 0.5)

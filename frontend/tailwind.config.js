@@ -4,6 +4,12 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      colors: {
+        primary: "#2D7A66",
+        secondary: "#144E53",
+        background: "#E6EDE2",
+        accent: "#93E9A2",
+      },
       boxShadow: {
         custom: "0px 4px 12px 0px #0D0A2C0F",
       },

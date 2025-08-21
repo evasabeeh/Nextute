@@ -16,6 +16,7 @@ import {
   getInstituteById,
   getAllInstitutesData,
   resendVerificationCode,
+  deleteInstitute,
 } from "../controllers/instituteAuthController.js";
 import instituteAuth from "../middlewares/instituteAuthMiddleware.js";
 import { validateEmailDomain } from "../middlewares/emailValidationMiddleware.js";
@@ -50,10 +51,10 @@ router.patch("/me/:section", instituteAuth, updateProfileSection);
 
 router.post("/signup", validateEmailDomain, signup);
 router.post("/verify", validateEmailDomain, verifyCode);
-
-router.post("/resend-verification", resendVerificationCode)
-
+router.post("/resend-verification", resendVerificationCode);
 router.post("/auth/login", login);
 router.post("/logout", instituteAuth, logout);
+
+router.delete("/auth/delete", instituteAuth, deleteInstitute);
 
 export default router;

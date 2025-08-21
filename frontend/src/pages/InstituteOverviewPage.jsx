@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense, lazy } from "react";
+import React, { useState, useEffect, Suspense, lazy, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
@@ -7,6 +7,7 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import OverviewHeader from "../components/Institute/Overview/OverviewHeader";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import { AppContext } from "../context/AppContext";
 
 // Lazy load components
 const Overview = lazy(() =>
@@ -44,6 +45,8 @@ const InstituteOverview = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
 
+  const { VITE_BACKEND_BASE_URL } = useContext(AppContext);
+
   useEffect(() => {
     if (!id) {
       setError("Institute ID is missing.");
@@ -55,7 +58,7 @@ const InstituteOverview = () => {
       try {
         setIsLoading(true);
         const instituteRes = await axios.get(
-          `${import.meta.env.VITE_BACKEND_BASE_URL}/api/institutes/${id}`,
+          `${VITE_BACKEND_BASE_URL}/api/institutes/${id}`,
           { withCredentials: true }
         );
 

@@ -80,7 +80,7 @@ const SidePanel = () => {
       id: "social-media",
       label: "Social Media",
       icon: <FaLink className="w-5 h-5" />,
-      route: "/institute/edit-social-media",
+      route: "/institute/social-media",
     },
     {
       id: "logout",

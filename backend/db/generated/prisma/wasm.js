@@ -140,7 +140,9 @@ exports.Prisma.InstituteScalarFieldEnum = {
   code: 'code',
   code_expires_at: 'code_expires_at',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  password_reset_token: 'password_reset_token',
+  password_reset_expires: 'password_reset_expires'
 };
 
 exports.Prisma.StudentScalarFieldEnum = {
@@ -158,12 +160,47 @@ exports.Prisma.StudentScalarFieldEnum = {
   created_at: 'created_at',
   updated_at: 'updated_at',
   code_expires_at: 'code_expires_at',
-  student_id: 'student_id'
+  student_id: 'student_id',
+  password_reset_token: 'password_reset_token',
+  password_reset_expires: 'password_reset_expires'
 };
 
 exports.Prisma.SubscriptionScalarFieldEnum = {
   id: 'id',
   email: 'email',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.ReviewScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  reviewerType: 'reviewerType',
+  rating: 'rating',
+  title: 'title',
+  comment: 'comment',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.AdminScalarFieldEnum = {
+  email: 'email',
+  password: 'password',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.EmployeeScalarFieldEnum = {
+  id: 'id',
+  idNo: 'idNo',
+  certificateNo: 'certificateNo',
+  fullName: 'fullName',
+  email: 'email',
+  phoneNumber: 'phoneNumber',
+  joiningDate: 'joiningDate',
+  designation: 'designation',
+  department: 'department',
+  image: 'image',
   created_at: 'created_at',
   updated_at: 'updated_at'
 };
@@ -198,7 +235,10 @@ exports.Prisma.NullsOrder = {
 exports.Prisma.ModelName = {
   Institute: 'Institute',
   Student: 'Student',
-  Subscription: 'Subscription'
+  Subscription: 'Subscription',
+  Review: 'Review',
+  Admin: 'Admin',
+  Employee: 'Employee'
 };
 
 /**
