@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import {
   FaAddressBook,
@@ -8,10 +8,13 @@ import {
 } from "react-icons/fa";
 import { toast } from "react-hot-toast";
 import axios from "axios";
+import { AppContext } from "../../../context/AppContext";
 
 const InstituteOverviewContactInfo = ({ id }) => {
   const [contact, setContact] = useState(null);
   const [error, setError] = useState("");
+
+  const { VITE_BACKEND_BASE_URL} = useContext(AppContext);
 
   // Welcome back popup for returning users
   useEffect(() => {
@@ -52,7 +55,7 @@ const InstituteOverviewContactInfo = ({ id }) => {
     const fetchContactInfo = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8080/api/institutes/${id}`
+          `${VITE_BACKEND_BASE_URL}/api/institutes/${id}`
         );
         if (res.data?.status) {
           const data = res.data.data;

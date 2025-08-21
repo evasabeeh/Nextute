@@ -66,7 +66,7 @@ const Header = () => {
         >
           Search Across{" "}
           <span className="relative inline-block text-[#204B55] ml-2">
-            <span className="invisible">"100+ Cities"</span>
+            <span className="invisible">"100+ Courses"</span>
             <span className="absolute left-0 top-0 whitespace-nowrap">
               "{text}"
             </span>

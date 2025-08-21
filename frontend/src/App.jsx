@@ -62,6 +62,11 @@ import ViewBatch from "./components/Institute/Dashboard/ViewBatch";
 
 import ForgotPasswordPopup from "./pages/ForgotPasswordPopup";
 import ResetPassword from "./pages/ResetPassword";
+import SocialMedia from "./components/Institute/Dashboard/SocialMedia";
+import EditSocialMedia from "./components/Institute/Dashboard/EditSocialMedia";
+import OurTeam from "./pages/OurTeam";
+import MemberDetails from "./pages/MemberDetails";
+import QRScanner from "./pages/QRScanner";
 
 const App = () => {
   // Use correct state names, not setters
@@ -160,6 +165,13 @@ const App = () => {
             path="/institute/edit-achievements/:type"
             element={<EditAchievements />}
           />
+          <Route path="/institute/social-media" element={<SocialMedia />} />
+          <Route path="/institute/edit-social-media" element={<EditSocialMedia />} />
+
+          <Route path="/team" element={<OurTeam />} />
+          <Route path="/team/:certificateNo" element={<MemberDetails />} />
+        <Route path="/scanner" element={<QRScanner />} />
+
         </Routes>
         {showLogin && <LoginPopup />}
         {showSignup && <SignupPopup />}

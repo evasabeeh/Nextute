@@ -1,11 +1,11 @@
+
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { motion } from "framer-motion";
 import SidePanel from "../components/Institute/Dashboard/SidePanel";
 import SummaryCard from "../components/Institute/Dashboard/SummaryCard";
 import AchievementCard from "../components/Institute/Dashboard/AchievementCard";
-import SocialMediaLink from "../components/Institute/Dashboard/SocialMediaLink";
 import { useInstituteData } from "../hooks/useInstituteData.js";
 import {
   FaSchool,
@@ -20,34 +20,34 @@ import {
   FaLaptop,
   FaVideo,
   FaHospital,
-  FaLink,
   FaUsers,
   FaImages,
+  FaLink,
 } from "react-icons/fa";
 import LoadingSpinner from "../components/LoadingSpinner.jsx";
 import Navbar from "../components/Navbar.jsx";
-import Footer from "../components/Footer.jsx";
 import { assets } from "../assets/assets.js";
 
 const InstituteDashboard = () => {
+  const { id } = useParams(); // Get the institute ID from the URL
   const { instituteDashboardData, dataLoading, error, hasRenderedOnce } =
-    useInstituteData();
+    useInstituteData(id); // Pass the ID to the hook
   const navigate = useNavigate();
 
+  console.log("Institute ID:", id);
   console.log("Raw data:", instituteDashboardData);
 
-  // Welcome back popup for returning users
   useEffect(() => {
     const hasVisited = localStorage.getItem("hasVisitedDashboard");
     if (hasVisited) {
       toast(
-        <div className="flex items-center gap-3">
-          <span className="text-2xl">🎉</span>
+        <div className="flex items-center gap-2 sm:gap-3">
+          <span className="text-xl sm:text-2xl">🎉</span>
           <div>
-            <h3 className="text-lg font-semibold text-[#144E53]">
+            <h3 className="text-base sm:text-lg font-semibold text-[#144E53]">
               Welcome Back!
             </h3>
-            <p className="text-sm text-gray-600">
+            <p className="text-xs sm:text-sm text-gray-600">
               Great to see you again! Explore your institute's dashboard.
             </p>
           </div>
@@ -59,8 +59,10 @@ const InstituteDashboard = () => {
             background: "#E6EDE2",
             color: "#144E53",
             borderRadius: "12px",
-            padding: "16px",
+            padding: "12px sm:16px",
             boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
+            maxWidth: "90vw",
+            width: "auto",
           },
         }
       );
@@ -70,7 +72,6 @@ const InstituteDashboard = () => {
 
   console.log("instituteDashboardData:", instituteDashboardData);
 
-  // Utility function to safely parse JSON
   const safeParseJSON = (jsonString, defaultValue) => {
     try {
       return jsonString ? JSON.parse(jsonString) : defaultValue;
@@ -80,7 +81,6 @@ const InstituteDashboard = () => {
     }
   };
 
-  // Check if instituteDashboardData is valid before parsing
   const instituteData =
     instituteDashboardData &&
     typeof instituteDashboardData === "object" &&
@@ -112,14 +112,13 @@ const InstituteDashboard = () => {
         }
       : null;
 
-  // Loading and error states
   if (dataLoading || !hasRenderedOnce) {
     return <LoadingSpinner />;
   }
 
   if (error || !instituteData) {
     return (
-      <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-200 text-red-600 text-lg sm:text-xl font-semibold">
+      <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-200 text-red-600 text-base sm:text-lg md:text-xl font-semibold px-4 text-center">
         Error loading data or no data available. Please try again.
       </div>
     );
@@ -135,6 +134,7 @@ const InstituteDashboard = () => {
         color: "#144E53",
         borderRadius: "8px",
         boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
+        maxWidth: "90vw",
       },
     });
   };
@@ -143,11 +143,8 @@ const InstituteDashboard = () => {
     <>
       <Navbar />
       <div className="flex min-h-screen bg-gradient-to-br from-gray-50 to-gray-200">
-        {/* Side Panel */}
         <SidePanel />
-        {/* Main Content */}
-        <div className="flex-1 p-4 sm:p-6 lg:p-8 overflow-x-hidden">
-          {/* Header Section */}
+        <div className="flex-1 p-4 sm:p-6 lg:p-8 overflow-x-hidden overflow-y-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -155,24 +152,24 @@ const InstituteDashboard = () => {
             className="bg-white bg-opacity-95 backdrop-blur-xl rounded-2xl shadow-xl p-4 sm:p-6 mb-6 sm:mb-8 border border-[#2D7A66]/10"
           >
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6">
-              <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
+              <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full sm:w-auto">
                 <motion.img
                   whileHover={{ scale: 1.05, rotate: 2 }}
                   src={instituteData.basic_info.logo || assets.upload_area}
                   alt={`${
                     instituteData.basic_info.institute_name || "Institute"
                   } Logo`}
-                  className="w-20 sm:w-24 lg:w-32 rounded-xl object-contain border border-[#2D7A66]/20 shadow-sm"
+                  className="w-16 sm:w-20 md:w-24 lg:w-28 rounded-xl object-contain border border-[#2D7A66]/20 shadow-sm"
                   onError={(e) => (e.target.src = assets.Not_found)}
                 />
-                <div className="text-center sm:text-left">
-                  <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#144E53] tracking-tight">
+                <div className="text-center sm:text-left min-w-0">
+                  <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-[#144E53] tracking-tight truncate">
                     {instituteData.basic_info.institute_name || "N/A"}
                   </h1>
-                  <p className="text-sm sm:text-base text-[#2D7A66] italic mt-1 sm:mt-2">
+                  <p className="text-xs sm:text-sm md:text-base text-[#2D7A66] italic mt-1 sm:mt-2 truncate">
                     {instituteData.basic_info.motto || "N/A"}
                   </p>
-                  <p className="text-xs sm:text-sm text-gray-600 mt-1">
+                  <p className="text-xs sm:text-sm text-gray-600 mt-1 truncate">
                     Established:{" "}
                     {instituteData.basic_info.establishedYear || "N/A"}
                   </p>
@@ -183,17 +180,19 @@ const InstituteDashboard = () => {
                   {
                     label: "Teachers",
                     link: "/institute/teachers",
-                    icon: <FaChalkboardTeacher />,
+                    icon: (
+                      <FaChalkboardTeacher className="w-4 h-4 sm:w-5 sm:h-5" />
+                    ),
                   },
                   {
                     label: "Batches",
                     link: "/institute/batches",
-                    icon: <FaUsers />,
+                    icon: <FaUsers className="w-4 h-4 sm:w-5 sm:h-5" />,
                   },
                   {
                     label: "Media",
                     link: "/institute/photos-and-videos",
-                    icon: <FaImages />,
+                    icon: <FaImages className="w-4 h-4 sm:w-5 sm:h-5" />,
                   },
                 ].map((link, index) => (
                   <motion.button
@@ -204,7 +203,7 @@ const InstituteDashboard = () => {
                     }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => navigate(link.link)}
-                    className="px-3 py-2 sm:px-4 sm:py-2 bg-gradient-to-r from-[#2D7A66] to-[#144E53] text-white rounded-lg shadow-md hover:from-[#144E53] hover:to-[#2D7A66] transition-all duration-300 flex items-center gap-2 text-xs sm:text-sm"
+                    className="px-3 sm:px-4 py-2 sm:py-2.5 bg-gradient-to-r from-[#2D7A66] to-[#144E53] text-white rounded-lg shadow-md hover:from-[#144E53] hover:to-[#2D7A66] transition-all duration-300 flex items-center gap-2 text-xs sm:text-sm min-w-[48px] min-h-[48px]"
                     aria-label={link.label}
                   >
                     {link.icon}
@@ -215,7 +214,6 @@ const InstituteDashboard = () => {
             </div>
           </motion.div>
 
-          {/* Summary Cards */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -227,7 +225,7 @@ const InstituteDashboard = () => {
                 title: "Courses Offered",
                 value: instituteData.courses.courses?.length || 0,
                 icon: (
-                  <FaSchool className="text-[#2D7A66] w-6 sm:w-8 h-6 sm:h-8" />
+                  <FaSchool className="text-[#2D7A66] w-5 sm:w-6 md:w-7 h-5 sm:h-6 md:h-7" />
                 ),
               },
               {
@@ -236,7 +234,7 @@ const InstituteDashboard = () => {
                   (v) => v === "Yes" || (typeof v === "string" && v.trim())
                 ).length,
                 icon: (
-                  <FaBuilding className="text-[#2D7A66] w-6 sm:w-8 h-6 sm:h-8" />
+                  <FaBuilding className="text-[#2D7A66] w-5 sm:w-6 md:w-7 h-5 sm:h-6 md:h-7" />
                 ),
               },
               {
@@ -245,7 +243,7 @@ const InstituteDashboard = () => {
                   instituteData.institute_achievements.achievements?.length ||
                   0,
                 icon: (
-                  <FaTrophy className="text-[#2D7A66] w-6 sm:w-8 h-6 sm:h-8" />
+                  <FaTrophy className="text-[#2D7A66] w-5 sm:w-6 md:w-7 h-5 sm:h-6 md:h-7" />
                 ),
               },
               {
@@ -253,7 +251,7 @@ const InstituteDashboard = () => {
                 value:
                   instituteData.student_achievements.achievements?.length || 0,
                 icon: (
-                  <FaTrophy className="text-[#2D7A66] w-6 sm:w-8 h-6 sm:h-8" />
+                  <FaTrophy className="text-[#2D7A66] w-5 sm:w-6 md:w-7 h-5 sm:h-6 md:h-7" />
                 ),
               },
             ].map((card, index) => (
@@ -266,72 +264,73 @@ const InstituteDashboard = () => {
             ))}
           </motion.div>
 
-          {/* Institute Overview */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
             className="bg-white bg-opacity-95 backdrop-blur-xl rounded-2xl shadow-xl p-4 sm:p-6 mb-6 sm:mb-8 border border-[#2D7A66]/10"
           >
-            <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-[#144E53] mb-4 sm:mb-6">
+            <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-[#144E53] mb-4 sm:mb-6">
               Institute Overview
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
-              <div>
-                <h3 className="text-base sm:text-lg font-semibold text-[#2D7A66] mb-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
+              <div className="min-w-0">
+                <h3 className="text-sm sm:text-base md:text-lg font-semibold text-[#2D7A66] mb-2">
                   Description
                 </h3>
-                <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
+                <p className="text-gray-700 text-xs sm:text-sm md:text-base leading-relaxed break-words">
                   {instituteData.basic_info.description ||
                     "No description available"}
                 </p>
               </div>
-              <div>
-                <h3 className="text-base sm:text-lg font-semibold text-[#2D7A66] mb-2">
+              <div className="min-w-0">
+                <h3 className="text-sm sm:text-base md:text-lg font-semibold text-[#2D7A66] mb-2">
                   Exams Covered
                 </h3>
-                <p className="text-gray-700 text-sm sm:text-base">
+                <p className="text-gray-700 text-xs sm:text-sm md:text-base break-words">
                   {instituteData.basic_info.exams?.join(", ") || "N/A"}
                 </p>
-                <h3 className="text-base sm:text-lg font-semibold text-[#2D7A66] mt-4 mb-2">
+                <h3 className="text-sm sm:text-base md:text-lg font-semibold text-[#2D7A66] mt-4 mb-2">
                   Medium
                 </h3>
-                <p className="text-gray-700 text-sm sm:text-base capitalize">
+                <p className="text-gray-700 text-xs sm:text-sm md:text-base capitalize">
                   {instituteData.basic_info.medium || "N/A"}
                 </p>
               </div>
-              <div>
-                <h3 className="text-base sm:text-lg font-semibold text-[#2D7A66] mb-2">
+              <div className="min-w-0">
+                <h3 className="text-sm sm:text-base md:text-lg font-semibold text-[#2D7A66] mb-2">
                   Contact Details
                 </h3>
-                <p className="text-gray-700 text-sm sm:text-base flex items-center gap-2">
+                <p className="text-gray-700 text-xs sm:text-sm md:text-base flex items-center gap-2">
                   <FaPhone className="text-[#2D7A66] w-4 sm:w-5 h-4 sm:h-5" />
                   <span
-                    className="cursor-pointer hover:text-[#144E53] transition-colors duration-200"
+                    className="cursor-pointer hover:text-[#144E53] transition-colors duration-200 truncate min-w-0 p-2 -m-2"
                     onClick={() =>
                       handleCopy(instituteData.contact || "N/A", "Phone Number")
                     }
+                    aria-label="Copy Phone Number"
                   >
                     {instituteData.contact || "N/A"}
                   </span>
                 </p>
-                <p className="text-gray-700 text-sm sm:text-base flex items-center gap-2 mt-2">
+                <p className="text-gray-700 text-xs sm:text-sm md:text-base flex items-center gap-2 mt-2">
                   <FaEnvelope className="text-[#2D7A66] w-4 sm:w-5 h-4 sm:h-5" />
                   <span
-                    className="cursor-pointer hover:text-[#144E53] transition-colors duration-200"
+                    className="cursor-pointer hover:text-[#144E53] transition-colors duration-200 truncate min-w-0 p-2 -m-2"
                     onClick={() =>
                       handleCopy(instituteData.email || "N/A", "Email")
                     }
+                    aria-label="Copy Email"
                   >
                     {instituteData.email || "N/A"}
                   </span>
                 </p>
               </div>
-              <div>
-                <h3 className="text-base sm:text-lg font-semibold text-[#2D7A66] mb-2">
+              <div className="min-w-0">
+                <h3 className="text-sm sm:text-base md:text-lg font-semibold text-[#2D7A66] mb-2">
                   Branch & Head Office
                 </h3>
-                <p className="text-gray-700 text-sm sm:text-base">
+                <p className="text-gray-700 text-xs sm:text-sm md:text-base break-words">
                   <strong>Branch:</strong>{" "}
                   {instituteData.contact_details.branch
                     ? `${
@@ -345,7 +344,7 @@ const InstituteDashboard = () => {
                       }`
                     : "N/A"}
                 </p>
-                <p className="text-gray-700 text-sm sm:text-base mt-2">
+                <p className="text-gray-700 text-xs sm:text-sm md:text-base break-words mt-2">
                   <strong>Head Office:</strong>{" "}
                   {instituteData.contact_details.headOffice
                     ? `${
@@ -365,7 +364,6 @@ const InstituteDashboard = () => {
             </div>
           </motion.div>
 
-          {/* Facilities */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -373,7 +371,7 @@ const InstituteDashboard = () => {
             className="bg-white bg-opacity-95 backdrop-blur-xl rounded-2xl shadow-xl p-4 sm:p-6 mb-6 sm:mb-8 border border-[#2D7A66]/10"
           >
             <div className="flex justify-between items-center mb-4 sm:mb-6">
-              <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-[#144E53]">
+              <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-[#144E53]">
                 Facilities
               </h2>
               <motion.button
@@ -383,7 +381,7 @@ const InstituteDashboard = () => {
                 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => navigate("/institute/edit-facilities")}
-                className="px-3 py-2 sm:px-4 sm:py-2 bg-gradient-to-r from-[#2D7A66] to-[#144E53] text-white rounded-lg shadow-md hover:from-[#144E53] hover:to-[#2D7A66] transition-all duration-300 flex items-center gap-2 text-xs sm:text-sm"
+                className="px-3 sm:px-4 py-2 sm:py-2.5 bg-gradient-to-r from-[#2D7A66] to-[#144E53] text-white rounded-lg shadow-md hover:from-[#144E53] hover:to-[#2D7A66] transition-all duration-300 flex items-center gap-2 text-xs sm:text-sm min-w-[48px] min-h-[48px]"
                 aria-label="Edit Facilities"
               >
                 <svg
@@ -402,90 +400,90 @@ const InstituteDashboard = () => {
                 <span className="hidden sm:inline">Edit Facilities</span>
               </motion.button>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-5">
               {[
                 {
                   label: "Library",
                   value: instituteData.facilities.library || "No",
                   icon: (
-                    <FaBook className="text-[#2D7A66] w-5 sm:w-6 h-5 sm:h-6" />
+                    <FaBook className="text-[#2D7A66] w-4 sm:w-5 md:w-6 h-4 sm:h-5 md:h-6" />
                   ),
                 },
                 {
                   label: "Mentorship Program",
                   value: instituteData.facilities.mentorship || "No",
                   icon: (
-                    <FaChalkboardTeacher className="text-[#2D7A66] w-5 sm:w-6 h-5 sm:h-6" />
+                    <FaChalkboardTeacher className="text-[#2D7A66] w-4 sm:w-5 md:w-6 h-4 sm:h-5 md:h-6" />
                   ),
                 },
                 {
                   label: "Tutorial & Remedial Classes",
                   value: instituteData.facilities.tutorial || "No",
                   icon: (
-                    <FaChalkboard className="text-[#2D7A66] w-5 sm:w-6 h-5 sm:h-6" />
+                    <FaChalkboard className="text-[#2D7A66] w-4 sm:w-5 md:w-6 h-4 sm:h-5 md:h-6" />
                   ),
                 },
                 {
                   label: "Hostel Accommodation",
                   value: instituteData.facilities.hostel || "No",
                   icon: (
-                    <FaBuilding className="text-[#2D7A66] w-5 sm:w-6 h-5 sm:h-6" />
+                    <FaBuilding className="text-[#2D7A66] w-4 sm:w-5 md:w-6 h-4 sm:h-5 md:h-6" />
                   ),
                 },
                 {
                   label: "Test Series",
                   value: instituteData.facilities.testSeries || "No",
                   icon: (
-                    <FaClipboardCheck className="text-[#2D7A66] w-5 sm:w-6 h-5 sm:h-6" />
+                    <FaClipboardCheck className="text-[#2D7A66] w-4 sm:w-5 md:w-6 h-4 sm:h-5 md:h-6" />
                   ),
                 },
                 {
                   label: "Online Learning Portal",
                   value: instituteData.facilities.onlinePortal || "No",
                   icon: (
-                    <FaLaptop className="text-[#2D7A66] w-5 sm:w-6 h-5 sm:h-6" />
+                    <FaLaptop className="text-[#2D7A66] w-4 sm:w-5 md:w-6 h-4 sm:h-5 md:h-6" />
                   ),
                 },
                 {
                   label: "Study Material",
                   value: instituteData.facilities.studyMaterials || "No",
                   icon: (
-                    <FaBook className="text-[#2D7A66] w-5 sm:w-6 h-5 sm:h-6" />
+                    <FaBook className="text-[#2D7A66] w-4 sm:w-5 md:w-6 h-4 sm:h-5 md:h-6" />
                   ),
                 },
                 {
                   label: "Attendance Tracking",
                   value: instituteData.facilities.attendance || "No",
                   icon: (
-                    <FaClipboardCheck className="text-[#2D7A66] w-5 sm:w-6 h-5 sm:h-6" />
+                    <FaClipboardCheck className="text-[#2D7A66] w-4 sm:w-5 md:w-6 h-4 sm:h-5 md:h-6" />
                   ),
                 },
                 {
                   label: "Well-Equipped Classes",
                   value: instituteData.facilities.classes || "No",
                   icon: (
-                    <FaSchool className="text-[#2D7A66] w-5 sm:w-6 h-5 sm:h-6" />
+                    <FaSchool className="text-[#2D7A66] w-4 sm:w-5 md:w-6 h-4 sm:h-5 md:h-6" />
                   ),
                 },
                 {
                   label: "CCTV Surveillance",
                   value: instituteData.facilities.cctv || "No",
                   icon: (
-                    <FaVideo className="text-[#2D7A66] w-5 sm:w-6 h-5 sm:h-6" />
+                    <FaVideo className="text-[#2D7A66] w-4 sm:w-5 md:w-6 h-4 sm:h-5 md:h-6" />
                   ),
                 },
                 {
                   label: "Medical Facilities",
                   value: instituteData.facilities.medical || "No",
                   icon: (
-                    <FaHospital className="text-[#2D7A66] w-5 sm:w-6 h-5 sm:h-6" />
+                    <FaHospital className="text-[#2D7A66] w-4 sm:w-5 md:w-6 h-4 sm:h-5 md:h-6" />
                   ),
                 },
                 {
                   label: "Other Facilities",
                   value: instituteData.facilities.other || "None",
                   icon: (
-                    <FaLink className="text-[#2D7A66] w-5 sm:w-6 h-5 sm:h-6" />
+                    <FaLink className="text-[#2D7A66] w-4 sm:w-5 md:w-6 h-4 sm:h-5 md:h-6" />
                   ),
                 },
               ].map((facility, index) => (
@@ -503,8 +501,8 @@ const InstituteDashboard = () => {
                   } hover:shadow-lg hover:scale-[1.02]`}
                 >
                   {facility.icon}
-                  <div>
-                    <h3 className="text-sm sm:text-base font-semibold text-[#144E53]">
+                  <div className="min-w-0">
+                    <h3 className="text-xs sm:text-sm md:text-base font-semibold text-[#144E53] truncate">
                       {facility.label}
                     </h3>
                     <p
@@ -514,7 +512,7 @@ const InstituteDashboard = () => {
                           : facility.value === "No" || facility.value === "None"
                           ? "text-red-600"
                           : "text-gray-950"
-                      }`}
+                      } truncate`}
                     >
                       {facility.value}
                     </p>
@@ -524,16 +522,15 @@ const InstituteDashboard = () => {
             </div>
           </motion.div>
 
-          {/* Achievements */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
-            className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8"
+            className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8"
           >
-            <div className="bg-white bg-opacity-95 backdrop-blur-xl rounded-2xl shadow-xl p-4 sm:p-6 border border-[#2D7A66]/10">
+            <div className="bg-white bg-opacity-95 backdrop-blur-xl rounded-2xl shadow-xl p-4 sm:p-6 border border-[#2D7A66]/10 min-w-0">
               <div className="flex justify-between items-center mb-4 sm:mb-6">
-                <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-[#144E53]">
+                <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-[#144E53]">
                   Institute Achievements
                 </h2>
                 <motion.button
@@ -545,7 +542,7 @@ const InstituteDashboard = () => {
                   onClick={() =>
                     navigate("/institute/edit-achievements/institute")
                   }
-                  className="px-3 py-2 sm:px-4 sm:py-2 bg-gradient-to-r from-[#2D7A66] to-[#144E53] text-white rounded-lg shadow-md hover:from-[#144E53] hover:to-[#2D7A66] transition-all duration-300 flex items-center gap-2 text-xs sm:text-sm"
+                  className="px-3 sm:px-4 py-2 sm:py-2.5 bg-gradient-to-r from-[#2D7A66] to-[#144E53] text-white rounded-lg shadow-md hover:from-[#144E53] hover:to-[#2D7A66] transition-all duration-300 flex items-center gap-2 text-xs sm:text-sm min-w-[48px] min-h-[48px]"
                   aria-label="Edit Institute Achievements"
                 >
                   <svg
@@ -564,7 +561,7 @@ const InstituteDashboard = () => {
                   <span className="hidden sm:inline">Edit</span>
                 </motion.button>
               </div>
-              <div className="max-h-[300px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-[#2D7A66] scrollbar-track-gray-100">
+              <div className="max-h-[300px] sm:max-h-[350px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-[#2D7A66] scrollbar-track-gray-100">
                 {instituteData.institute_achievements.achievements?.length >
                 0 ? (
                   instituteData.institute_achievements.achievements.map(
@@ -576,15 +573,15 @@ const InstituteDashboard = () => {
                     )
                   )
                 ) : (
-                  <p className="text-gray-700 text-sm sm:text-base">
+                  <p className="text-gray-700 text-xs sm:text-sm md:text-base text-center">
                     No institute achievements available.
                   </p>
                 )}
               </div>
             </div>
-            <div className="bg-white bg-opacity-95 backdrop-blur-xl rounded-2xl shadow-xl p-4 sm:p-6 border border-[#2D7A66]/10">
+            <div className="bg-white bg-opacity-95 backdrop-blur-xl rounded-2xl shadow-xl p-4 sm:p-6 border border-[#2D7A66]/10 min-w-0">
               <div className="flex justify-between items-center mb-4 sm:mb-6">
-                <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-[#144E53]">
+                <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-[#144E53]">
                   Student Achievements
                 </h2>
                 <motion.button
@@ -596,7 +593,7 @@ const InstituteDashboard = () => {
                   onClick={() =>
                     navigate("/institute/edit-achievements/student")
                   }
-                  className="px-3 py-2 sm:px-4 sm:py-2 bg-gradient-to-r from-[#2D7A66] to-[#144E53] text-white rounded-lg shadow-md hover:from-[#144E53] hover:to-[#2D7A66] transition-all duration-300 flex items-center gap-2 text-xs sm:text-sm"
+                  className="px-3 sm:px-4 py-2 sm:py-2.5 bg-gradient-to-r from-[#2D7A66] to-[#144E53] text-white rounded-lg shadow-md hover:from-[#144E53] hover:to-[#2D7A66] transition-all duration-300 flex items-center gap-2 text-xs sm:text-sm min-w-[48px] min-h-[48px]"
                   aria-label="Edit Student Achievements"
                 >
                   <svg
@@ -615,7 +612,7 @@ const InstituteDashboard = () => {
                   <span className="hidden sm:inline">Edit</span>
                 </motion.button>
               </div>
-              <div className="max-h-[300px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-[#2D7A66] scrollbar-track-gray-100">
+              <div className="max-h-[300px] sm:max-h-[350px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-[#2D7A66] scrollbar-track-gray-100">
                 {instituteData.student_achievements.achievements?.length > 0 ? (
                   instituteData.student_achievements.achievements.map(
                     (achievement) => (
@@ -626,95 +623,15 @@ const InstituteDashboard = () => {
                     )
                   )
                 ) : (
-                  <p className="text-gray-700 text-sm sm:text-base">
+                  <p className="text-gray-700 text-xs sm:text-sm md:text-base text-center">
                     No student achievements available.
                   </p>
                 )}
               </div>
             </div>
           </motion.div>
-
-          {/* Social Media Links */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
-            className="bg-white bg-opacity-95 backdrop-blur-xl rounded-2xl shadow-xl p-4 sm:p-6 border border-[#2D7A66]/10"
-          >
-            <div className="flex justify-between items-center mb-4 sm:mb-6">
-              <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-[#144E53]">
-                Follow Us
-              </h2>
-              <motion.button
-                whileHover={{
-                  scale: 1.05,
-                  boxShadow: "0 4px 15px rgba(0, 0, 0, 0.2)",
-                }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => navigate("/institute/edit-social-media")}
-                className="px-3 py-2 sm:px-4 sm:py-2 bg-gradient-to-r from-[#2D7A66] to-[#144E53] text-white rounded-lg shadow-md hover:from-[#144E53] hover:to-[#2D7A66] transition-all duration-300 flex items-center gap-2 text-xs sm:text-sm"
-                aria-label="Edit Social Media Links"
-              >
-                <svg
-                  className="w-4 sm:w-5 h-4 sm:h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-                  />
-                </svg>
-                <span className="hidden sm:inline">Edit</span>
-              </motion.button>
-            </div>
-            <div className="flex flex-wrap gap-3 sm:gap-4">
-              {[
-                {
-                  platform: "facebook",
-                  url: instituteData.social_media.socialMedia?.facebook || "",
-                },
-                {
-                  platform: "twitter",
-                  url: instituteData.social_media.socialMedia?.twitter || "",
-                },
-                {
-                  platform: "instagram",
-                  url: instituteData.social_media.socialMedia?.instagram || "",
-                },
-                {
-                  platform: "linkedin",
-                  url: instituteData.social_media.socialMedia?.linkedin || "",
-                },
-                {
-                  platform: "youtube",
-                  url: instituteData.social_media.socialMedia?.youtube || "",
-                },
-                ...(instituteData.social_media.socialMedia?.other || []).map(
-                  (other, index) => ({
-                    platform: other.label?.toLowerCase() || `other-${index}`,
-                    url: other.link || "",
-                    key: `other-${index}`,
-                  })
-                ),
-              ].map(
-                (social, index) =>
-                  social.url && (
-                    <SocialMediaLink
-                      key={social.key || index}
-                      platform={social.platform}
-                      url={social.url}
-                    />
-                  )
-              )}
-            </div>
-          </motion.div>
         </div>
       </div>
-      <Footer />
     </>
   );
 };
