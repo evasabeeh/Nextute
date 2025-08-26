@@ -13,6 +13,8 @@ const addEmployee = async (employeeData) => {
         designation: employeeData.designation,
         department: employeeData.department,
         image: employeeData.image,
+        certificateURL: employeeData.certificateURL,
+        achievementsURL: employeeData.achievementsURL,
       },
     });
     return newEmployee;

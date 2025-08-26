@@ -201,6 +201,8 @@ exports.Prisma.EmployeeScalarFieldEnum = {
   designation: 'designation',
   department: 'department',
   image: 'image',
+  certificateURL: 'certificateURL',
+  achievementsURL: 'achievementsURL',
   created_at: 'created_at',
   updated_at: 'updated_at'
 };

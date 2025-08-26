@@ -63,10 +63,10 @@ model Subscription {
 model Review {
   id           String   @id @default(uuid()) @db.Uuid
   email        String   @unique
-  reviewerType String   @db.VarChar(50) // 'student' or 'institute'
+  reviewerType String   @db.VarChar(50)
   rating       Int      @default(0)
   title        String   @db.VarChar(255)
-  comment      String   @db.Text
+  comment      String
   created_at   DateTime @default(now())
   updated_at   DateTime @default(now()) @updatedAt
 }
@@ -79,15 +79,18 @@ model Admin {
 }
 
 model Employee {
-  id            String   @id @default(uuid()) @db.Uuid
-  name          String
-  employeeId    String   @unique
-  certificateId String   @unique
-  role          String
-  email         String   @unique
-  image         String?
-  details       String?
-  qrCodeUrl     String?
-  created_at    DateTime @default(now())
-  updated_at    DateTime @default(now()) @updatedAt
+  id              String   @id @default(uuid()) @db.Uuid
+  idNo            String   @unique
+  certificateNo   String?  @unique
+  fullName        String
+  email           String?  @unique
+  phoneNumber     String?  @unique
+  joiningDate     DateTime
+  designation     String
+  department      String
+  image           String?
+  certificateURL  String?
+  achievementsURL String?
+  created_at      DateTime @default(now())
+  updated_at      DateTime @default(now()) @updatedAt
 }

@@ -18,6 +18,8 @@ const createEmployee = async (req, res) => {
     designation,
     department,
     image,
+    certificateURL,
+    achievementsURL,
   } = req.body;
 
   const employeeData = {
@@ -30,6 +32,8 @@ const createEmployee = async (req, res) => {
     designation,
     department,
     image,
+    certificateURL,
+    achievementsURL,
   };
 
   try {
