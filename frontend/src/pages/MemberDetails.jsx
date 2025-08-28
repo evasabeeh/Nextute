@@ -169,7 +169,7 @@ const MemberDetails = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.4 }}
-                    className="mt-4"
+                    className="mt-4 flex flex-col items-center"
                   >
                     <img
                       src={qrCodeUrl}
@@ -227,11 +227,7 @@ const MemberDetails = () => {
                     {member.designation}
                   </p>
                   {member.department && (
-                    <p
-                      className="text-sm sm:text-base text­
-
-System: text-[#2D7A66] font-medium"
-                    >
+                    <p className="text-sm sm:text-base text-[#2D7A66] font-medium">
                       Department: {member.department}
                     </p>
                   )}
