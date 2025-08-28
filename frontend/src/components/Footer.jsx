@@ -114,9 +114,6 @@ const Footer = () => {
               <li>
                 <Link to="/support">Support</Link>
               </li>
-              <li>
-                <Link to="/team">Our Team</Link>
-              </li>
             </ul>
           </div>
         </div>
