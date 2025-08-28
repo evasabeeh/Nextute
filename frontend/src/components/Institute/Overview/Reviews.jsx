@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import { FaStar, FaPen, FaTrash } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { AppContext } from "../../../context/AppContext";
 
 const Reviews = ({ instituteId, reviews, setReviews }) => {
   const [isWritingReview, setIsWritingReview] = useState(false);
@@ -14,6 +16,8 @@ const Reviews = ({ instituteId, reviews, setReviews }) => {
     details: "",
   });
   const reviewFormRef = useRef(null);
+  const { user, userType, VITE_BACKEND_BASE_URL } = useContext(AppContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isWritingReview || editingReview) {
@@ -42,6 +46,18 @@ const Reviews = ({ instituteId, reviews, setReviews }) => {
 
   const handleSubmitReview = async (e) => {
     e.preventDefault();
+
+    // Check if user is logged in
+    if (!user || !userType) {
+      toast.error("Please login to submit a review.", {
+        position: "top-right",
+        duration: 3000,
+        style: { background: "#E6EDE2", color: "#144E53" },
+      });
+      navigate("/student/login");
+      return;
+    }
+
     const errors = validateReview();
     if (Object.keys(errors).length > 0) {
       toast.error("Please fill all required fields.", {
@@ -52,52 +68,27 @@ const Reviews = ({ instituteId, reviews, setReviews }) => {
       return;
     }
 
-    try {
-      const reviewData = {
-        rating: newReview.rating,
-        comment: newReview.comment,
-        email: newReview.email,
-        details: newReview.details,
-      };
+    const reviewData = {
+      rating: newReview.rating,
+      email: newReview.email,
+      title: newReview.comment,
+      reviewerType: userType,
+      comment: newReview.details,
+    };
 
-      if (editingReview) {
-        const res = await axios.patch(
-          `${
-            import.meta.env.VITE_BACKEND_BASE_URL
-          }/api/institutes/${instituteId}/reviews/${editingReview.reviewId}`,
-          reviewData,
-          { withCredentials: true }
-        );
-        if (res.data?.status) {
-          setReviews((prev) =>
-            prev.map((review) =>
-              review.reviewId === editingReview.reviewId
-                ? { ...review, ...reviewData }
-                : review
-            )
-          );
-          toast.success("Review updated successfully!", {
-            position: "top-right",
-            duration: 3000,
-            style: { background: "#E6EDE2", color: "#144E53" },
-          });
-        }
-      } else {
-        const res = await axios.post(
-          `${
-            import.meta.env.VITE_BACKEND_BASE_URL
-          }/api/institutes/${instituteId}/reviews`,
-          reviewData,
-          { withCredentials: true }
-        );
-        if (res.data?.status) {
-          setReviews((prev) => [...prev, res.data.data]);
-          toast.success("Review added successfully!", {
-            position: "top-right",
-            duration: 3000,
-            style: { background: "#E6EDE2", color: "#144E53" },
-          });
-        }
+    try {
+      const res = await axios.post(
+        `${VITE_BACKEND_BASE_URL}/api/feedback/reviews`,
+        reviewData,
+        { withCredentials: true }
+      );
+      if (res.data?.status) {
+        setReviews((prev) => [...prev, res.data.data]);
+        toast.success("Review added successfully!", {
+          position: "top-right",
+          duration: 3000,
+          style: { background: "#E6EDE2", color: "#144E53" },
+        });
       }
 
       setNewReview({ rating: 0, email: "", comment: "", details: "" });
