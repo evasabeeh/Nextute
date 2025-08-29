@@ -207,6 +207,19 @@ exports.Prisma.EmployeeScalarFieldEnum = {
   updated_at: 'updated_at'
 };
 
+exports.Prisma.JobScalarFieldEnum = {
+  id: 'id',
+  job_id: 'job_id',
+  title: 'title',
+  description: 'description',
+  location: 'location',
+  type: 'type',
+  salary: 'salary',
+  requirements: 'requirements',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -240,7 +253,8 @@ exports.Prisma.ModelName = {
   Subscription: 'Subscription',
   Review: 'Review',
   Admin: 'Admin',
-  Employee: 'Employee'
+  Employee: 'Employee',
+  Job: 'Job'
 };
 
 /**
