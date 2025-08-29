@@ -226,7 +226,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "D:\\GitHub Dekstop\\Nextute\\backend\\db\\generated\\prisma",
+      "value": "C:\\Users\\evas1\\Downloads\\DevxAlpha\\Nextute\\backend\\db\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -240,7 +240,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "D:\\GitHub Dekstop\\Nextute\\backend\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\evas1\\Downloads\\DevxAlpha\\Nextute\\backend\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -254,6 +254,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {

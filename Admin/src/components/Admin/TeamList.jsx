@@ -1,80 +1,57 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { motion } from "framer-motion";
 import SidePanel from "./SidePanel";
-import useAdminData from "../../hooks/useAdminData";
 import LoadingSpinner from "../LoadingSpinner";
 import Navbar from "../Navbar";
 import Footer from "../Footer";
 
 const TeamList = () => {
-  const { adminData, dataLoading, error, hasRenderedOnce } = useAdminData();
+  const [members, setMembers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
-    const hasVisited = localStorage.getItem("hasVisitedTeamList");
-    if (hasVisited) {
-      toast(
-        <div className="flex items-center gap-2 sm:gap-3">
-          <span className="text-xl sm:text-2xl">🎉</span>
-          <div>
-            <h3 className="text-base sm:text-lg font-semibold text-[#144E53]">
-              Welcome Back!
-            </h3>
-            <p className="text-xs sm:text-sm text-gray-600">
-              Manage your team here.
-            </p>
-          </div>
-        </div>,
-        {
-          duration: 3000,
-          position: "top-center",
-          style: {
-            background: "#E6EDE2",
-            color: "#144E53",
-            borderRadius: "12px",
-            padding: "12px sm:16px",
-            boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
-            maxWidth: "90vw",
-          },
-        }
-      );
-    }
-    localStorage.setItem("hasVisitedTeamList", "true");
-  }, []);
+    const fetchMembers = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch(`${apiUrl}/api/employees/members`, {
+          cache: "no-store",
+        });
+        if (!res.ok) throw new Error("Failed to fetch team members");
+        const data = await res.json();
+        setMembers(data || []);
+        setError(null);
+      } catch (err) {
+        setError(err.message);
+        setMembers([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchMembers();
+  }, [apiUrl]);
 
-  if (dataLoading || !hasRenderedOnce) return <LoadingSpinner />;
-  if (error || !adminData) {
+  if (loading) return <LoadingSpinner />;
+  if (error) {
     return (
       <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-200 text-red-600 text-base sm:text-lg md:text-xl font-semibold px-4 text-center">
-        Error loading team data. Please try again.
+        Error loading team members. Please try again.
+        <br />
+        {error}
       </div>
     );
   }
-
-  const handleDelete = async (id) => {
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      toast.success("Team member deleted successfully!", {
-        position: "top-right",
-        style: { background: "#E6EDE2", color: "#144E53", borderRadius: "8px" },
-      });
-    } catch (err) {
-      toast.error("Failed to delete team member", {
-        position: "top-right",
-        style: { background: "#E6EDE2", color: "#144E53", borderRadius: "8px" },
-      });
-    }
-  };
-
-  const teamGroups = [
-    { title: "CEO", members: adminData.team.ceo },
-    { title: "Founder", members: adminData.team.founder },
-    { title: "Tech Team", members: adminData.team.tech },
-    { title: "Marketing Team", members: adminData.team.marketing },
-    { title: "UI/UX Team", members: adminData.team.uiux },
-  ];
+  if (!members.length) {
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-200 text-gray-600 text-base sm:text-lg md:text-xl font-semibold px-4 text-center">
+        No team members found.
+      </div>
+    );
+  }
 
   return (
     <>
@@ -94,95 +71,139 @@ const TeamList = () => {
             className="flex justify-between items-center mb-6 sm:mb-8"
           >
             <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-[#144E53]">
-              Team
+              Team Members
             </h1>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => navigate("/admin/team/add")}
               className="px-4 sm:px-6 py-2 bg-[#2D7A66] text-white rounded-lg shadow-md hover:bg-[#144E53] transition-all duration-300 flex items-center gap-2 text-sm sm:text-base min-w-[48px] min-h-[48px]"
-              aria-label="Add New Team Member"
+              aria-label="Add New Member"
             >
-              <svg className="w-4 sm:w-5 h-4 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
+              <svg
+                className="w-4 sm:w-5 h-4 sm:h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M12 4v16m8-8H4"
+                />
               </svg>
-              Add Team Member
+              Add Member
             </motion.button>
           </motion.div>
-          {teamGroups.map((group, groupIndex) => (
-            <motion.div
-              key={group.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: groupIndex * 0.1, ease: "easeOut" }}
-              className="bg-white bg-opacity-95 backdrop-blur-xl rounded-2xl shadow-xl p-4 sm:p-6 mb-6 sm:mb-8 border border-[#2D7A66]/10"
-            >
-              <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-[#144E53] mb-4 sm:mb-6">
-                {group.title}
-              </h2>
-              <div className="overflow-x-auto">
-                <table className="w-full text-left">
-                  <thead>
-                    <tr className="text-[#144E53] border-b border-[#2D7A66]/20">
-                      <th className="p-3 text-xs sm:text-sm md:text-base">Name</th>
-                      <th className="p-3 text-xs sm:text-sm md:text-base">Role</th>
-                      <th className="p-3 text-xs sm:text-sm md:text-base">Email</th>
-                      <th className="p-3 text-xs sm:text-sm md:text-base">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {group.members.map((member, index) => (
-                      <motion.tr
-                        key={member.id}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.3, delay: index * 0.1 }}
-                        className="border-b border-[#2D7A66]/10 hover:bg-[#E6EDE2]"
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+            className="bg-white bg-opacity-95 backdrop-blur-xl rounded-2xl shadow-xl p-4 sm:p-6 border border-[#2D7A66]/10"
+          >
+            <div className="overflow-x-auto">
+              <table className="w-full text-left">
+                <thead>
+                  <tr className="text-[#144E53] border-b border-[#2D7A66]/20">
+                    <th className="p-3 text-xs sm:text-sm md:text-base">Name</th>
+                    <th className="p-3 text-xs sm:text-sm md:text-base">
+                      Designation
+                    </th>
+                    <th className="p-3 text-xs sm:text-sm md:text-base">
+                      Department
+                    </th>
+                    <th className="p-3 text-xs sm:text-sm md:text-base">
+                      Joining Date
+                    </th>
+                    <th className="p-3 text-xs sm:text-sm md:text-base">
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {members.map((member, index) => (
+                    <motion.tr
+                      key={member.id}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, delay: index * 0.1 }}
+                      className="border-b border-[#2D7A66]/10 hover:bg-[#E6EDE2]"
+                    >
+                      <td
+                        className="p-3 text-xs sm:text-sm md:text-base cursor-pointer truncate"
+                        onClick={() => navigate(`/admin/team/${member.id}`)}
                       >
-                        <td
-                          className="p-3 text-xs sm:text-sm md:text-base cursor-pointer truncate"
-                          onClick={() => navigate(`/admin/team/${member.id}`)}
+                        <div className="flex items-center gap-2">
+                          <img
+                            src={member.image}
+                            alt={member.fullName}
+                            className="w-8 h-8 rounded-full object-cover"
+                          />
+                          <span>{member.fullName}</span>
+                        </div>
+                      </td>
+                      <td className="p-3 text-xs sm:text-sm md:text-base truncate">
+                        {member.designation}
+                      </td>
+                      <td className="p-3 text-xs sm:text-sm md:text-base">
+                        {member.department}
+                      </td>
+                      <td className="p-3 text-xs sm:text-sm md:text-base">
+                        {new Date(member.joiningDate).toLocaleDateString()}
+                      </td>
+                      <td className="p-3 flex gap-2">
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => navigate(`/admin/team/edit/${member.id}`)}
+                          className="p-2 bg-[#2D7A66] text-white rounded-lg hover:bg-[#144E53] min-w-[40px] min-h-[40px]"
+                          aria-label="Edit Member"
                         >
-                          {member.name}
-                        </td>
-                        <td className="p-3 text-xs sm:text-sm md:text-base">{member.role}</td>
-                        <td className="p-3 text-xs sm:text-sm md:text-base truncate">{member.email}</td>
-                        <td className="p-3 flex gap-2">
-                          <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            onClick={() => navigate(`/admin/team/edit/${member.id}`)}
-                            className="p-2 bg-[#2D7A66] text-white rounded-lg hover:bg-[#144E53] min-w-[40px] min-h-[40px]"
-                            aria-label="Edit Team Member"
+                          <svg
+                            className="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
                           >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-                              />
-                            </svg>
-                          </motion.button>
-                          <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            onClick={() => handleDelete(member.id)}
-                            className="p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 min-w-[40px] min-h-[40px]"
-                            aria-label="Delete Team Member"
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                            />
+                          </svg>
+                        </motion.button>
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => {
+                            /* handle delete here if needed */
+                          }}
+                          className="p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 min-w-[40px] min-h-[40px]"
+                          aria-label="Delete Member"
+                        >
+                          <svg
+                            className="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
                           >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                          </motion.button>
-                        </td>
-                      </motion.tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </motion.div>
-          ))}
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M6 18L18 6M6 6l12 12"
+                            />
+                          </svg>
+                        </motion.button>
+                      </td>
+                    </motion.tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </motion.div>
         </motion.div>
       </div>
       <Footer />

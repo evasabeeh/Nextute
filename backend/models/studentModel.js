@@ -56,6 +56,11 @@ const isStudentIdUnique = async (student_id) => {
   return !existingStudent;
 };
 
+
+const getAllStudents = async () => {
+  return await prisma.student.findMany();
+};
+
 const deleteStudentByEmail = async (email) => {
   return await prisma.student.delete({
     where: { email },
@@ -71,4 +76,5 @@ export {
   isStudentIdUnique,
   findStudentById,
   deleteStudentByEmail,
+  getAllStudents,
 };

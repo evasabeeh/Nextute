@@ -8,6 +8,7 @@ import {
   updateStudentResendVerificationCode,
   verifyStudent,
   deleteStudentByEmail,
+  getAllStudents,
 } from "../models/studentModel.js";
 import { handleError } from "../utils/errorHandler.js";
 import { body, validationResult } from "express-validator";
@@ -317,6 +318,17 @@ export const login = [
     }
   },
 ];
+
+// Fetch all students
+export const fetchAllStudents = async (req, res) => {
+  try {
+    const students = await getAllStudents();
+    res.status(200).json({ students });
+  } catch (error) {
+    console.error("Fetch all students error:", error);
+    handleError(res, 500, "Failed to fetch students", "FETCH_ERROR");
+  }
+};
 
 // Get the student's profile
 export const getStudentProfile = async (req, res) => {
