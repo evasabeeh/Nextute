@@ -178,7 +178,7 @@ const InstitutesList = () => {
                     >
                       <td
                         className="p-3 text-xs sm:text-sm md:text-base cursor-pointer truncate"
-                        onClick={() => navigate(`/admin/institutes/${inst.id}`)}
+                        onClick={() => navigate(`/admin/institutes/dashboard/${inst.id}`)}
                       >
                         {inst.institute_name}
                       </td>

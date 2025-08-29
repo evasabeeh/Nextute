@@ -1,24 +1,45 @@
-import React, { useState, useEffect } from "react";
+import SummaryCard from "../Institute/Dashboard/SummaryCard";
+import upload_area from "../../assets/upload_area.svg";
+import Not_found from "../../assets/Not_found.svg";
+import { FaSchool, FaUsers, FaTrophy, FaBook } from "react-icons/fa";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { motion } from "framer-motion";
-import { FaSchool, FaUsers, FaTrophy, FaBook } from "react-icons/fa";
 import SidePanel from "./SidePanel";
-import useInstituteData from "../../hooks/useInstituteData";
-import SummaryCard from "../Institute/Dashboard/SummaryCard";
-import AchievementCard from "../Institute/Dashboard/AchievementCard";
 import LoadingSpinner from "../LoadingSpinner";
 import Navbar from "../Navbar";
 import Footer from "../Footer";
-import Not_found from "../../assets/Not_found.svg";
-import upload_area from "../../assets/upload_area.svg";
 
 const InstituteDashboard = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { instituteData, dataLoading, error, hasRenderedOnce } = useInstituteData();
+  const [instituteData, setInstituteData] = useState(null);
+  const [dataLoading, setDataLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
+  const apiUrl = import.meta.env.VITE_API_URL;
+
+  useEffect(() => {
+    const fetchInstitute = async () => {
+      setDataLoading(true);
+      try {
+        const res = await fetch(`${apiUrl}/api/institutes/${id}`);
+        const result = await res.json();
+        // Always use result.data, regardless of status code
+        if (!result.data) throw new Error(result.message || "Failed to fetch institute");
+        setInstituteData(result.data);
+        setError(null);
+      } catch (err) {
+        setError(err.message);
+        setInstituteData(null);
+      } finally {
+        setDataLoading(false);
+      }
+    };
+    if (id) fetchInstitute();
+  }, [apiUrl, id]);
 
   useEffect(() => {
     const hasVisited = localStorage.getItem(`hasVisitedInstituteDashboard_${id}`);
@@ -77,7 +98,7 @@ const InstituteDashboard = () => {
     }
   };
 
-  if (dataLoading || !hasRenderedOnce) return <LoadingSpinner />;
+  if (dataLoading) return <LoadingSpinner />;
   if (error || !instituteData) {
     return (
       <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-200 text-red-600 text-base sm:text-lg md:text-xl font-semibold px-4 text-center">
@@ -86,7 +107,7 @@ const InstituteDashboard = () => {
     );
   }
 
-  const institute = instituteData.id === parseInt(id) ? instituteData : null;
+  const institute = instituteData;
   if (!institute) {
     return (
       <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-200 text-red-600 text-base sm:text-lg md:text-xl font-semibold px-4 text-center">
@@ -94,6 +115,39 @@ const InstituteDashboard = () => {
       </div>
     );
   }
+
+  // Show all institute details (except sensitive fields)
+  const hiddenFields = [
+    "id",
+    "password_reset_token",
+    "password_reset_expires",
+    "created_at",
+    "updated_at",
+    "code_expires_at"
+  ];
+  
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6, ease: "easeOut" }}
+    className="bg-white bg-opacity-95 backdrop-blur-xl rounded-2xl shadow-xl p-4 sm:p-6 mb-6 border border-[#2D7A66]/10"
+  >
+    <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-[#144E53] mb-4">Institute Details</h2>
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+      {Object.entries(institute)
+        .filter(([key]) => !hiddenFields.includes(key))
+        .map(([key, value]) => (
+          <div key={key} className="min-w-0">
+            <h3 className="text-sm sm:text-base md:text-lg font-semibold text-[#2D7A66] mb-2">
+              {key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+            </h3>
+            <p className="text-gray-700 text-xs sm:text-sm md:text-base break-all">
+              {value === null ? '-' : String(value)}
+            </p>
+          </div>
+        ))}
+    </div>
+  </motion.div>
 
   return (
     <>
@@ -118,10 +172,10 @@ const InstituteDashboard = () => {
                 <FaSchool className="text-[#2D7A66] w-16 sm:w-20 md:w-24 h-16 sm:h-20 md:h-24" />
                 <div className="text-center sm:text-left min-w-0">
                   <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-[#144E53] truncate">
-                    {institute.name}
+                    {institute.institute_name}
                   </h1>
                   <p className="text-xs sm:text-sm md:text-base text-gray-600 mt-1 break-words">
-                    {institute.description}
+                    {institute.basic_info || ""}
                   </p>
                 </div>
               </div>

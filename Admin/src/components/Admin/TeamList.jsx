@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-hot-toast";
 import { motion } from "framer-motion";
 import SidePanel from "./SidePanel";
 import LoadingSpinner from "../LoadingSpinner";
@@ -132,7 +131,7 @@ const TeamList = () => {
                     >
                       <td
                         className="p-3 text-xs sm:text-sm md:text-base cursor-pointer truncate"
-                        onClick={() => navigate(`/admin/team/${member.id}`)}
+                        onClick={() => navigate(`/admin/team/${member.certificateNo}`)}
                       >
                         <div className="flex items-center gap-2">
                           <img
@@ -156,7 +155,7 @@ const TeamList = () => {
                         <motion.button
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
-                          onClick={() => navigate(`/admin/team/edit/${member.id}`)}
+                          onClick={() => navigate(`/admin/team/edit/${member.certificateNo}`)}
                           className="p-2 bg-[#2D7A66] text-white rounded-lg hover:bg-[#144E53] min-w-[40px] min-h-[40px]"
                           aria-label="Edit Member"
                         >
