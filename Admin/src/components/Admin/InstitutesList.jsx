@@ -1,18 +1,40 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { motion } from "framer-motion";
 import SidePanel from "./SidePanel";
 import LoadingSpinner from "../LoadingSpinner.jsx";
 import Navbar from "../Navbar.jsx";
-import { FaSearch, FaFilter } from "react-icons/fa";
-import useAdminData from "../../hooks/useAdminData";
+import Footer from "../Footer";
 
 const InstitutesList = () => {
-  const { adminData, dataLoading, error, hasRenderedOnce } = useAdminData();
+  const [institutes, setInstitutes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filterCity, setFilterCity] = useState("");
+  const apiUrl = import.meta.env.VITE_API_URL;
+
+  useEffect(() => {
+    const fetchInstitutes = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch(
+          `${apiUrl}/api/institutes/all-institutes`,
+          { cache: "no-store" }
+        );
+        if (!res.ok) throw new Error("Failed to fetch institutes");
+        const data = await res.json();
+        setInstitutes(data.data || []);
+        setError(null);
+      } catch (err) {
+        setError(err.message);
+        setInstitutes([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchInstitutes();
+  }, [apiUrl]);
 
   useEffect(() => {
     const hasVisited = localStorage.getItem("hasVisitedInstitutesList");
@@ -59,24 +81,23 @@ const InstitutesList = () => {
     }
   };
 
-  const filteredInstitutes = adminData?.institutes?.filter(
-    (institute) =>
-      institute.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (filterCity
-        ? institute.city.toLowerCase() === filterCity.toLowerCase()
-        : true)
-  );
-
-  if (dataLoading || !hasRenderedOnce) return <LoadingSpinner />;
-  if (error || !adminData) {
+  if (loading) return <LoadingSpinner />;
+  if (error) {
     return (
-      <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-200 text-red-600 text-lg md:text-xl font-semibold px-4 text-center">
+      <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-200 text-red-600 text-base sm:text-lg md:text-xl font-semibold px-4 text-center">
         Error loading institutes. Please try again.
+        <br />
+        {error}
       </div>
     );
   }
-
-  const cities = [...new Set(adminData.institutes.map((inst) => inst.city))];
+  if (!institutes.length) {
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-200 text-gray-600 text-base sm:text-lg md:text-xl font-semibold px-4 text-center">
+        No institutes found.
+      </div>
+    );
+  }
 
   return (
     <>
@@ -93,189 +114,140 @@ const InstitutesList = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="flex flex-col sm:flex-row justify-between items-center mb-6 sm:mb-8 gap-4"
+            className="flex justify-between items-center mb-6 sm:mb-8"
           >
-            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-[#144E53]">
+            <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-[#144E53]">
               Institutes
             </h1>
-            <div className="flex gap-3 w-full sm:w-auto">
-              <div className="relative flex-1 sm:flex-none">
-                <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                <input
-                  type="text"
-                  placeholder="Search institutes..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 pr-4 py-2 rounded-lg border border-[#2D7A66]/20 focus:ring-2 focus:ring-[#2D7A66] focus:outline-none w-full sm:w-64 bg-white bg-opacity-95 shadow-sm"
-                  aria-label="Search institutes"
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => navigate("/admin/institutes/add")}
+              className="px-4 sm:px-6 py-2 bg-[#2D7A66] text-white rounded-lg shadow-md hover:bg-[#144E53] transition-all duration-300 flex items-center gap-2 text-sm sm:text-base min-w-[48px] min-h-[48px]"
+              aria-label="Add New Institute"
+            >
+              <svg
+                className="w-4 sm:w-5 h-4 sm:h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M12 4v16m8-8H4"
                 />
-              </div>
-              <select
-                value={filterCity}
-                onChange={(e) => setFilterCity(e.target.value)}
-                className="px-4 py-2 rounded-lg border border-[#2D7A66]/20 focus:ring-2 focus:ring-[#2D7A66] focus:outline-none bg-white bg-opacity-95 shadow-sm"
-                aria-label="Filter by city"
-              >
-                <option value="">All Cities</option>
-                {cities.map((city) => (
-                  <option key={city} value={city}>
-                    {city}
-                  </option>
-                ))}
-              </select>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => navigate("/admin/institutes/add")}
-                className="px-4 sm:px-6 py-2 bg-gradient-to-r from-[#2D7A66] to-[#144E53] text-white rounded-lg shadow-md hover:from-[#144E53] hover:to-[#2D7A66] transition-all duration-300 flex items-center gap-2 text-sm sm:text-base"
-                aria-label="Add New Institute"
-              >
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M12 4v16m8-8H4"
-                  />
-                </svg>
-                <span className="hidden sm:inline">Add Institute</span>
-              </motion.button>
-            </div>
+              </svg>
+              Add Institute
+            </motion.button>
           </motion.div>
-
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="bg-white bg-opacity-95 backdrop-blur-xl rounded-2xl shadow-xl p-4 sm:p-6 border border-[#2D7A66]/10 overflow-hidden"
+            className="bg-white bg-opacity-95 backdrop-blur-xl rounded-2xl shadow-xl p-4 sm:p-6 border border-[#2D7A66]/10"
           >
             <div className="overflow-x-auto">
               <table className="w-full text-left">
-                <thead className="sticky top-0 bg-[#E6EDE2] z-10">
+                <thead>
                   <tr className="text-[#144E53] border-b border-[#2D7A66]/20">
-                    <th className="p-4 text-sm md:text-base font-semibold">
-                      Name
+                    <th className="p-3 text-xs sm:text-sm md:text-base">Name</th>
+                    <th className="p-3 text-xs sm:text-sm md:text-base">
+                      Email
                     </th>
-                    <th className="p-4 text-sm md:text-base font-semibold hidden sm:table-cell">
-                      City
+                    <th className="p-3 text-xs sm:text-sm md:text-base">
+                      Contact
                     </th>
-                    <th className="p-4 text-sm md:text-base font-semibold hidden md:table-cell">
-                      Courses
+                    <th className="p-3 text-xs sm:text-sm md:text-base">
+                      Verified
                     </th>
-                    <th className="p-4 text-sm md:text-base font-semibold hidden lg:table-cell">
-                      Students
-                    </th>
-                    <th className="p-4 text-sm md:text-base font-semibold">
+                    <th className="p-3 text-xs sm:text-sm md:text-base">
                       Actions
                     </th>
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredInstitutes?.length > 0 ? (
-                    filteredInstitutes.map((institute, index) => (
-                      <motion.tr
-                        key={institute.id}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.3, delay: index * 0.1 }}
-                        className="border-b border-[#2D7A66]/10 hover:bg-[#E6EDE2] transition-all duration-200 cursor-pointer rounded-lg"
-                        onClick={() =>
-                          navigate(`/admin/institute/dashboard/${institute.id}`)
-                        }
-                        tabIndex={0}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter") {
-                            navigate(
-                              `/admin/institute/dashboard/${institute.id}`
-                            );
-                          }
-                        }}
-                        aria-label={`View details for ${institute.name}`}
+                  {institutes.map((inst, index) => (
+                    <motion.tr
+                      key={inst.id}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, delay: index * 0.1 }}
+                      className="border-b border-[#2D7A66]/10 hover:bg-[#E6EDE2]"
+                    >
+                      <td
+                        className="p-3 text-xs sm:text-sm md:text-base cursor-pointer truncate"
+                        onClick={() => navigate(`/admin/institutes/dashboard/${inst.id}`)}
                       >
-                        <td className="p-4 text-sm md:text-base font-medium text-[#144E53] truncate">
-                          {institute.name}
-                        </td>
-                        <td className="p-4 text-sm md:text-base hidden sm:table-cell truncate">
-                          {institute.city}
-                        </td>
-                        <td className="p-4 text-sm md:text-base hidden md:table-cell truncate">
-                          {institute.courses}
-                        </td>
-                        <td className="p-4 text-sm md:text-base hidden lg:table-cell truncate">
-                          {institute.students}
-                        </td>
-                        <td className="p-4 flex gap-2 items-center">
-                          <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              navigate(
-                                `/admin/institutes/edit/${institute.id}`
-                              );
-                            }}
-                            className="p-2 bg-[#2D7A66] text-white rounded-lg hover:bg-[#144E53] transition-all duration-200"
-                            aria-label={`Edit ${institute.name}`}
-                          >
-                            <svg
-                              className="w-5 h-5"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-                              />
-                            </svg>
-                          </motion.button>
-                          <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleDelete(institute.id);
-                            }}
-                            className="p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-all duration-200"
-                            aria-label={`Delete ${institute.name}`}
-                          >
-                            <svg
-                              className="w-5 h-5"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M6 18L18 6M6 6l12 12"
-                              />
-                            </svg>
-                          </motion.button>
-                        </td>
-                      </motion.tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td colSpan="5" className="p-4 text-center text-gray-600">
-                        No institutes found.
+                        {inst.institute_name}
                       </td>
-                    </tr>
-                  )}
+                      <td className="p-3 text-xs sm:text-sm md:text-base truncate">
+                        {inst.email}
+                      </td>
+                      <td className="p-3 text-xs sm:text-sm md:text-base">
+                        {inst.contact}
+                      </td>
+                      <td className="p-3 text-xs sm:text-sm md:text-base">
+                        {inst.is_verified ? "Yes" : "No"}
+                      </td>
+                      <td className="p-3 flex gap-2">
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() =>
+                            navigate(`/admin/institutes/edit/${inst.id}`)
+                          }
+                          className="p-2 bg-[#2D7A66] text-white rounded-lg hover:bg-[#144E53] min-w-[40px] min-h-[40px]"
+                          aria-label="Edit Institute"
+                        >
+                          <svg
+                            className="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                            />
+                          </svg>
+                        </motion.button>
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => {
+                            /* handle delete here if needed */
+                          }}
+                          className="p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 min-w-[40px] min-h-[40px]"
+                          aria-label="Delete Institute"
+                        >
+                          <svg
+                            className="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M6 18L18 6M6 6l12 12"
+                            />
+                          </svg>
+                        </motion.button>
+                      </td>
+                    </motion.tr>
+                  ))}
                 </tbody>
               </table>
             </div>
           </motion.div>
         </motion.div>
       </div>
+      <Footer />
     </>
   );
 };

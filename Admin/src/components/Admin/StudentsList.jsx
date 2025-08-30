@@ -1,16 +1,18 @@
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { motion } from "framer-motion";
 import SidePanel from "./SidePanel";
-import useAdminData from "../../hooks/useAdminData";
 import LoadingSpinner from "../LoadingSpinner";
 import Navbar from "../Navbar";
 import Footer from "../Footer";
 
 const StudentsList = () => {
-  const { adminData, dataLoading, error, hasRenderedOnce } = useAdminData();
+  const [students, setStudents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const hasVisited = localStorage.getItem("hasVisitedStudentsList");
@@ -44,14 +46,24 @@ const StudentsList = () => {
     localStorage.setItem("hasVisitedStudentsList", "true");
   }, []);
 
-  if (dataLoading || !hasRenderedOnce) return <LoadingSpinner />;
-  if (error || !adminData) {
-    return (
-      <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-200 text-red-600 text-base sm:text-lg md:text-xl font-semibold px-4 text-center">
-        Error loading students. Please try again.
-      </div>
-    );
-  }
+  useEffect(() => {
+    const fetchStudents = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch(`${apiUrl}/api/students/all`, { cache: "no-store" });
+        if (!res.ok) throw new Error("Failed to fetch students");
+        const data = await res.json();
+        setStudents(data.students || []);
+        setError(null);
+      } catch (err) {
+        setError(err.message);
+        setStudents([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchStudents();
+  }, [apiUrl]);
 
   const handleDelete = async (id) => {
     try {
@@ -67,6 +79,22 @@ const StudentsList = () => {
       });
     }
   };
+
+  if (loading) return <LoadingSpinner />;
+  if (error) {
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-200 text-red-600 text-base sm:text-lg md:text-xl font-semibold px-4 text-center">
+        Error loading students. Please try again.<br />{error}
+      </div>
+    );
+  }
+  if (!students.length) {
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-200 text-gray-600 text-base sm:text-lg md:text-xl font-semibold px-4 text-center">
+        No students found.
+      </div>
+    );
+  }
 
   return (
     <>
@@ -118,7 +146,7 @@ const StudentsList = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {adminData.students.map((student, index) => (
+                  {students.map((student, index) => (
                     <motion.tr
                       key={student.id}
                       initial={{ opacity: 0, y: 10 }}
@@ -133,7 +161,7 @@ const StudentsList = () => {
                         {student.name}
                       </td>
                       <td className="p-3 text-xs sm:text-sm md:text-base truncate">{student.email}</td>
-                      <td className="p-3 text-xs sm:text-sm md:text-base">{student.institute}</td>
+                      <td className="p-3 text-xs sm:text-sm md:text-base">{student.institute || '-'}</td>
                       <td className="p-3 flex gap-2">
                         <motion.button
                           whileHover={{ scale: 1.05 }}

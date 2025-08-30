@@ -18,4 +18,8 @@ const createReview = async ({
   });
 };
 
-export { createReview };
+const getAllReviews = async () => {
+  return await prisma.review.findMany();
+};
+
+export { createReview, getAllReviews };

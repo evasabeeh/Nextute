@@ -8,11 +8,16 @@ import {
   logout,
   resendVerificationCode,
   deleteStudent,
+  fetchAllStudents,
+  fetchStudentById,
 } from "../controllers/studentAuthController.js";
 import { validateEmailDomain } from "../middlewares/emailValidationMiddleware.js";
 
 const router = express.Router();
 
+
+router.get("/all", fetchAllStudents);
+router.get("/:id", fetchStudentById);
 router.get("/profile", studentAuth, getStudentProfile);
 
 router.post("/signup", validateEmailDomain, signup);
