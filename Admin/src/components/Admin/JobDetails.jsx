@@ -58,7 +58,16 @@ const JobDetails = () => {
         const res = await fetch(`${import.meta.env.VITE_API_URL}/api/jobs/id/${id}`);
         if (!res.ok) throw new Error("Failed to fetch job details");
         const data = await res.json();
-        setJob(data);
+        // Parse requirements if it is a string
+        let requirements = data.requirements;
+        if (typeof requirements === "string") {
+          try {
+            requirements = JSON.parse(requirements);
+          } catch {
+            requirements = { skills: [], experience: "" };
+          }
+        }
+        setJob({ ...data, requirements });
       } catch (err) {
         setError(err.message);
       } finally {
@@ -107,7 +116,7 @@ const JobDetails = () => {
                   </p>
                 </div>
               </div>
-              <motion.button
+              {/* <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => navigate(`/admin/jobs/edit/${job.id}`)}
@@ -122,7 +131,7 @@ const JobDetails = () => {
                     d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
                   />
                 </svg>
-              </motion.button>
+              </motion.button> */}
             </div>
           </motion.div>
           <motion.div

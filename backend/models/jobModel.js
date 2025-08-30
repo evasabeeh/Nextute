@@ -58,7 +58,7 @@ const getJobByJobId = async (job_id) => {
   }
 };
 
-// Update job
+// Update job by UUID
 const updateJob = async (id, jobData) => {
   try {
     const updatedJob = await prisma.job.update({
@@ -79,6 +79,27 @@ const updateJob = async (id, jobData) => {
   }
 };
 
+// Update job by short job_id
+const updateJobByShortId = async (job_id, jobData) => {
+  try {
+    const updatedJob = await prisma.job.update({
+      where: { job_id },
+      data: {
+        title: jobData.title,
+        description: jobData.description,
+        location: jobData.location,
+        type: jobData.type,
+        salary: jobData.salary,
+        requirements: jobData.requirements,
+      },
+    });
+    return updatedJob;
+  } catch (error) {
+    console.error(`Error updating job by job_id ${job_id}:`, error);
+    throw new Error("Error updating job by job_id");
+  }
+};
+
 // Delete job
 const deleteJob = async (id) => {
   try {
@@ -92,4 +113,4 @@ const deleteJob = async (id) => {
   }
 };
 
-export { addJob, getAllJobs, getJobById, getJobByJobId, updateJob, deleteJob };
+export { addJob, getAllJobs, getJobById, getJobByJobId, updateJob, updateJobByShortId, deleteJob };
