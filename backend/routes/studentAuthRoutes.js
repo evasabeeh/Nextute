@@ -10,6 +10,7 @@ import {
   deleteStudent,
   fetchAllStudents,
   fetchStudentById,
+  editStudentById,
 } from "../controllers/studentAuthController.js";
 import { validateEmailDomain } from "../middlewares/emailValidationMiddleware.js";
 
@@ -18,6 +19,7 @@ const router = express.Router();
 
 router.get("/all", fetchAllStudents);
 router.get("/:id", fetchStudentById);
+router.put("/:id", editStudentById);
 router.get("/profile", studentAuth, getStudentProfile);
 
 router.post("/signup", validateEmailDomain, signup);

@@ -67,6 +67,19 @@ const deleteStudentByEmail = async (email) => {
   });
 };
 
+// Edit student by id (UUID)
+const editStudentById = async (id, updateData) => {
+  // Convert date_of_birth to ISO-8601 if present and is a string
+  if (updateData.date_of_birth && typeof updateData.date_of_birth === 'string') {
+    // If already in ISO format, this will not change it
+    updateData.date_of_birth = new Date(updateData.date_of_birth).toISOString();
+  }
+  return await prisma.student.update({
+    where: { id },
+    data: updateData,
+  });
+};
+
 export {
   createStudent,
   findStudentByEmail,
@@ -77,4 +90,5 @@ export {
   findStudentById,
   deleteStudentByEmail,
   getAllStudents,
+  editStudentById,
 };

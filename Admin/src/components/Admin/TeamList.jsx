@@ -5,6 +5,7 @@ import SidePanel from "./SidePanel";
 import LoadingSpinner from "../LoadingSpinner";
 import Navbar from "../Navbar";
 import Footer from "../Footer";
+import { toast } from "react-hot-toast";
 
 const TeamList = () => {
   const [members, setMembers] = useState([]);
@@ -33,6 +34,26 @@ const TeamList = () => {
     };
     fetchMembers();
   }, [apiUrl]);
+
+  const handleDelete = async (certificateNo) => {
+    try {
+      const res = await fetch(`${apiUrl}/api/employees/member/${certificateNo}`, {
+        method: "DELETE",
+      });
+      if (!res.ok) throw new Error("Failed to delete member");
+      setMembers((prev) => prev.filter((m) => m.certificateNo !== certificateNo));
+      // Show success toast
+      toast.success("Member deleted successfully!", {
+        position: "top-right",
+        style: { background: "#E6EDE2", color: "#144E53", borderRadius: "8px" },
+      });
+    } catch (err) {
+      toast.error("Failed to delete member", {
+        position: "top-right",
+        style: { background: "#E6EDE2", color: "#144E53", borderRadius: "8px" },
+      });
+    }
+  };
 
   if (loading) return <LoadingSpinner />;
   if (error) {
@@ -176,9 +197,7 @@ const TeamList = () => {
                         <motion.button
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
-                          onClick={() => {
-                            /* handle delete here if needed */
-                          }}
+                          onClick={() => handleDelete(member.certificateNo)}
                           className="p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 min-w-[40px] min-h-[40px]"
                           aria-label="Delete Member"
                         >

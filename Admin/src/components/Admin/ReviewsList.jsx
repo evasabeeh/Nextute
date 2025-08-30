@@ -110,7 +110,7 @@ const ReviewsList = () => {
             <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-[#144E53]">
               Reviews
             </h1>
-            <motion.button
+            {/* <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => navigate("/admin/reviews/add")}
@@ -121,7 +121,7 @@ const ReviewsList = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
               </svg>
               Add Review
-            </motion.button>
+            </motion.button> */}
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}

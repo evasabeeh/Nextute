@@ -3,6 +3,8 @@ import {
   getAllEmployees,
   getEmployeeByCertificateId,
   getEmployeeById,
+  editEmployeeByCertificateNo,
+  deleteEmployeeByCertificateNo,
 } from "../models/employeeModel.js";
 import QRCode from "qrcode";
 
@@ -82,4 +84,45 @@ const getEmployee = async (req, res) => {
   }
 };
 
-export { createEmployee, getEmployees, getEmployee };
+
+// Edit Employee by CertificateNo
+const editEmployee = async (req, res) => {
+  const { certificateNo } = req.params;
+  // Only allow specific fields to be updated
+  const allowedFields = [
+    'fullName', 'email', 'phoneNumber', 'joiningDate', 'designation', 'department', 'image', 'certificateURL', 'achievementsURL'
+  ];
+  const updateData = {};
+  for (const field of allowedFields) {
+    if (req.body[field] !== undefined) {
+      updateData[field] = req.body[field];
+    }
+  }
+  if (!certificateNo || certificateNo === "undefined") {
+    return res.status(400).json({ error: "Invalid certificateNo" });
+  }
+  try {
+    const updatedEmployee = await editEmployeeByCertificateNo(certificateNo, updateData);
+    return res.json(updatedEmployee);
+  } catch (error) {
+    console.error(`Error in editEmployee for certificateNo ${certificateNo}:`, error);
+    return res.status(500).json({ error: error.message });
+  }
+};
+
+// Delete Employee by CertificateNo
+const deleteEmployee = async (req, res) => {
+  const { certificateNo } = req.params;
+  if (!certificateNo || certificateNo === "undefined") {
+    return res.status(400).json({ error: "Invalid certificateNo" });
+  }
+  try {
+    const deletedEmployee = await deleteEmployeeByCertificateNo(certificateNo);
+    return res.json({ message: "Employee deleted successfully", deletedEmployee });
+  } catch (error) {
+    console.error(`Error in deleteEmployee for certificateNo ${certificateNo}:`, error);
+    return res.status(500).json({ error: error.message });
+  }
+};
+
+export { createEmployee, getEmployees, getEmployee, editEmployee, deleteEmployee };

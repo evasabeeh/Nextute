@@ -1,19 +1,10 @@
 import bcrypt from "bcrypt";
 import { createSecretToken } from "../config/jwt.js";
 import sendVerificationEmail from "../utils/emailSender.js";
-import {
-  createStudent,
-  findStudentByEmail,
-  findStudentByPhone,
-  updateStudentResendVerificationCode,
-  verifyStudent,
-  deleteStudentByEmail,
-  getAllStudents,
-  findStudentById,
-} from "../models/studentModel.js";
 import { handleError } from "../utils/errorHandler.js";
 import { body, validationResult } from "express-validator";
 import prisma from "../db/index.js";
+import { getAllStudents, findStudentById } from "../models/studentModel.js";
 
 //Singup a new student
 export const signup = [
@@ -411,5 +402,20 @@ export const fetchStudentById = async (req, res) => {
   } catch (error) {
     console.error("Error fetching student by id:", error);
     handleError(res, 500, "Failed to fetch student", "FETCH_ERROR");
+  }
+};
+
+export const editStudentById = async (req, res) => {
+  const { id } = req.params;
+  const updateData = req.body;
+  try {
+    const updatedStudent = await import('../models/studentModel.js').then(m => m.editStudentById(id, updateData));
+    if (!updatedStudent) {
+      return handleError(res, 404, "Student not found", "STUDENT_NOT_FOUND");
+    }
+    res.status(200).json({ status: true, data: updatedStudent });
+  } catch (error) {
+    console.error("Error editing student by id:", error);
+    handleError(res, 500, "Failed to edit student", "EDIT_ERROR");
   }
 };

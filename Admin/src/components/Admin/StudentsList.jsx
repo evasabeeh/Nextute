@@ -65,9 +65,15 @@ const StudentsList = () => {
     fetchStudents();
   }, [apiUrl]);
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (studentId) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const res = await fetch(`${apiUrl}/api/students/auth/delete`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: studentId }),
+      });
+      if (!res.ok) throw new Error("Failed to delete student");
+      setStudents((prev) => prev.filter((s) => s.id !== studentId));
       toast.success("Student deleted successfully!", {
         position: "top-right",
         style: { background: "#E6EDE2", color: "#144E53", borderRadius: "8px" },
@@ -116,7 +122,7 @@ const StudentsList = () => {
             <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-[#144E53]">
               Students
             </h1>
-            <motion.button
+            {/* <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => navigate("/admin/students/add")}
@@ -127,7 +133,7 @@ const StudentsList = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
               </svg>
               Add Student
-            </motion.button>
+            </motion.button> */}
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -179,17 +185,27 @@ const StudentsList = () => {
                             />
                           </svg>
                         </motion.button>
-                        <motion.button
+                        {/* <motion.button
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                           onClick={() => handleDelete(student.id)}
                           className="p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 min-w-[40px] min-h-[40px]"
                           aria-label="Delete Student"
                         >
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                          <svg
+                            className="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M6 18L18 6M6 6l12 12"
+                            />
                           </svg>
-                        </motion.button>
+                        </motion.button> */}
                       </td>
                     </motion.tr>
                   ))}
