@@ -79,18 +79,32 @@ model Admin {
 }
 
 model Employee {
-  id              String   @id @default(uuid()) @db.Uuid
-  idNo            String   @unique
-  certificateNo   String?  @unique
-  fullName        String
-  email           String?  @unique
-  phoneNumber     String?  @unique
-  joiningDate     DateTime
-  designation     String
-  department      String
-  image           String?
+  id            String   @id @default(uuid()) @db.Uuid
+  idNo          String   @unique
+  certificateNo String?  @unique
+  fullName      String
+  email         String?  @unique
+  phoneNumber   String?  @unique
+  joiningDate   DateTime
+  designation   String
+  department    String
+  image         String?
   certificateURL  String?
   achievementsURL String?
-  created_at      DateTime @default(now())
-  updated_at      DateTime @default(now()) @updatedAt
+  created_at    DateTime @default(now())
+  updated_at    DateTime @default(now()) @updatedAt
+}
+
+
+model Job {
+  id           String   @id @default(uuid()) @db.Uuid
+  job_id       String   @unique @db.VarChar(10)
+  title        String   @db.VarChar(255)
+  description  String
+  location     String?
+  type         String   @db.VarChar(50) // Full-time, Internship, etc.
+  salary       String?  @db.VarChar(100)
+  requirements Json?
+  created_at   DateTime @default(now())
+  updated_at   DateTime @default(now()) @updatedAt
 }

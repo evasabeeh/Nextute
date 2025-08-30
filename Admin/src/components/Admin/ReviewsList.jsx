@@ -1,17 +1,19 @@
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { motion } from "framer-motion";
 import SidePanel from "./SidePanel";
-import useAdminData from "../../hooks/useAdminData";
 import LoadingSpinner from "../LoadingSpinner";
 import Navbar from "../Navbar";
 import Footer from "../Footer";
 import { FaStar } from "react-icons/fa";
 
 const ReviewsList = () => {
-  const { adminData, dataLoading, error, hasRenderedOnce } = useAdminData();
+  const [reviews, setReviews] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const hasVisited = localStorage.getItem("hasVisitedReviewsList");
@@ -39,17 +41,36 @@ const ReviewsList = () => {
             boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
             maxWidth: "90vw",
           },
+          // ...existing code...
         }
       );
     }
     localStorage.setItem("hasVisitedReviewsList", "true");
   }, []);
 
-  if (dataLoading || !hasRenderedOnce) return <LoadingSpinner />;
-  if (error || !adminData) {
+  useEffect(() => {
+    const fetchReviews = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch(`${apiUrl}/api/feedback/reviews`, { cache: "no-store" });
+        const result = await res.json();
+        setReviews(result.data || []);
+        setError(null);
+      } catch (err) {
+        setError(err.message);
+        setReviews([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchReviews();
+  }, [apiUrl]);
+
+  if (loading) return <LoadingSpinner />;
+  if (error) {
     return (
       <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-200 text-red-600 text-base sm:text-lg md:text-xl font-semibold px-4 text-center">
-        Error loading reviews. Please try again.
+        Error loading reviews. Please try again.<br />{error}
       </div>
     );
   }
@@ -109,7 +130,7 @@ const ReviewsList = () => {
             className="bg-white bg-opacity-95 backdrop-blur-xl rounded-2xl shadow-xl p-4 sm:p-6 border border-[#2D7A66]/10"
           >
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-              {adminData.reviews.map((review, index) => (
+              {reviews.map((review, index) => (
                 <motion.div
                   key={review.id}
                   initial={{ opacity: 0, y: 10 }}
@@ -119,10 +140,12 @@ const ReviewsList = () => {
                 >
                   <div className="flex items-center gap-2 mb-2">
                     <FaStar className="text-[#2D7A66] w-5 h-5" />
-                    <h3 className="text-sm sm:text-base font-semibold text-[#144E53] truncate">{review.author}</h3>
+                    <h3 className="text-sm sm:text-base font-semibold text-[#144E53] truncate">{review.title}</h3>
                   </div>
-                  <p className="text-xs sm:text-sm text-gray-700 break-words">{review.content}</p>
+                  <p className="text-xs sm:text-sm text-gray-700 break-words">{review.comment}</p>
                   <p className="text-xs sm:text-sm text-[#2D7A66] mt-2">Rating: {review.rating}/5</p>
+                  <p className="text-xs sm:text-sm text-gray-600 mt-1">By: {review.email} ({review.reviewerType})</p>
+                  <p className="text-xs sm:text-sm text-gray-400 mt-1">{new Date(review.created_at).toLocaleString()}</p>
                   <div className="flex gap-2 mt-3">
                     <motion.button
                       whileHover={{ scale: 1.05 }}

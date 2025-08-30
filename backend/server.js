@@ -13,6 +13,7 @@ import emailSubscriptionRoutes from "./routes/emailSubscriptionRoutes.js";
 import reviewRoutes from "./routes/reviewRoute.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import employeeRoutes from "./routes/employeeRoutes.js";
+import jobRoutes from "./routes/jobRoutes.js";
 
 dotenv.config();
 
@@ -74,6 +75,7 @@ app.use("/api/subscribe", emailSubscriptionRoutes);
 app.use("/api/feedback", reviewRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/employees", employeeRoutes);
+app.use("/api/jobs/", jobRoutes);
 
 // 404 handler
 app.use((req, res) => {

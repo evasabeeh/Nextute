@@ -1,16 +1,18 @@
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { motion } from "framer-motion";
 import SidePanel from "./SidePanel";
-import useAdminData from "../../hooks/useAdminData";
 import LoadingSpinner from "../LoadingSpinner";
 import Navbar from "../Navbar";
 import Footer from "../Footer";
 
 const JobsList = () => {
-  const { adminData, dataLoading, error, hasRenderedOnce } = useAdminData();
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const hasVisited = localStorage.getItem("hasVisitedJobsList");
@@ -44,11 +46,29 @@ const JobsList = () => {
     localStorage.setItem("hasVisitedJobsList", "true");
   }, []);
 
-  if (dataLoading || !hasRenderedOnce) return <LoadingSpinner />;
-  if (error || !adminData) {
+  useEffect(() => {
+    const fetchJobs = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch(`${apiUrl}/api/jobs/all`, { cache: "no-store" });
+        const result = await res.json();
+        setJobs(Array.isArray(result) ? result : []);
+        setError(null);
+      } catch (err) {
+        setError(err.message);
+        setJobs([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchJobs();
+  }, [apiUrl]);
+
+  if (loading) return <LoadingSpinner />;
+  if (error) {
     return (
       <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-200 text-red-600 text-base sm:text-lg md:text-xl font-semibold px-4 text-center">
-        Error loading jobs. Please try again.
+        Error loading jobs. Please try again.<br />{error}
       </div>
     );
   }
@@ -112,13 +132,17 @@ const JobsList = () => {
                 <thead>
                   <tr className="text-[#144E53] border-b border-[#2D7A66]/20">
                     <th className="p-3 text-xs sm:text-sm md:text-base">Title</th>
-                    <th className="p-3 text-xs sm:text-sm md:text-base">Institute</th>
+                    <th className="p-3 text-xs sm:text-sm md:text-base">Location</th>
+                    <th className="p-3 text-xs sm:text-sm md:text-base">Type</th>
+                    <th className="p-3 text-xs sm:text-sm md:text-base">Salary</th>
+                    <th className="p-3 text-xs sm:text-sm md:text-base">Skills</th>
+                    <th className="p-3 text-xs sm:text-sm md:text-base">Experience</th>
                     <th className="p-3 text-xs sm:text-sm md:text-base">Posted</th>
                     <th className="p-3 text-xs sm:text-sm md:text-base">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {adminData.jobs.map((job, index) => (
+                  {jobs.map((job, index) => (
                     <motion.tr
                       key={job.id}
                       initial={{ opacity: 0, y: 10 }}
@@ -132,8 +156,18 @@ const JobsList = () => {
                       >
                         {job.title}
                       </td>
-                      <td className="p-3 text-xs sm:text-sm md:text-base">{job.institute}</td>
-                      <td className="p-3 text-xs sm:text-sm md:text-base">{job.posted}</td>
+                      <td className="p-3 text-xs sm:text-sm md:text-base">{job.location}</td>
+                      <td className="p-3 text-xs sm:text-sm md:text-base">{job.type}</td>
+                      <td className="p-3 text-xs sm:text-sm md:text-base">{job.salary}</td>
+                      <td className="p-3 text-xs sm:text-sm md:text-base">
+                        {job.requirements?.skills?.join(", ")}
+                      </td>
+                      <td className="p-3 text-xs sm:text-sm md:text-base">
+                        {job.requirements?.experience}
+                      </td>
+                      <td className="p-3 text-xs sm:text-sm md:text-base">
+                        {new Date(job.created_at).toLocaleDateString()}
+                      </td>
                       <td className="p-3 flex gap-2">
                         <motion.button
                           whileHover={{ scale: 1.05 }}
