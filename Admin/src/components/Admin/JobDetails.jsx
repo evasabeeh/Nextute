@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-hot-toast";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import LoadingSpinner from "../LoadingSpinner";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import SidePanel from "./SidePanel";
 import useAdminData from "../../hooks/useAdminData";
-import LoadingSpinner from "../LoadingSpinner";
 import Navbar from "../Navbar";
 import Footer from "../Footer";
 import { FaBriefcase, FaSchool, FaCalendar } from "react-icons/fa";
@@ -12,7 +13,10 @@ import { FaBriefcase, FaSchool, FaCalendar } from "react-icons/fa";
 const JobDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { adminData, dataLoading, error, hasRenderedOnce } = useAdminData();
+  const { adminData, dataLoading, hasRenderedOnce } = useAdminData();
+  const [job, setJob] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const hasVisited = localStorage.getItem("hasVisitedJobDetails");
@@ -46,20 +50,30 @@ const JobDetails = () => {
     localStorage.setItem("hasVisitedJobDetails", "true");
   }, []);
 
-  if (dataLoading || !hasRenderedOnce) return <LoadingSpinner />;
-  if (error || !adminData) {
-    return (
-      <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-200 text-red-600 text-base sm:text-lg md:text-xl font-semibold px-4 text-center">
-        Error loading job data. Please try again.
-      </div>
-    );
-  }
+  useEffect(() => {
+    const fetchJob = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/jobs/id/${id}`);
+        if (!res.ok) throw new Error("Failed to fetch job details");
+        const data = await res.json();
+        setJob(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchJob();
+  }, [id]);
 
-  const job = adminData.jobs.find((j) => j.id === parseInt(id));
-  if (!job) {
+  if (dataLoading || !hasRenderedOnce) return <LoadingSpinner />;
+  if (loading) return <LoadingSpinner />;
+  if (error || !job) {
     return (
       <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-200 text-red-600 text-base sm:text-lg md:text-xl font-semibold px-4 text-center">
-        Job not found.
+        {error ? "Error loading job data. Please try again." : "Job not found."}
       </div>
     );
   }
@@ -89,7 +103,7 @@ const JobDetails = () => {
                     {job.title}
                   </h1>
                   <p className="text-xs sm:text-sm md:text-base text-gray-600 mt-1">
-                    Institute: {job.institute}
+                    Job ID: {job.job_id}
                   </p>
                 </div>
               </div>
@@ -107,43 +121,56 @@ const JobDetails = () => {
                     strokeWidth="2"
                     d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
                   />
-                  </svg>
-                </motion.button>
-              </div>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-              className="bg-white bg-opacity-95 backdrop-blur-xl rounded-2xl shadow-xl p-4 sm:p-6 border border-[#2D7A66]/10"
-            >
-              <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-[#144E53] mb-4 sm:mb-6">
-                Job Details
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-                <div className="min-w-0">
-                  <h3 className="text-sm sm:text-base md:text-lg font-semibold text-[#2D7A66] mb-2">
-                    Institute
-                  </h3>
-                  <p className="text-gray-700 text-xs sm:text-sm md:text-base flex items-center gap-2">
-                    <FaSchool className="text-[#2D7A66] w-4 sm:w-5 h-4 sm:h-5" />
-                    {job.institute}
-                  </p>
-                </div>
-                <div className="min-w-0">
-                  <h3 className="text-sm sm:text-base md:text-lg font-semibold text-[#2D7A66] mb-2">
-                    Posted Date
-                  </h3>
-                  <p className="text-gray-700 text-xs sm:text-sm md:text-base flex items-center gap-2">
-                    <FaCalendar className="text-[#2D7A66] w-4 sm:w-5 h-4 sm:h-5" />
-                    {job.posted}
-                  </p>
-                </div>
-              </div>
-            </motion.div>
+                </svg>
+              </motion.button>
+            </div>
           </motion.div>
-        </div>
-      
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+            className="bg-white bg-opacity-95 backdrop-blur-xl rounded-2xl shadow-xl p-4 sm:p-6 border border-[#2D7A66]/10"
+          >
+            <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-[#144E53] mb-4 sm:mb-6">
+              Job Details
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+              <div className="min-w-0">
+                <h3 className="text-sm sm:text-base md:text-lg font-semibold text-[#2D7A66] mb-2">Description</h3>
+                <p className="text-gray-700 text-xs sm:text-sm md:text-base">{job.description}</p>
+              </div>
+              <div className="min-w-0">
+                <h3 className="text-sm sm:text-base md:text-lg font-semibold text-[#2D7A66] mb-2">Location</h3>
+                <p className="text-gray-700 text-xs sm:text-sm md:text-base">{job.location}</p>
+              </div>
+              <div className="min-w-0">
+                <h3 className="text-sm sm:text-base md:text-lg font-semibold text-[#2D7A66] mb-2">Type</h3>
+                <p className="text-gray-700 text-xs sm:text-sm md:text-base">{job.type}</p>
+              </div>
+              <div className="min-w-0">
+                <h3 className="text-sm sm:text-base md:text-lg font-semibold text-[#2D7A66] mb-2">Salary</h3>
+                <p className="text-gray-700 text-xs sm:text-sm md:text-base">{job.salary}</p>
+              </div>
+              <div className="min-w-0">
+                <h3 className="text-sm sm:text-base md:text-lg font-semibold text-[#2D7A66] mb-2">Skills</h3>
+                <p className="text-gray-700 text-xs sm:text-sm md:text-base">{job.requirements?.skills?.join(", ")}</p>
+              </div>
+              <div className="min-w-0">
+                <h3 className="text-sm sm:text-base md:text-lg font-semibold text-[#2D7A66] mb-2">Experience</h3>
+                <p className="text-gray-700 text-xs sm:text-sm md:text-base">{job.requirements?.experience}</p>
+              </div>
+              <div className="min-w-0">
+                <h3 className="text-sm sm:text-base md:text-lg font-semibold text-[#2D7A66] mb-2">Posted On</h3>
+                <p className="text-gray-700 text-xs sm:text-sm md:text-base">{new Date(job.created_at).toLocaleString()}</p>
+              </div>
+              <div className="min-w-0">
+                <h3 className="text-sm sm:text-base md:text-lg font-semibold text-[#2D7A66] mb-2">Last Updated</h3>
+                <p className="text-gray-700 text-xs sm:text-sm md:text-base">{new Date(job.updated_at).toLocaleString()}</p>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+      </div>
       <Footer />
     </>
   );

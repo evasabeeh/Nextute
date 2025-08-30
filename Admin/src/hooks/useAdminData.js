@@ -1,80 +1,6 @@
 import { useState, useEffect } from "react";
 
-const mockData = {
-  totalInstitutes: 25,
-  totalStudents: 1200,
-  institutes: [
-    { id: 1, name: "Institute A", city: "Mumbai", courses: 5, students: 200 },
-    { id: 2, name: "Institute B", city: "Delhi", courses: 3, students: 150 },
-  ],
-  students: [
-    {
-      id: 1,
-      name: "John Doe",
-      email: "john@example.com",
-      institute: "Institute A",
-    },
-    {
-      id: 2,
-      name: "Jane Smith",
-      email: "jane@example.com",
-      institute: "Institute B",
-    },
-  ],
-  reviews: [
-    { id: 1, author: "Alice", content: "Great institute!", rating: 5 },
-    { id: 2, author: "Bob", content: "Good experience.", rating: 4 },
-  ],
-  jobs: [
-    {
-      id: 1,
-      title: "Math Teacher",
-      institute: "Institute A",
-      posted: "2025-08-01",
-    },
-    {
-      id: 2,
-      title: "Science Tutor",
-      institute: "Institute B",
-      posted: "2025-07-15",
-    },
-  ],
-  team: {
-    ceo: [{ id: 1, name: "CEO Name", role: "CEO", email: "ceo@nextute.com" }],
-    founder: [
-      {
-        id: 2,
-        name: "Founder Name",
-        role: "Founder",
-        email: "founder@nextute.com",
-      },
-    ],
-    tech: [
-      {
-        id: 3,
-        name: "Tech Lead",
-        role: "Tech Lead",
-        email: "tech@nextute.com",
-      },
-    ],
-    marketing: [
-      {
-        id: 4,
-        name: "Marketing Head",
-        role: "Marketing Head",
-        email: "marketing@nextute.com",
-      },
-    ],
-    uiux: [
-      {
-        id: 5,
-        name: "UI/UX Designer",
-        role: "UI/UX Designer",
-        email: "uiux@nextute.com",
-      },
-    ],
-  },
-};
+const API_URL = import.meta.env.VITE_API_URL;
 
 const useAdminData = () => {
   const [adminData, setAdminData] = useState(null);
@@ -86,12 +12,37 @@ const useAdminData = () => {
     const fetchData = async () => {
       setDataLoading(true);
       try {
-        // Simulate API call
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        setAdminData(mockData);
+        const [institutesRes, studentsRes, jobsRes, reviewsRes, teamRes] = await Promise.all([
+          fetch(`${API_URL}/api/institutes/all-institutes`),
+          fetch(`${API_URL}/api/students/all`),
+          fetch(`${API_URL}/api/jobs/all`),
+          fetch(`${API_URL}/api/feedback/reviews`),
+          fetch(`${API_URL}/api/employees/members`)
+        ]);
+
+        const [institutes, students, jobs, reviews, team] = await Promise.all([
+          institutesRes.json(),
+          studentsRes.json(),
+          jobsRes.json(),
+          reviewsRes.json(),
+          teamRes.json()
+        ]);
+
+        const getArray = (resp, key = "data") => Array.isArray(resp) ? resp : (Array.isArray(resp?.[key]) ? resp[key] : []);
+        setAdminData({
+          totalInstitutes: getArray(institutes).length,
+          totalStudents: getArray(students, "students").length,
+          institutes: getArray(institutes),
+          students: getArray(students, "students"),
+          jobs: Array.isArray(jobs) ? jobs : (Array.isArray(jobs?.data) ? jobs.data : []),
+          reviews: getArray(reviews),
+          team: getArray(team),
+        });
         setHasRenderedOnce(true);
+        setError(null);
       } catch (err) {
         setError("Failed to fetch admin data");
+        setAdminData(null);
       } finally {
         setDataLoading(false);
       }

@@ -147,7 +147,7 @@ const ReviewsList = () => {
                   <p className="text-xs sm:text-sm text-gray-600 mt-1">By: {review.email} ({review.reviewerType})</p>
                   <p className="text-xs sm:text-sm text-gray-400 mt-1">{new Date(review.created_at).toLocaleString()}</p>
                   <div className="flex gap-2 mt-3">
-                    <motion.button
+                    {/* <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => navigate(`/admin/reviews/edit/${review.id}`)}
@@ -162,18 +162,18 @@ const ReviewsList = () => {
                           d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
                         />
                       </svg>
-                    </motion.button>
-                    <motion.button
+                    </motion.button> */}
+                    {/* <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => handleDelete(review.id)}
-                      className="p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 min-w-[40px] min-h-[40px]"
+                      className="p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 min-w-[30px] min-h-[30px]"
                       aria-label="Delete Review"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                       </svg>
-                    </motion.button>
+                    </motion.button> */}
                   </div>
                 </motion.div>
               ))}
