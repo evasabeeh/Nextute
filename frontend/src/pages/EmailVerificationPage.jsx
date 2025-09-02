@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext.jsx";
 import { toast } from "react-hot-toast";
 import axios from "axios";
-import { assets } from "../assets/assets";
+import * as assets from "../assets/index.js";
 
 const EmailVerificationPage = () => {
   const {
