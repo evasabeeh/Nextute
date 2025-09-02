@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Edit, Trash2, Eye, Phone, Mail, User } from "lucide-react";
-import { assets } from "../../../assets/assets";
+import * as assets from "../../../assets/index.js";
 import Button from "../../ui/Button";
 
 const TeacherCard = ({

@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import Card from "./Card";
 import HorizontalCard from "./HorizontalCard";
-import { coaching, Not_found } from "../assets";
+import * as assets from "../assets/index.js";
 import { AppContext } from "../context/AppContext";
 import useInstitutes from "../hooks/useInstitutes";
 import LoadingSpinner from "./LoadingSpinner";

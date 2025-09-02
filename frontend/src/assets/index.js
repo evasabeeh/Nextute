@@ -65,3 +65,5 @@ export { default as Revolution } from "./Revolution.jpeg";
 export { default as ReviewBanner } from "./ReviewBanner.svg";
 export { default as FAQBanner } from "./FAQBanner.svg";
 export { default as Not_found } from "./No_found.svg";
+export { default as institute1 } from "./coaching.png"; // Or another appropriate image
+export { default as institute2 } from "./signup-illustration.png"; // Or another appropriate image

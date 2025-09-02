@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import { BsChatTextFill } from "react-icons/bs";
 import { FaLocationDot } from "react-icons/fa6";
-import { assets } from "../assets/assets";
+import * as assets from "../assets/index.js";
 
 // Default fallback image
 const DEFAULT_IMAGE =

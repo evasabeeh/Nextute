@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { assets } from "../../assets/assets";
+
+import * as assets from "../../assets/index.js";
 import { Eye, EyeOff } from "lucide-react";
 import { toast } from "react-hot-toast";
 import PasswordStrength from "../../context/PasswordStrength.jsx";

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Navbar from "../components/Navbar";
-import { assets } from "../assets/assets";
+import * as assets from "../assets/index.js";
 import Footer from "../components/Footer";
 
 const ReviewPage = () => {

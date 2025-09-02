@@ -7,7 +7,7 @@ import { ChevronLeft, RefreshCw, Star, CheckCircle } from "lucide-react";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { motion, AnimatePresence } from "framer-motion";
-import { assets } from "../assets/assets";
+import * as assets from "../assets/index.js";
 import LoadingSpinner from "../components/LoadingSpinner";
 import useInstitutes from "../hooks/useInstitutes";
 

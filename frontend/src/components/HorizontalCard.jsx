@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaPhoneAlt, FaWhatsapp, FaMapMarkerAlt } from "react-icons/fa";
 import { BsChatTextFill } from "react-icons/bs";
-import { assets } from "../assets/assets";
+import * as assets from "../assets/index.js";
 
 // Default fallback image (replace with your assets import or a placeholder URL)
 const DEFAULT_IMAGE =

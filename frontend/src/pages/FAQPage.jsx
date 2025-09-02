@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Navbar from "../components/Navbar";
-import { assets } from "../assets/assets";
+import * as assets from "../assets/index.js";
 import { RectangleIcon } from "../components/RectangleIcon";
 import { ChevronDown, ChevronUp, Search } from "lucide-react";
 import Footer from "../components/Footer";

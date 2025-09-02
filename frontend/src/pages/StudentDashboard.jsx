@@ -14,7 +14,21 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Menu, X } from "lucide-react";
-import { institute1, institute2 } from "../assets";
+// Change this line:
+// import { institute1, institute2 } from "../assets";
+
+// To something like:
+import * as assets from "../assets/index.js";
+
+// Then update the image references:
+// image: institute1,
+// To:
+// image: assets.coaching, // or any other exported image
+
+// And:
+// image: institute2,
+// To:
+// image: assets.signup_illustration, // or any other exported image
 
 const StudentDashboard = () => {
   const navigate = useNavigate();

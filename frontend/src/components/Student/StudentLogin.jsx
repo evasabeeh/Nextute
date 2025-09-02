@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { logo, crossTick, rightTick } from "../../assets";
+import * as assets from "../../assets/index.js";
 import { BiSolidUserRectangle } from "react-icons/bi";
 import { RiLock2Fill } from "react-icons/ri";
 import { toast } from "react-hot-toast";

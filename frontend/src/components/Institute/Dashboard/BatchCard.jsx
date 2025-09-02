@@ -9,7 +9,7 @@ import {
   DollarSign,
   Languages,
 } from "lucide-react";
-import { assets } from "../../../assets/assets";
+import * as assets from "../../../assets/index.js";
 import Button from "../../ui/Button";
 
 const BatchCard = ({

@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { assets } from "../../../assets/assets";
+
+import * as assets from "../../../assets/index.js";
 import { Mail, Phone, MapPin } from "lucide-react";
 
 const ContactInfo = ({ studentData, isEditing }) => {

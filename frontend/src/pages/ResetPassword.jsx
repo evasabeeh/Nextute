@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from "react";
-import { assets } from "../assets/assets";
+import * as assets from"../assets/index.js";
 import { RiLock2Fill } from "react-icons/ri";
 import { toast } from "react-hot-toast";
 import { Eye, EyeOff } from "lucide-react";
