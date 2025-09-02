@@ -1,5 +1,5 @@
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
-import { assets } from "../assets/assets";
+import { test2, test3 } from "../assets";
 
 const TestimonialCard = ({ text, quote, author, rating }) => {
   const renderStars = (rating) => {
@@ -42,9 +42,9 @@ const TestimonialCard = ({ text, quote, author, rating }) => {
   // Choose image based on gender
   const getProfileImage = () => {
     if (isFemale(author)) {
-      return assets.test2; // Female testimonial image
+      return test2; // Female testimonial image
     } else {
-      return assets.test3; // Male testimonial image
+      return test3; // Male testimonial image
     }
   };
 

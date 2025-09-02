@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { assets } from "../assets/assets";
+import { student_signup, institute_signup } from "../assets";
 import { AppContext } from "../context/AppContext";
 import { useNavigate } from "react-router-dom";
 
@@ -56,7 +56,7 @@ const SignupPopup = () => {
           {/* Student Signup */}
           <div className="w-full max-w-xs p-4">
             <img
-              src={assets.student_signup}
+              src={student_signup}
               alt="Student Signup"
               className="w-full h-36 sm:h-40 object-cover rounded-lg mb-6"
             />
@@ -75,7 +75,7 @@ const SignupPopup = () => {
           {/* Institute Signup */}
           <div className="w-full max-w-xs p-4">
             <img
-              src={assets.institute_signup}
+              src={institute_signup}
               alt="Institute Signup"
               className="w-full h-36 sm:h-40 object-cover rounded-lg mb-6"
             />

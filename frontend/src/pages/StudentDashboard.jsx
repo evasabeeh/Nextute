@@ -14,7 +14,7 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Menu, X } from "lucide-react";
-import { assets } from "../assets/assets.js";
+import { institute1, institute2 } from "../assets";
 
 const StudentDashboard = () => {
   const navigate = useNavigate();
@@ -115,13 +115,13 @@ const StudentDashboard = () => {
               name: "Alpha Institute",
               location: "Mumbai",
               rating: 4.5,
-              image: assets.institute1,
+              image: institute1,
             },
             {
               name: "Beta Academy",
               location: "Delhi",
               rating: 4.2,
-              image: assets.institute2,
+              image: institute2,
             },
           ],
         };

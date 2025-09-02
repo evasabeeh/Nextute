@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { assets } from "../../assets/assets";
+import { logo, crossTick, rightTick } from "../../assets";
 import { BiSolidUserRectangle } from "react-icons/bi";
 import { RiLock2Fill } from "react-icons/ri";
 import { toast } from "react-hot-toast";
@@ -194,7 +194,7 @@ const StudentLogin = () => {
   return (
     <div className="min-h-screen bg-[#f2fffc]">
       <img
-        src={assets.logo || "/fallback-logo.png"}
+        src={logo || "/fallback-logo.png"}
         alt="Company Logo"
         className="w-32 sm:w-40 flex justify-start ml-20 cursor-pointer"
         onClick={() => navigate("/")}
@@ -253,8 +253,8 @@ const StudentLogin = () => {
               <img
                 src={
                   errors.loginInput
-                    ? assets.crossTick || "/error-icon.png"
-                    : assets.rightTick || "/tick-icon.png"
+                    ? crossTick || "/error-icon.png"
+                    : rightTick || "/tick-icon.png"
                 }
                 alt={errors.loginInput ? "Error" : "Valid"}
                 className="w-5 h-5 mx-2"
@@ -309,8 +309,8 @@ const StudentLogin = () => {
               <img
                 src={
                   errors.password
-                    ? assets.crossTick || "/error-icon.png"
-                    : assets.rightTick || "/tick-icon.png"
+                    ? crossTick || "/error-icon.png"
+                    : rightTick || "/tick-icon.png"
                 }
                 alt={errors.password ? "Error" : "Valid"}
                 className="w-5 h-5 mx-2"
