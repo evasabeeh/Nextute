@@ -6,7 +6,7 @@ import { ArrowLeft, Save, Upload, Trash2 } from "lucide-react";
 import SidePanel from "./SidePanel";
 import { useInstituteData } from "../../../hooks/useInstituteData.js";
 import LoadingSpinner from "../../LoadingSpinner.jsx";
-import { assets } from "../../../assets/assets.js";
+import * as assets from "../../../assets/index.js";
 import Button from "../../ui/Button";
 import InputField from "../../ui/InputField";
 import Navbar from "../../Navbar.jsx";

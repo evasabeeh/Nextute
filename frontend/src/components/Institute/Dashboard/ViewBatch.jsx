@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import SidePanel from "./SidePanel";
 import { useInstituteData } from "../../../hooks/useInstituteData.js";
-import { assets } from "../../../assets/assets.js";
+import * as assets from "../../../assets/index.js";
 import Button from "../../ui/Button";
 import Navbar from "../../Navbar.jsx";
 import Footer from "../../Footer.jsx";
@@ -172,27 +172,22 @@ const ViewBatch = () => {
                           }
                         >
                           {value}
-                          {isLongText && (
-                            <div id={`${id}-description`} className="sr-only">
-                              {value}
-                            </div>
+                          {isLongText && value.length > 100 && (
+                            <motion.button
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
+                              onClick={() => setShowFullDetails(!showFullDetails)}
+                              className="text-sm text-[#2D7A66] hover:text-[#144E53] underline mt-1"
+                              aria-label={
+                                showFullDetails
+                                  ? "Show less details"
+                                  : "Show more details"
+                              }
+                            >
+                              {showFullDetails ? "Show Less" : "Show More"}
+                            </motion.button>
                           )}
                         </div>
-                        {isLongText && value.length > 100 && (
-                          <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            onClick={() => setShowFullDetails(!showFullDetails)}
-                            className="text-sm text-[#2D7A66] hover:text-[#144E53] underline mt-1"
-                            aria-label={
-                              showFullDetails
-                                ? "Show less details"
-                                : "Show more details"
-                            }
-                          >
-                            {showFullDetails ? "Show Less" : "Show More"}
-                          </motion.button>
-                        )}
                       </motion.div>
                     )
                   )}
