@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import SidePanel from "./SidePanel";
 import { useInstituteData } from "../../../hooks/useInstituteData.js";
 import LoadingSpinner from "../../LoadingSpinner.jsx";
-import { assets } from "../../../assets/assets.js";
+import * as assets from "../../../assets/index.js";
 import Navbar from "../../Navbar.jsx";
 import Footer from "../../Footer.jsx";
 

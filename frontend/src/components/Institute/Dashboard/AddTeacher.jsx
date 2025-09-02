@@ -4,7 +4,7 @@ import { toast } from "react-hot-toast";
 import { motion } from "framer-motion";
 import { ArrowLeft, Save, Upload, Trash2 } from "lucide-react";
 import SidePanel from "./SidePanel";
-import { assets } from "../../../assets/assets.js";
+import * as assets from "../../../assets/index.js";
 import Button from "../../ui/Button";
 import InputField from "../../ui/InputField";
 import SelectField from "../../ui/SelectField";

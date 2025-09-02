@@ -1,4 +1,3 @@
-
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
@@ -26,7 +25,7 @@ import {
 } from "react-icons/fa";
 import LoadingSpinner from "../components/LoadingSpinner.jsx";
 import Navbar from "../components/Navbar.jsx";
-import { assets } from "../assets/assets.js";
+import * as assets from "../assets/index.js";
 
 const InstituteDashboard = () => {
   const { id } = useParams(); // Get the institute ID from the URL
@@ -367,7 +366,7 @@ const InstituteDashboard = () => {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+            transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
             className="bg-white bg-opacity-95 backdrop-blur-xl rounded-2xl shadow-xl p-4 sm:p-6 mb-6 sm:mb-8 border border-[#2D7A66]/10"
           >
             <div className="flex justify-between items-center mb-4 sm:mb-6">
@@ -556,7 +555,7 @@ const InstituteDashboard = () => {
                       strokeLinejoin="round"
                       strokeWidth="2"
                       d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-                    />
+                  />
                   </svg>
                   <span className="hidden sm:inline">Edit</span>
                 </motion.button>
@@ -607,7 +606,7 @@ const InstituteDashboard = () => {
                       strokeLinejoin="round"
                       strokeWidth="2"
                       d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-                    />
+                  />
                   </svg>
                   <span className="hidden sm:inline">Edit</span>
                 </motion.button>

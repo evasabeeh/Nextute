@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import SidePanel from "./SidePanel.jsx";
 import { useInstituteData } from "../../../hooks/useInstituteData.js";
-import { assets } from "../../../assets/assets.js";
+import * as assets from "../../../assets/index.js";
 import Button from "../../ui/Button";
 import Navbar from "../../Navbar.jsx";
 import Footer from "../../Footer.jsx";

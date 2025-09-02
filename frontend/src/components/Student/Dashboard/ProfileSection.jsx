@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { assets } from "../../../assets/assets.js";
+import * as assets from "../../../assets/index.js";
 import { Upload, Sparkles } from "lucide-react";
 import Loader from "./Loader";
 

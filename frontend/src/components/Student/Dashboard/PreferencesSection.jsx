@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { assets } from "../../../assets/assets.js";
+import * as assets from "../../../assets/index.js";
 import {
   Book,
   Target,

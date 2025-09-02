@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { assets } from "../../../assets/assets.js";
+import * as assets from "../../../assets/index.js";
 
 const InstituteRecommendations = ({ studentData }) => {
   const institutes = studentData?.recommendedInstitutes || [];
