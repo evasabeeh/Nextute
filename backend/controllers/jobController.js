@@ -1,11 +1,4 @@
-import {
-  addJob,
-  getAllJobs,
-  getJobById,
-  getJobByJobId,
-  updateJob,
-  deleteJob,
-} from "../models/jobModel.js";
+  import { addJob, getAllJobs, getJobById, getJobByJobId, updateJob, updateJobByShortId, deleteJob } from "../models/jobModel.js";
 
 // ✅ Create Job
 const createJob = async (req, res) => {
@@ -100,6 +93,22 @@ const editJob = async (req, res) => {
   }
 };
 
+
+// ✅ Update Job by short job_id
+const editJobByShortId = async (req, res) => {
+  const { job_id } = req.params;
+  if (!job_id || job_id === "undefined") {
+    return res.status(400).json({ error: "Invalid job_id" });
+  }
+  try {
+    const updatedJob = await updateJobByShortId(job_id, req.body);
+    return res.json(updatedJob);
+  } catch (error) {
+    console.error(`Error in editJobByShortId for job_id ${job_id}:`, error);
+    return res.status(500).json({ error: error.message });
+  }
+};
+
 // ✅ Delete Job
 const removeJob = async (req, res) => {
   const { id } = req.params;
@@ -116,4 +125,4 @@ const removeJob = async (req, res) => {
   }
 };
 
-export { createJob, getJobs, getJob, getJobByShortId, editJob, removeJob };
+export { createJob, getJobs, getJob, getJobByShortId, editJob, editJobByShortId, removeJob };

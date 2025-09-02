@@ -134,7 +134,7 @@ const TeamMemberDetails = () => {
                   </p>
                 </div>
               </div>
-              <motion.button
+              {/* <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => navigate(`/admin/team/edit/${member.id}`)}
@@ -154,7 +154,7 @@ const TeamMemberDetails = () => {
                     d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
                   />
                 </svg>
-              </motion.button>
+              </motion.button> */}
             </div>
           </motion.div>
           <motion.div

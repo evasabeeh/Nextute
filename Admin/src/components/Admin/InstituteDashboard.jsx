@@ -118,36 +118,10 @@ const InstituteDashboard = () => {
 
   // Show all institute details (except sensitive fields)
   const hiddenFields = [
-    "id",
     "password_reset_token",
-    "password_reset_expires",
-    "created_at",
-    "updated_at",
-    "code_expires_at"
+    "password_reset_expires"
   ];
-  
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.6, ease: "easeOut" }}
-    className="bg-white bg-opacity-95 backdrop-blur-xl rounded-2xl shadow-xl p-4 sm:p-6 mb-6 border border-[#2D7A66]/10"
-  >
-    <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-[#144E53] mb-4">Institute Details</h2>
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-      {Object.entries(institute)
-        .filter(([key]) => !hiddenFields.includes(key))
-        .map(([key, value]) => (
-          <div key={key} className="min-w-0">
-            <h3 className="text-sm sm:text-base md:text-lg font-semibold text-[#2D7A66] mb-2">
-              {key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
-            </h3>
-            <p className="text-gray-700 text-xs sm:text-sm md:text-base break-all">
-              {value === null ? '-' : String(value)}
-            </p>
-          </div>
-        ))}
-    </div>
-  </motion.div>
+  // ...existing code...
 
   return (
     <>
@@ -196,6 +170,21 @@ const InstituteDashboard = () => {
                 </svg>
                 Edit
               </motion.button>
+            </div>
+            {/* Institute Details Section - show all fields except sensitive */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mt-6">
+              {Object.entries(institute)
+                .filter(([key]) => !hiddenFields.includes(key))
+                .map(([key, value]) => (
+                  <div key={key} className="min-w-0">
+                    <h3 className="text-sm sm:text-base md:text-lg font-semibold text-[#2D7A66] mb-2">
+                      {key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                    </h3>
+                    <p className="text-gray-700 text-xs sm:text-sm md:text-base break-all">
+                      {value === null ? '-' : String(value)}
+                    </p>
+                  </div>
+                ))}
             </div>
           </motion.div>
 

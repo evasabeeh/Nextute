@@ -9,36 +9,33 @@ import Navbar from "../Navbar";
 import Footer from "../Footer";
 
 const EditStudent = () => {
+  const initialStudent = {
+    name: "",
+    email: "",
+    gender: "",
+    phone_number: "",
+    address: "",
+    course: "",
+    date_of_birth: "",
+    is_verified: false,
+    code: "",
+    student_id: "",
+  };
   const { id } = useParams();
   const navigate = useNavigate();
   const { adminData, dataLoading, error, hasRenderedOnce } = useAdminData();
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    institute: "",
-  });
+  const [student, setStudent] = useState(initialStudent);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  useEffect(() => {
-    if (id && adminData) {
-      const student = adminData.students.find((s) => s.id === parseInt(id));
-      if (student) {
-        setFormData({
-          name: student.name,
-          email: student.email,
-          institute: student.institute,
-        });
-      }
-    }
-  }, [id, adminData]);
+  const [loading, setLoading] = useState(false);
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const validateForm = () => {
     const errors = {};
-    if (!formData.name.trim()) errors.name = "Name is required";
-    if (!formData.email.trim() || !/^\S+@\S+\.\S+$/.test(formData.email))
+    if (!student.name.trim()) errors.name = "Name is required";
+    if (!student.email.trim() || !/^\S+@\S+\.\S+$/.test(student.email))
       errors.email = "Valid email is required";
-    if (!formData.institute.trim()) errors.institute = "Institute is required";
+  // Removed institute validation, not present in state or form
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -48,8 +45,15 @@ const EditStudent = () => {
     if (!validateForm()) return;
     setIsSubmitting(true);
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      toast.success(id ? "Student updated!" : "Student added!", {
+      const res = await fetch(`${apiUrl}/api/students/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(student),
+      });
+      if (!res.ok) throw new Error("Failed to update student");
+      toast.success("Student updated!", {
         position: "top-right",
         style: { background: "#E6EDE2", color: "#144E53", borderRadius: "8px" },
       });
@@ -63,6 +67,45 @@ const EditStudent = () => {
       setIsSubmitting(false);
     }
   };
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setStudent((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
+
+  useEffect(() => {
+    if (id) {
+      setLoading(true);
+      fetch(`${apiUrl}/api/students/${id}`)
+        .then((res) => {
+          if (!res.ok) throw new Error("Failed to fetch student");
+          return res.json();
+        })
+        .then((data) => {
+          console.log('Fetched student data:', data);
+          const s = data.data || {};
+          setStudent({
+            name: s.name || "",
+            email: s.email || "",
+            gender: s.gender || "",
+            phone_number: s.phone_number || "",
+            address: s.address || "",
+            course: s.course || "",
+            date_of_birth: s.date_of_birth ? s.date_of_birth.split('T')[0] : "",
+            is_verified: s.is_verified || false,
+            code: s.code || "",
+            student_id: s.student_id || "",
+          });
+        })
+        .catch((err) => {
+          toast.error("Failed to load student: " + err.message);
+        })
+        .finally(() => setLoading(false));
+    }
+  }, [id, apiUrl]);
 
   if (dataLoading || !hasRenderedOnce) return <LoadingSpinner />;
   if (error && id) {
@@ -105,7 +148,14 @@ const EditStudent = () => {
               {[
                 { label: "Name", key: "name", type: "text" },
                 { label: "Email", key: "email", type: "email" },
-                { label: "Institute", key: "institute", type: "text" },
+                { label: "Gender", key: "gender", type: "text" },
+                { label: "Phone Number", key: "phone_number", type: "text" },
+                { label: "Address", key: "address", type: "text" },
+                { label: "Course", key: "course", type: "text" },
+                { label: "Date of Birth", key: "date_of_birth", type: "date" },
+                { label: "Verified", key: "is_verified", type: "checkbox" },
+                { label: "Code", key: "code", type: "text" },
+                { label: "Student ID", key: "student_id", type: "text" },
               ].map((field, index) => (
                 <motion.div
                   key={field.key}
@@ -120,8 +170,9 @@ const EditStudent = () => {
                   <div className="flex-1">
                     <input
                       type={field.type}
-                      value={formData[field.key]}
-                      onChange={(e) => setFormData({ ...formData, [field.key]: e.target.value })}
+                      name={field.key}
+                      value={student[field.key]}
+                      onChange={handleChange}
                       className="w-full p-3 border border-[#2D7A66] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#93E9A2] transition-all bg-[#E6EDE2] text-gray-700 text-sm sm:text-base"
                       placeholder={`Enter ${field.label}`}
                       aria-label={field.label}

@@ -62,27 +62,27 @@ const Dashboard = () => {
   const summaryCards = [
     {
       title: "Total Institutes",
-      value: adminData.totalInstitutes,
+      value: adminData?.totalInstitutes ?? 0,
       icon: <FaSchool className="text-[#2D7A66] w-6 sm:w-8 h-6 sm:h-8" />,
     },
     {
       title: "Total Students",
-      value: adminData.totalStudents,
+      value: adminData?.totalStudents ?? 0,
       icon: <FaUsers className="text-[#2D7A66] w-6 sm:w-8 h-6 sm:h-8" />,
     },
     {
       title: "Total Jobs",
-      value: adminData.jobs.length,
+      value: Array.isArray(adminData?.jobs) ? adminData.jobs.length : 0,
       icon: <FaBriefcase className="text-[#2D7A66] w-6 sm:w-8 h-6 sm:h-8" />,
     },
     {
       title: "Total Reviews",
-      value: adminData.reviews.length,
+      value: Array.isArray(adminData?.reviews) ? adminData.reviews.length : 0,
       icon: <FaStar className="text-[#2D7A66] w-6 sm:w-8 h-6 sm:h-8" />,
     },
     {
       title: "Team Members",
-      value: Object.values(adminData.team).flat().length,
+      value: Array.isArray(adminData?.team) ? adminData.team.length : 0,
       icon: <FaUserTie className="text-[#2D7A66] w-6 sm:w-8 h-6 sm:h-8" />,
     },
   ];
@@ -99,30 +99,6 @@ const Dashboard = () => {
       action: "Job posted",
       details: "Software Engineer role added.",
       time: "5 hours ago",
-    },
-    {
-      id: 3,
-      action: "Review submitted",
-      details: "John Doe rated an institute.",
-      time: "Yesterday",
-    },
-  ];
-
-  const quickActions = [
-    {
-      label: "Add Institute",
-      path: "/admin/institutes/add",
-      icon: <FaSchool className="w-4 sm:w-5 h-4 sm:h-5" />,
-    },
-    {
-      label: "Add Job",
-      path: "/admin/jobs/add",
-      icon: <FaBriefcase className="w-4 sm:w-5 h-4 sm:h-5" />,
-    },
-    {
-      label: "Add Team Member",
-      path: "/admin/team/add",
-      icon: <FaUserTie className="w-4 sm:w-5 h-4 sm:h-5" />,
     },
   ];
 
@@ -160,7 +136,7 @@ const Dashboard = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                <motion.button
+                {/* <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => navigate("/admin/profile")}
@@ -177,38 +153,8 @@ const Dashboard = () => {
                   aria-label="Settings"
                 >
                   Settings
-                </motion.button>
+                </motion.button> */}
               </motion.div>
-            </div>
-          </motion.div>
-
-          {/* Quick Actions */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="bg-white bg-opacity-95 backdrop-blur-xl rounded-2xl shadow-xl p-4 sm:p-6 mb-6 sm:mb-8 border border-[#2D7A66]/10"
-          >
-            <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-[#144E53] mb-4 sm:mb-6">
-              Quick Actions
-            </h2>
-            <div className="flex flex-wrap gap-3 sm:gap-4">
-              {quickActions.map((action, index) => (
-                <motion.button
-                  key={action.label}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => navigate(action.path)}
-                  className="flex items-center gap-2 px-4 sm:px-6 py-2 bg-[#2D7A66] text-white rounded-lg shadow-md hover:bg-[#144E53] transition-all duration-300 text-sm sm:text-base min-w-[48px] min-h-[48px]"
-                  aria-label={action.label}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.1 }}
-                >
-                  {action.icon}
-                  {action.label}
-                </motion.button>
-              ))}
             </div>
           </motion.div>
 

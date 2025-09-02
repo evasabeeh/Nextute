@@ -52,7 +52,19 @@ const JobsList = () => {
       try {
         const res = await fetch(`${apiUrl}/api/jobs/all`, { cache: "no-store" });
         const result = await res.json();
-        setJobs(Array.isArray(result) ? result : []);
+        // Parse requirements if it is a string
+        const jobsWithParsedRequirements = (Array.isArray(result) ? result : []).map(job => {
+          let requirements = job.requirements;
+          if (typeof requirements === "string") {
+            try {
+              requirements = JSON.parse(requirements);
+            } catch {
+              requirements = { skills: [], experience: "" };
+            }
+          }
+          return { ...job, requirements };
+        });
+        setJobs(jobsWithParsedRequirements);
         setError(null);
       } catch (err) {
         setError(err.message);
@@ -75,7 +87,11 @@ const JobsList = () => {
 
   const handleDelete = async (id) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const res = await fetch(`${apiUrl}/api/jobs/id/${id}`, {
+        method: "DELETE",
+      });
+      if (!res.ok) throw new Error("Failed to delete job");
+      setJobs((prev) => prev.filter((job) => job.id !== id));
       toast.success("Job deleted successfully!", {
         position: "top-right",
         style: { background: "#E6EDE2", color: "#144E53", borderRadius: "8px" },
@@ -172,7 +188,7 @@ const JobsList = () => {
                         <motion.button
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
-                          onClick={() => navigate(`/admin/jobs/edit/${job.id}`)}
+                          onClick={() => navigate(`/admin/jobs/edit/${job.job_id}`)}
                           className="p-2 bg-[#2D7A66] text-white rounded-lg hover:bg-[#144E53] min-w-[40px] min-h-[40px]"
                           aria-label="Edit Job"
                         >

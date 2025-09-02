@@ -61,9 +61,44 @@ const getEmployeeByCertificateId = async (certificateNo) => {
   }
 };
 
+// Edit employee by certificateNo
+const editEmployeeByCertificateNo = async (certificateNo, updateData) => {
+  try {
+    console.log('EditEmployeeByCertificateNo called with:', { certificateNo, updateData });
+    // Convert joiningDate to ISO-8601 if present and is a string
+    if (updateData.joiningDate && typeof updateData.joiningDate === 'string') {
+      updateData.joiningDate = new Date(updateData.joiningDate).toISOString();
+    }
+    const updatedEmployee = await prisma.employee.update({
+      where: { certificateNo },
+      data: updateData,
+    });
+    console.log('Updated employee result:', updatedEmployee);
+    return updatedEmployee;
+  } catch (error) {
+    console.error(`Error editing employee by certificateNo ${certificateNo}:`, error);
+    throw new Error("Error editing employee");
+  }
+};
+
+// Delete employee by certificateNo
+const deleteEmployeeByCertificateNo = async (certificateNo) => {
+  try {
+    const deletedEmployee = await prisma.employee.delete({
+      where: { certificateNo },
+    });
+    return deletedEmployee;
+  } catch (error) {
+    console.error(`Error deleting employee by certificateNo ${certificateNo}:`, error);
+    throw new Error("Error deleting employee");
+  }
+};
+
 export {
   addEmployee,
   getAllEmployees,
   getEmployeeByCertificateId,
   getEmployeeById,
+  editEmployeeByCertificateNo,
+  deleteEmployeeByCertificateNo,
 };
