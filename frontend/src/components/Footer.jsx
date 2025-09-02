@@ -1,4 +1,4 @@
-import { assets } from "../assets/assets";
+import { logo, instagram, linkedin } from "../assets";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
@@ -8,7 +8,7 @@ const Footer = () => {
         {/* Left Section */}
         <div className="w-full lg:w-1/3 flex flex-col items-start -mt-20">
           <img
-            src={assets.logo}
+            src={logo}
             alt="Nextute Logo"
             className="w-40 sm:w-52 mb-4 hover:cursor-pointer"
           />
@@ -31,7 +31,7 @@ const Footer = () => {
               rel="noopener noreferrer"
             >
               <img
-                src={assets.instagram}
+                src={instagram}
                 alt="Instagram"
                 className="w-6 h-6 sm:w-8 sm:h-8 hover:opacity-80 transition duration-200"
               />
@@ -43,7 +43,7 @@ const Footer = () => {
               rel="noopener noreferrer"
             >
               <img
-                src={assets.linkedin}
+                src={linkedin}
                 alt="LinkedIn"
                 className="w-6 h-6 sm:w-8 sm:h-8 hover:opacity-80 transition duration-200"
               />

@@ -1,7 +1,7 @@
 import { Rocket, Award, Lightbulb } from "lucide-react"; // Added icons for services and timeline
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { assets } from "../assets/assets";
+import { aboutus, Revolution } from "../assets";
 
 const AboutUsPage = () => {
   return (
@@ -46,7 +46,7 @@ const AboutUsPage = () => {
 
           <div className="w-full lg:w-[42%] flex justify-center items-center mt-2 sm:mt-28">
             <img
-              src={assets.aboutus}
+              src={aboutus}
               alt=""
               className=" w-full h-auto object-contain rounded-3xl hover:scale-105 transition-all duration-300"
             />
@@ -75,7 +75,7 @@ const AboutUsPage = () => {
             <div className="w-full lg:w-1/2 order-1 lg:order-2 flex justify-center">
               <div className="relative group max-w-[500px] w-full">
                 <img
-                  src={assets.Revolution}
+                  src={Revolution}
                   alt="Students engaged in innovative learning"
                   className="relative z-10 rounded-2xl shadow-lg w-full h-auto max-h-[400px] object-cover transition-transform duration-300 group-hover:scale-105"
                   loading="lazy"

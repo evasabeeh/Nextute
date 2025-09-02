@@ -1,6 +1,6 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
-import { assets } from "../assets/assets";
+import { logo, upload_area, menu_icon, cross_icon } from "../assets";
 import { useContext, useState, useEffect, useRef } from "react";
 import { AppContext } from "../context/AppContext";
 import toast from "react-hot-toast";
@@ -78,7 +78,7 @@ const Navbar = () => {
     <div className="w-full max-w-[94rem] h-24 mx-auto flex items-center justify-between py-4 px-4 sm:px-8 relative">
       <NavLink to="/">
         <img
-          src={assets.logo}
+          src={logo}
           alt="Nextute Logo"
           className="w-28 sm:w-32 lg:w-40"
         />
@@ -126,7 +126,7 @@ const Navbar = () => {
                 />
               ) : (
                 <img
-                  src={assets.upload_area}
+                  src={upload_area}
                   alt="profile icon"
                   className="w-full h-full rounded-full object-cover"
                 />
@@ -190,7 +190,7 @@ const Navbar = () => {
       </nav>
 
       <img
-        src={assets.menu_icon}
+        src={menu_icon}
         alt="menu-icon"
         onClick={() => setShowMenu(true)}
         className="w-6 md:hidden cursor-pointer"
@@ -202,9 +202,9 @@ const Navbar = () => {
         }`}
       >
         <div className="flex items-center justify-between px-5 py-6 border-b">
-          <img src={assets.logo} alt="logo" className="w-28" />
+          <img src={logo} alt="logo" className="w-28" />
           <img
-            src={assets.cross_icon}
+            src={cross_icon}
             alt="close"
             onClick={() => setShowMenu(false)}
             className="w-6 h-6 cursor-pointer"

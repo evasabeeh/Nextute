@@ -6,7 +6,7 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Card from "../components/Card";
 import LoadingSpinner from "../components/LoadingSpinner";
-import { assets } from "../assets/assets";
+import { Not_found } from "../assets";
 import useInstitutes from "../hooks/useInstitutes";
 
 function parseJSONSafe(str) {
@@ -386,7 +386,7 @@ const InstituteOnLocation = () => {
             >
               <img
                 src={
-                  assets.Not_found ||
+                  Not_found ||
                   "https://via.placeholder.com/200?text=No+Image"
                 }
                 alt="No institutes found"
