@@ -1,4 +1,5 @@
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
+import { assets } from "../assets/assets";
 
 const TestimonialCard = ({ text, quote, author, rating }) => {
   const renderStars = (rating) => {
@@ -30,12 +31,29 @@ const TestimonialCard = ({ text, quote, author, rating }) => {
     return <div className="flex justify-center gap-1 mb-4">{stars}</div>;
   };
 
+  // Determine if the author is likely male or female based on name
+  const isFemale = (name) => {
+    // Common female names in the testimonials
+    const femaleNames = ["priya", "sneha", "ananya", "kavya", "meera"];
+    const firstName = name.split(" ")[0].toLowerCase();
+    return femaleNames.includes(firstName);
+  };
+
+  // Choose image based on gender
+  const getProfileImage = () => {
+    if (isFemale(author)) {
+      return assets.test2; // Female testimonial image
+    } else {
+      return assets.test3; // Male testimonial image
+    }
+  };
+
   return (
     <div className="my-20 flex items-center justify-center px-4">
       <div className="polygon relative bg-gradient-to-t from-[#ffffff] to-[#e8f3e2] rounded-[60px] max-w-xl w-full p-8 pt-16 text-center shadow-lg">
         <div className="absolute top-[-40px] left-0 rounded-full w-24 h-24 flex items-center justify-center shadow-xl">
           <img
-            src="testimonialdp.jpg"
+            src={getProfileImage()}
             alt="Profile"
             className="rounded-full w-full h-full object-cover"
           />
