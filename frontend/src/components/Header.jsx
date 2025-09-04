@@ -1,4 +1,4 @@
-import { cities } from "../assets";
+import { cities } from "../assets/index.js";
 import SearchBar from "./SearchBar.jsx";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
