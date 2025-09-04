@@ -4709,3 +4709,4 @@
 {"level":"info","message":{"ip":"::1","method":"GET","timestamp":"2025-09-04T09:46:06.714Z","url":"/api/employees/members"},"timestamp":"2025-09-04T09:46:06.714Z"}
 {"level":"info","message":{"ip":"::1","method":"GET","timestamp":"2025-09-04T09:46:06.722Z","url":"/api/employees/members"},"timestamp":"2025-09-04T09:46:06.722Z"}
 {"level":"info","message":{"ip":"::1","method":"GET","timestamp":"2025-09-04T21:42:05.233Z","url":"/api/institutes/all-institutes"},"timestamp":"2025-09-04T21:42:05.234Z"}
+{"level":"info","message":{"ip":"::1","method":"POST","timestamp":"2025-09-04T21:43:47.969Z","url":"/api/students/auth/login"},"timestamp":"2025-09-04T21:43:47.969Z"}
