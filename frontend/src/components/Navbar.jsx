@@ -1,6 +1,7 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
-import { logo, upload_area, menu_icon, cross_icon } from "../assets";
+import { upload_area, menu_icon, cross_icon } from "../assets";
+import logo from "../assets/logo.svg";
 import { useContext, useState, useEffect, useRef } from "react";
 import { AppContext } from "../context/AppContext";
 import toast from "react-hot-toast";

@@ -363,6 +363,7 @@ const StudentServicesPage = ({ onBack }) => {
             slidesPerView={1}
             slidesPerGroup={1}
             navigation
+            loop={true}
             pagination={{ clickable: true }}
             autoplay={{ delay: 5000, disableOnInteraction: false }}
             breakpoints={{
