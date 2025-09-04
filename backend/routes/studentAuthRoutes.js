@@ -16,7 +16,6 @@ import { validateEmailDomain } from "../middlewares/emailValidationMiddleware.js
 
 const router = express.Router();
 
-
 router.get("/all", fetchAllStudents);
 router.get("/:id", fetchStudentById);
 router.put("/:id", editStudentById);
@@ -28,6 +27,6 @@ router.post("/resend-verification", resendVerificationCode);
 router.post("/auth/login", login);
 router.post("/logout", studentAuth, logout);
 
-router.delete("/auth/delete", studentAuth, deleteStudent);
+router.delete("/auth/delete", deleteStudent);
 
 export default router;

@@ -4,7 +4,7 @@ import sendVerificationEmail from "../utils/emailSender.js";
 import { handleError } from "../utils/errorHandler.js";
 import { body, validationResult } from "express-validator";
 import prisma from "../db/index.js";
-import { getAllStudents, findStudentById } from "../models/studentModel.js";
+import { getAllStudents, findStudentById, findStudentByEmail, deleteStudentByEmail } from "../models/studentModel.js";
 
 //Singup a new student
 export const signup = [

@@ -65,15 +65,20 @@ const StudentsList = () => {
     fetchStudents();
   }, [apiUrl]);
 
-  const handleDelete = async (studentId) => {
+  const handleDelete = async (studentEmail) => {
+    if (!window.confirm('Are you sure you want to delete this student?')) return;
+    const token = localStorage.getItem('token');
     try {
       const res = await fetch(`${apiUrl}/api/students/auth/delete`, {
         method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: studentId }),
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { "Authorization": `Bearer ${token}` } : {}),
+        },
+        body: JSON.stringify({ email: studentEmail }),
       });
       if (!res.ok) throw new Error("Failed to delete student");
-      setStudents((prev) => prev.filter((s) => s.id !== studentId));
+      setStudents((prev) => prev.filter((s) => s.email !== studentEmail));
       toast.success("Student deleted successfully!", {
         position: "top-right",
         style: { background: "#E6EDE2", color: "#144E53", borderRadius: "8px" },
@@ -185,10 +190,10 @@ const StudentsList = () => {
                             />
                           </svg>
                         </motion.button>
-                        {/* <motion.button
+                        <motion.button
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
-                          onClick={() => handleDelete(student.id)}
+                          onClick={() => handleDelete(student.email)}
                           className="p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 min-w-[40px] min-h-[40px]"
                           aria-label="Delete Student"
                         >
@@ -205,7 +210,7 @@ const StudentsList = () => {
                               d="M6 18L18 6M6 6l12 12"
                             />
                           </svg>
-                        </motion.button> */}
+                        </motion.button>
                       </td>
                     </motion.tr>
                   ))}

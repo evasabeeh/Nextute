@@ -5807,6 +5807,8 @@ export namespace Prisma {
   }
 
   export type AdminMinAggregateOutputType = {
+    id: string | null
+    name: string | null
     email: string | null
     password: string | null
     created_at: Date | null
@@ -5814,6 +5816,8 @@ export namespace Prisma {
   }
 
   export type AdminMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
     email: string | null
     password: string | null
     created_at: Date | null
@@ -5821,6 +5825,8 @@ export namespace Prisma {
   }
 
   export type AdminCountAggregateOutputType = {
+    id: number
+    name: number
     email: number
     password: number
     created_at: number
@@ -5830,6 +5836,8 @@ export namespace Prisma {
 
 
   export type AdminMinAggregateInputType = {
+    id?: true
+    name?: true
     email?: true
     password?: true
     created_at?: true
@@ -5837,6 +5845,8 @@ export namespace Prisma {
   }
 
   export type AdminMaxAggregateInputType = {
+    id?: true
+    name?: true
     email?: true
     password?: true
     created_at?: true
@@ -5844,6 +5854,8 @@ export namespace Prisma {
   }
 
   export type AdminCountAggregateInputType = {
+    id?: true
+    name?: true
     email?: true
     password?: true
     created_at?: true
@@ -5924,6 +5936,8 @@ export namespace Prisma {
   }
 
   export type AdminGroupByOutputType = {
+    id: string
+    name: string
     email: string
     password: string
     created_at: Date
@@ -5948,6 +5962,8 @@ export namespace Prisma {
 
 
   export type AdminSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
     email?: boolean
     password?: boolean
     created_at?: boolean
@@ -5955,6 +5971,8 @@ export namespace Prisma {
   }, ExtArgs["result"]["admin"]>
 
   export type AdminSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
     email?: boolean
     password?: boolean
     created_at?: boolean
@@ -5962,6 +5980,8 @@ export namespace Prisma {
   }, ExtArgs["result"]["admin"]>
 
   export type AdminSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
     email?: boolean
     password?: boolean
     created_at?: boolean
@@ -5969,18 +5989,22 @@ export namespace Prisma {
   }, ExtArgs["result"]["admin"]>
 
   export type AdminSelectScalar = {
+    id?: boolean
+    name?: boolean
     email?: boolean
     password?: boolean
     created_at?: boolean
     updated_at?: boolean
   }
 
-  export type AdminOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"email" | "password" | "created_at" | "updated_at", ExtArgs["result"]["admin"]>
+  export type AdminOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "created_at" | "updated_at", ExtArgs["result"]["admin"]>
 
   export type $AdminPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Admin"
     objects: {}
     scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
       email: string
       password: string
       created_at: Date
@@ -6068,8 +6092,8 @@ export namespace Prisma {
      * // Get first 10 Admins
      * const admins = await prisma.admin.findMany({ take: 10 })
      * 
-     * // Only select the `email`
-     * const adminWithEmailOnly = await prisma.admin.findMany({ select: { email: true } })
+     * // Only select the `id`
+     * const adminWithIdOnly = await prisma.admin.findMany({ select: { id: true } })
      * 
      */
     findMany<T extends AdminFindManyArgs>(args?: SelectSubset<T, AdminFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -6113,9 +6137,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Create many Admins and only return the `email`
-     * const adminWithEmailOnly = await prisma.admin.createManyAndReturn({
-     *   select: { email: true },
+     * // Create many Admins and only return the `id`
+     * const adminWithIdOnly = await prisma.admin.createManyAndReturn({
+     *   select: { id: true },
      *   data: [
      *     // ... provide data here
      *   ]
@@ -6204,9 +6228,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Admins and only return the `email`
-     * const adminWithEmailOnly = await prisma.admin.updateManyAndReturn({
-     *   select: { email: true },
+     * // Update zero or more Admins and only return the `id`
+     * const adminWithIdOnly = await prisma.admin.updateManyAndReturn({
+     *   select: { id: true },
      *   where: {
      *     // ... provide filter here
      *   },
@@ -6408,6 +6432,8 @@ export namespace Prisma {
    * Fields of the Admin model
    */
   interface AdminFieldRefs {
+    readonly id: FieldRef<"Admin", 'String'>
+    readonly name: FieldRef<"Admin", 'String'>
     readonly email: FieldRef<"Admin", 'String'>
     readonly password: FieldRef<"Admin", 'String'>
     readonly created_at: FieldRef<"Admin", 'DateTime'>
@@ -9036,6 +9062,8 @@ export namespace Prisma {
 
 
   export const AdminScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
     email: 'email',
     password: 'password',
     created_at: 'created_at',
@@ -9576,6 +9604,8 @@ export namespace Prisma {
     AND?: AdminWhereInput | AdminWhereInput[]
     OR?: AdminWhereInput[]
     NOT?: AdminWhereInput | AdminWhereInput[]
+    id?: UuidFilter<"Admin"> | string
+    name?: StringFilter<"Admin"> | string
     email?: StringFilter<"Admin"> | string
     password?: StringFilter<"Admin"> | string
     created_at?: DateTimeFilter<"Admin"> | Date | string
@@ -9583,6 +9613,8 @@ export namespace Prisma {
   }
 
   export type AdminOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
     email?: SortOrder
     password?: SortOrder
     created_at?: SortOrder
@@ -9590,16 +9622,20 @@ export namespace Prisma {
   }
 
   export type AdminWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
     email?: string
     AND?: AdminWhereInput | AdminWhereInput[]
     OR?: AdminWhereInput[]
     NOT?: AdminWhereInput | AdminWhereInput[]
+    name?: StringFilter<"Admin"> | string
     password?: StringFilter<"Admin"> | string
     created_at?: DateTimeFilter<"Admin"> | Date | string
     updated_at?: DateTimeFilter<"Admin"> | Date | string
-  }, "email">
+  }, "id" | "email">
 
   export type AdminOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
     email?: SortOrder
     password?: SortOrder
     created_at?: SortOrder
@@ -9613,6 +9649,8 @@ export namespace Prisma {
     AND?: AdminScalarWhereWithAggregatesInput | AdminScalarWhereWithAggregatesInput[]
     OR?: AdminScalarWhereWithAggregatesInput[]
     NOT?: AdminScalarWhereWithAggregatesInput | AdminScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"Admin"> | string
+    name?: StringWithAggregatesFilter<"Admin"> | string
     email?: StringWithAggregatesFilter<"Admin"> | string
     password?: StringWithAggregatesFilter<"Admin"> | string
     created_at?: DateTimeWithAggregatesFilter<"Admin"> | Date | string
@@ -10235,6 +10273,8 @@ export namespace Prisma {
   }
 
   export type AdminCreateInput = {
+    id?: string
+    name: string
     email: string
     password: string
     created_at?: Date | string
@@ -10242,6 +10282,8 @@ export namespace Prisma {
   }
 
   export type AdminUncheckedCreateInput = {
+    id?: string
+    name: string
     email: string
     password: string
     created_at?: Date | string
@@ -10249,6 +10291,8 @@ export namespace Prisma {
   }
 
   export type AdminUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10256,6 +10300,8 @@ export namespace Prisma {
   }
 
   export type AdminUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10263,6 +10309,8 @@ export namespace Prisma {
   }
 
   export type AdminCreateManyInput = {
+    id?: string
+    name: string
     email: string
     password: string
     created_at?: Date | string
@@ -10270,6 +10318,8 @@ export namespace Prisma {
   }
 
   export type AdminUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10277,6 +10327,8 @@ export namespace Prisma {
   }
 
   export type AdminUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10910,6 +10962,8 @@ export namespace Prisma {
   }
 
   export type AdminCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
     email?: SortOrder
     password?: SortOrder
     created_at?: SortOrder
@@ -10917,6 +10971,8 @@ export namespace Prisma {
   }
 
   export type AdminMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
     email?: SortOrder
     password?: SortOrder
     created_at?: SortOrder
@@ -10924,6 +10980,8 @@ export namespace Prisma {
   }
 
   export type AdminMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
     email?: SortOrder
     password?: SortOrder
     created_at?: SortOrder

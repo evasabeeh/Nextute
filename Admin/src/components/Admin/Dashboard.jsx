@@ -61,27 +61,27 @@ const Dashboard = () => {
 
   const summaryCards = [
     {
-      title: "Total Institutes",
+      title: "Institutes",
       value: adminData?.totalInstitutes ?? 0,
       icon: <FaSchool className="text-[#2D7A66] w-6 sm:w-8 h-6 sm:h-8" />,
     },
     {
-      title: "Total Students",
+      title: "Students",
       value: adminData?.totalStudents ?? 0,
       icon: <FaUsers className="text-[#2D7A66] w-6 sm:w-8 h-6 sm:h-8" />,
     },
     {
-      title: "Total Jobs",
+      title: "Jobs",
       value: Array.isArray(adminData?.jobs) ? adminData.jobs.length : 0,
       icon: <FaBriefcase className="text-[#2D7A66] w-6 sm:w-8 h-6 sm:h-8" />,
     },
     {
-      title: "Total Reviews",
+      title: "Reviews",
       value: Array.isArray(adminData?.reviews) ? adminData.reviews.length : 0,
       icon: <FaStar className="text-[#2D7A66] w-6 sm:w-8 h-6 sm:h-8" />,
     },
     {
-      title: "Team Members",
+      title: "Team",
       value: Array.isArray(adminData?.team) ? adminData.team.length : 0,
       icon: <FaUserTie className="text-[#2D7A66] w-6 sm:w-8 h-6 sm:h-8" />,
     },
@@ -113,7 +113,7 @@ const Dashboard = () => {
           transition={{ duration: 0.5, ease: "easeOut" }}
           className="flex-1 p-4 sm:p-6 lg:p-8 overflow-x-hidden overflow-y-auto scrollbar-thin"
         >
-          {/* Hero Section */}
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -179,7 +179,7 @@ const Dashboard = () => {
                     scale: 1.02,
                     boxShadow: "0 4px 15px rgba(0, 0, 0, 0.1)",
                   }}
-                  className="bg-[#E6EDE2] rounded-2xl shadow-md p-4 sm:p-6 flex items-center gap-3 sm:gap-4 border border-[#2D7A66]/20 min-w-0"
+                  className="bg-[#E6EDE2] rounded-2xl shadow-md p-4 flex items-center gap-3 sm:gap-4 border border-[#2D7A66]/20 min-w-0"
                 >
                   {card.icon}
                   <div>

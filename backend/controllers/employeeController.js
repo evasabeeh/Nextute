@@ -84,7 +84,6 @@ const getEmployee = async (req, res) => {
   }
 };
 
-
 // Edit Employee by CertificateNo
 const editEmployee = async (req, res) => {
   const { certificateNo } = req.params;

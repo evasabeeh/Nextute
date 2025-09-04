@@ -5,12 +5,8 @@ const router = express.Router();
 
 router.post("/", createEmployee);
 router.get("/members", getEmployees);
-
-router.get("/member/:certificateNo", getEmployee); // Changed from :certificateId to :certificateNo
-// Edit member by certificateNo
+router.get("/member/:certificateNo", getEmployee);
 router.put("/member/:certificateNo", editEmployee);
-// Delete member by certificateNo
 router.delete("/member/:certificateNo", deleteEmployee);
-
 
 export default router;
