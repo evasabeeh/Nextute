@@ -1,7 +1,10 @@
-import StudentServicesPage from "./StudentServicesPage";
-import InstituteServicesPage from "./InstituteServicesPage";
+import React, { Suspense, lazy } from "react";
 import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
+import LoadingSpinner from "../components/LoadingSpinner"; // Assuming this path is correct
+
+const StudentServicesPage = lazy(() => import("./StudentServicesPage"));
+const InstituteServicesPage = lazy(() => import("./InstituteServicesPage"));
 
 const onBack = () => {
   window.history.back();
@@ -10,10 +13,14 @@ const onBack = () => {
 const ServicesPage = () => {
   const { userType } = useContext(AppContext);
 
-  return userType === "institute" ? (
-    <InstituteServicesPage onBack={onBack} />
-  ) : (
-    <StudentServicesPage onBack={onBack} />
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      {userType === "institute" ? (
+        <InstituteServicesPage onBack={onBack} />
+      ) : (
+        <StudentServicesPage onBack={onBack} />
+      )}
+    </Suspense>
   );
 };
 

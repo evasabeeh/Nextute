@@ -187,6 +187,7 @@ const MemberDetails = () => {
                           `QR code loaded successfully for ${member.fullName}`
                         )
                       }
+                      loading="lazy"
                     />
                     <p className="text-xs sm:text-sm text-[#2D7A66] mt-2 text-center font-medium">
                       Scan to share profile
@@ -352,6 +353,7 @@ const MemberDetails = () => {
                         `Certificate image loaded successfully for ${member.fullName}`
                       )
                     }
+                    loading="lazy"
                   />
                 ) : (
                   <iframe

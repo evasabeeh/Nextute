@@ -341,6 +341,7 @@ const BlogPage = () => {
                       <img
                         src={post.image}
                         alt={post.title}
+                        loading="lazy"
                         className="w-12 h-12 rounded-lg object-cover"
                       />
                       <div className="flex-1 min-w-0">
@@ -499,6 +500,7 @@ const BlogPage = () => {
                         <img
                           src={post.image}
                           alt={post.title}
+                          loading="lazy"
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                         <div className="absolute top-3 left-3 flex gap-2">

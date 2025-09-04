@@ -1,4 +1,5 @@
-import { logo, instagram, linkedin } from "../assets";
+import logo from "../assets/logo.svg";
+import { instagram, linkedin } from "../assets";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
