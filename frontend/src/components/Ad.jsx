@@ -89,9 +89,7 @@ const Ad = () => {
                 "Not Available"
               }
               contact={institute.contact || "+91 91234 56789"}
-              // ... existing code ...
               image={institute.basic_info?.logo || assets.coaching}
-// ... existing code ...
               tags={
                 Array.isArray(institute.basic_info?.exams)
                   ? institute.basic_info.exams
@@ -136,10 +134,7 @@ const Ad = () => {
         ) : (
           <div className="col-span-full flex flex-col items-center justify-center p-6 sm:p-8 bg-teal-50 rounded-2xl border border-gray-200 shadow-md hover:shadow-lg transition-all duration-300">
             <img
-              src={
-                Not_found ||
-                "https://via.placeholder.com/200?text=No+Image"
-              }
+              src={Not_found || "https://via.placeholder.com/200?text=No+Image"}
               alt="No institutes found"
               className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 mb-4 opacity-90"
               loading="lazy"

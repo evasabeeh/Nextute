@@ -291,3 +291,10 @@ const InstituteMedia = () => {
 };
 
 export default InstituteMedia;
+
+<img
+  src={media.url}
+  alt={media.caption || "Gallery image"}
+  className="w-full h-full object-cover rounded-lg"
+  loading="lazy"
+/>

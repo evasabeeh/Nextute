@@ -56,6 +56,7 @@ const TestimonialCard = ({ text, quote, author, rating }) => {
             src={getProfileImage()}
             alt="Profile"
             className="rounded-full w-full h-full object-cover"
+            loading="lazy"
           />
         </div>
         {renderStars(rating)}

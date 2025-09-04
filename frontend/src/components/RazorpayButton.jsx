@@ -1,5 +1,5 @@
 import React from 'react';
-
+import logo from "../assets/logo.svg";
 const RazorpayButton = ({ plan, billingCycle, userType }) => {
   const handlePayment = async () => {
     const amount = plan.price[billingCycle];
@@ -14,15 +14,15 @@ const RazorpayButton = ({ plan, billingCycle, userType }) => {
       currency: 'INR',
       name: 'Nextute',
       description: `Payment for ${plan.name} - ${billingCycle}`,
-      image: 'https://example.com/your_logo.png', // Replace with your logo URL
+      image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.nextute.com%2F&psig=AOvVaw1Iz1i74iPzJzqP15osH5Rk&ust=1757111056543000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCMC4vfeSwI8DFQAAAAAdAAAAABAE', // Replace with your logo URL
       handler: function (response) {
         alert(`Payment successful. Payment ID: ${response.razorpay_payment_id}`);
         // You can handle the success response here (e.g., update user subscription)
       },
       prefill: {
-        name: 'Test User', // Replace with user's name
-        email: 'test.user@example.com', // Replace with user's email
-        contact: '9999999999', // Replace with user's contact number
+        name: '', // Replace with user's name
+        email: '', // Replace with user's email
+        contact: '', // Replace with user's contact number
       },
       notes: {
         plan_id: plan.id,
