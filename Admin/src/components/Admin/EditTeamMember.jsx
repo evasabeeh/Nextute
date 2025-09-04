@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { motion } from "framer-motion";
@@ -11,6 +11,7 @@ const EditTeamMember = () => {
   const { certificateNo } = useParams();
   const navigate = useNavigate();
   const [employee, setEmployee] = useState({
+    idNo: "",
     certificateNo: "",
     fullName: "",
     email: "",
@@ -39,6 +40,7 @@ const EditTeamMember = () => {
         })
         .then((data) => {
           setEmployee({
+            idNo: data.idNo || "",
             certificateNo: data.certificateNo || "",
             fullName: data.fullName || "",
             email: data.email || "",
@@ -61,6 +63,7 @@ const EditTeamMember = () => {
 
   const validateForm = () => {
     const errors = {};
+    if (!employee.idNo.trim()) errors.idNo = "ID No is required";
     if (!employee.fullName.trim()) errors.fullName = "Full Name is required";
     if (!employee.designation.trim()) errors.designation = "Designation is required";
     if (!employee.email.trim() || !/^\S+@\S+\.\S+$/.test(employee.email))
@@ -80,7 +83,7 @@ const EditTeamMember = () => {
       if (certificateNo) {
         url = `${apiUrl}/api/employees/member/${certificateNo}`;
         method = "PUT";
-        // Use FormData for image upload
+
         payload = new FormData();
         Object.entries(employee).forEach(([key, value]) => {
           if (key === "joiningDate" && value) {
@@ -95,7 +98,18 @@ const EditTeamMember = () => {
       } else {
         url = `${apiUrl}/api/employees/`;
         method = "POST";
-        payload = JSON.stringify(employee);
+
+        payload = new FormData();
+        Object.entries(employee).forEach(([key, value]) => {
+          if (key === "joiningDate" && value) {
+            payload.append(key, new Date(value).toISOString());
+          } else {
+            payload.append(key, value);
+          }
+        });
+        if (imageFile) {
+          payload.append("image", imageFile);
+        }
       }
       const res = await fetch(url, {
         method,
@@ -168,65 +182,70 @@ const EditTeamMember = () => {
             className="bg-white bg-opacity-95 backdrop-blur-xl rounded-2xl shadow-xl p-4 sm:p-6 border border-[#2D7A66]/10"
           >
             <div className="space-y-4 sm:space-y-6">
-              <motion.div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
-                <label className="text-sm sm:text-base font-medium text-[#144E53] capitalize w-24">Certificate No</label>
-                <div className="flex-1">
-                  <input type="text" name="certificateNo" value={employee.certificateNo} onChange={handleChange} className="w-full p-3 border border-[#2D7A66] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#93E9A2] transition-all bg-[#E6EDE2] text-gray-700 text-sm sm:text-base" placeholder="Enter Certificate No" aria-label="Certificate No" />
-                  {formErrors.certificateNo && <p className="text-red-500 text-xs sm:text-sm mt-1">{formErrors.certificateNo}</p>}
+
+              <motion.div className="flex flex-row gap-4 w-full">
+                <div className="flex-1 flex items-center gap-2">
+                  <label className="text-sm sm:text-base font-medium text-[#144E53] capitalize whitespace-nowrap">ID No</label>
+                  <input type="text" name="idNo" value={employee.idNo} onChange={handleChange} className="flex-1 p-3 border border-[#2D7A66] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#93E9A2] transition-all bg-[#E6EDE2] text-gray-700 text-sm sm:text-base" placeholder="Enter ID No" aria-label="ID No" />
+                  {formErrors.idNo && <p className="text-red-500 text-xs sm:text-sm ml-2">{formErrors.idNo}</p>}
+                </div>
+                <div className="flex-1 flex items-center gap-2">
+                  <label className="text-sm sm:text-base font-medium text-[#144E53] capitalize whitespace-nowrap">Certificate No</label>
+                  <input type="text" name="certificateNo" value={employee.certificateNo} onChange={handleChange} className="flex-1 p-3 border border-[#2D7A66] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#93E9A2] transition-all bg-[#E6EDE2] text-gray-700 text-sm sm:text-base" placeholder="Enter Certificate No" aria-label="Certificate No" />
+                  {formErrors.certificateNo && <p className="text-red-500 text-xs sm:text-sm ml-2">{formErrors.certificateNo}</p>}
                 </div>
               </motion.div>
-              <motion.div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
-                <label className="text-sm sm:text-base font-medium text-[#144E53] capitalize w-24">Full Name</label>
-                <div className="flex-1">
-                  <input type="text" name="fullName" value={employee.fullName} onChange={handleChange} className="w-full p-3 border border-[#2D7A66] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#93E9A2] transition-all bg-[#E6EDE2] text-gray-700 text-sm sm:text-base" placeholder="Enter Full Name" aria-label="Full Name" />
-                  {formErrors.fullName && <p className="text-red-500 text-xs sm:text-sm mt-1">{formErrors.fullName}</p>}
+
+              <motion.div className="flex flex-row gap-4 w-full">
+                <div className="flex-1 flex items-center gap-2">
+                  <label className="text-sm sm:text-base font-medium text-[#144E53] capitalize whitespace-nowrap">Name</label>
+                  <input type="text" name="fullName" value={employee.fullName} onChange={handleChange} className="flex-1 p-3 border border-[#2D7A66] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#93E9A2] transition-all bg-[#E6EDE2] text-gray-700 text-sm sm:text-base" placeholder="Enter Full Name" aria-label="Full Name" />
+                  {formErrors.fullName && <p className="text-red-500 text-xs sm:text-sm ml-2">{formErrors.fullName}</p>}
+                </div>
+                <div className="flex-1 flex items-center gap-2">
+                  <label className="text-sm sm:text-base font-medium text-[#144E53] capitalize whitespace-nowrap">Joining Date</label>
+                  <input type="date" name="joiningDate" value={employee.joiningDate} onChange={handleChange} className="flex-1 p-3 border border-[#2D7A66] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#93E9A2] transition-all bg-[#E6EDE2] text-gray-700 text-sm sm:text-base" aria-label="Joining Date" />
                 </div>
               </motion.div>
-              <motion.div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
-                <label className="text-sm sm:text-base font-medium text-[#144E53] capitalize w-24">Email</label>
-                <div className="flex-1">
-                  <input type="email" name="email" value={employee.email} onChange={handleChange} className="w-full p-3 border border-[#2D7A66] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#93E9A2] transition-all bg-[#E6EDE2] text-gray-700 text-sm sm:text-base" placeholder="Enter Email" aria-label="Email" />
-                  {formErrors.email && <p className="text-red-500 text-xs sm:text-sm mt-1">{formErrors.email}</p>}
+
+              <motion.div className="flex flex-row gap-4 w-full">
+                <div className="flex-1 flex items-center gap-2">
+                  <label className="text-sm sm:text-base font-medium text-[#144E53] capitalize whitespace-nowrap">Email</label>
+                  <input type="email" name="email" value={employee.email} onChange={handleChange} className="flex-1 p-3 border border-[#2D7A66] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#93E9A2] transition-all bg-[#E6EDE2] text-gray-700 text-sm sm:text-base" placeholder="Enter Email Address" aria-label="ID No" />
+                  {formErrors.idNo && <p className="text-red-500 text-xs sm:text-sm ml-2">{formErrors.email}</p>}
+                </div>
+                <div className="flex-1 flex items-center gap-2">
+                  <label className="text-sm sm:text-base font-medium text-[#144E53] capitalize whitespace-nowrap">Phone Number</label>
+                  <input type="text" name="phoneNumber" value={employee.phoneNumber} onChange={handleChange} className="flex-1 p-3 border border-[#2D7A66] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#93E9A2] transition-all bg-[#E6EDE2] text-gray-700 text-sm sm:text-base" placeholder="Enter Phone Number" aria-label="Certificate No" />
+                  {formErrors.certificateNo && <p className="text-red-500 text-xs sm:text-sm ml-2">{formErrors.phoneNumber}</p>}
                 </div>
               </motion.div>
-              <motion.div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
-                <label className="text-sm sm:text-base font-medium text-[#144E53] capitalize w-24">Phone Number</label>
-                <div className="flex-1">
-                  <input type="text" name="phoneNumber" value={employee.phoneNumber} onChange={handleChange} className="w-full p-3 border border-[#2D7A66] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#93E9A2] transition-all bg-[#E6EDE2] text-gray-700 text-sm sm:text-base" placeholder="Enter Phone Number" aria-label="Phone Number" />
+
+              <motion.div className="flex flex-row gap-4 w-full">
+                <div className="flex-1 flex items-center gap-2">
+                  <label className="text-sm sm:text-base font-medium text-[#144E53] capitalize whitespace-nowrap">Designation</label>
+                  <input type="text" name="designation" value={employee.designation} onChange={handleChange} className="flex-1 p-3 border border-[#2D7A66] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#93E9A2] transition-all bg-[#E6EDE2] text-gray-700 text-sm sm:text-base" placeholder="Enter Designation" aria-label="Designation" />
+                  {formErrors.designation && <p className="text-red-500 text-xs sm:text-sm ml-2">{formErrors.designation}</p>}
+                </div>
+                <div className="flex-1 flex items-center gap-2">
+                  <label className="text-sm sm:text-base font-medium text-[#144E53] capitalize whitespace-nowrap">Department</label>
+                  <input type="text" name="department" value={employee.department} onChange={handleChange} className="flex-1 p-3 border border-[#2D7A66] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#93E9A2] transition-all bg-[#E6EDE2] text-gray-700 text-sm sm:text-base" placeholder="Enter Department" aria-label="Department" />
                 </div>
               </motion.div>
-              <motion.div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
-                <label className="text-sm sm:text-base font-medium text-[#144E53] capitalize w-24">Joining Date</label>
-                <div className="flex-1">
-                  <input type="date" name="joiningDate" value={employee.joiningDate} onChange={handleChange} className="w-full p-3 border border-[#2D7A66] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#93E9A2] transition-all bg-[#E6EDE2] text-gray-700 text-sm sm:text-base" aria-label="Joining Date" />
+
+              <motion.div className="flex flex-row gap-4 w-full">
+                <div className="flex-1 flex items-center gap-2">
+                  <label className="text-sm sm:text-base font-medium text-[#144E53] capitalize whitespace-nowrap">Image</label>
+                  <div className="flex-1">
+                    <input type="file" name="image" accept="image/*" onChange={handleImageChange} className="w-full p-3 border border-[#2D7A66] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#93E9A2] transition-all bg-[#E6EDE2] text-gray-700 text-sm sm:text-base" aria-label="Image" />
+                    {imagePreview && imagePreview !== "" ? (
+                      <img src={imagePreview} alt="Preview" className="w-24 h-24 rounded-full object-cover mt-2" />
+                    ) : null}
+                  </div>
                 </div>
-              </motion.div>
-              <motion.div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
-                <label className="text-sm sm:text-base font-medium text-[#144E53] capitalize w-24">Designation</label>
-                <div className="flex-1">
-                  <input type="text" name="designation" value={employee.designation} onChange={handleChange} className="w-full p-3 border border-[#2D7A66] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#93E9A2] transition-all bg-[#E6EDE2] text-gray-700 text-sm sm:text-base" placeholder="Enter Designation" aria-label="Designation" />
-                  {formErrors.designation && <p className="text-red-500 text-xs sm:text-sm mt-1">{formErrors.designation}</p>}
-                </div>
-              </motion.div>
-              <motion.div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
-                <label className="text-sm sm:text-base font-medium text-[#144E53] capitalize w-24">Department</label>
-                <div className="flex-1">
-                  <input type="text" name="department" value={employee.department} onChange={handleChange} className="w-full p-3 border border-[#2D7A66] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#93E9A2] transition-all bg-[#E6EDE2] text-gray-700 text-sm sm:text-base" placeholder="Enter Department" aria-label="Department" />
-                </div>
-              </motion.div>
-              <motion.div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
-                <label className="text-sm sm:text-base font-medium text-[#144E53] capitalize w-24">Image</label>
-                <div className="flex-1">
-                  <input type="file" name="image" accept="image/*" onChange={handleImageChange} className="w-full p-3 border border-[#2D7A66] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#93E9A2] transition-all bg-[#E6EDE2] text-gray-700 text-sm sm:text-base" aria-label="Image" />
-                  {imagePreview && (
-                    <img src={imagePreview} alt="Preview" className="w-24 h-24 rounded-full object-cover mt-2" />
-                  )}
-                </div>
-              </motion.div>
-              <motion.div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
-                <label className="text-sm sm:text-base font-medium text-[#144E53] capitalize w-24">Certificate URL</label>
-                <div className="flex-1">
-                  <input type="text" name="certificateURL" value={employee.certificateURL} onChange={handleChange} className="w-full p-3 border border-[#2D7A66] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#93E9A2] transition-all bg-[#E6EDE2] text-gray-700 text-sm sm:text-base" placeholder="Enter Certificate URL" aria-label="Certificate URL" />
+                <div className="flex-1 flex items-center gap-2">
+                  <label className="text-sm sm:text-base font-medium text-[#144E53] capitalize whitespace-nowrap">Certificate URL</label>
+                  <input type="text" name="certificateURL" value={employee.certificateURL} onChange={handleChange} className="flex-1 p-3 border border-[#2D7A66] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#93E9A2] transition-all bg-[#E6EDE2] text-gray-700 text-sm sm:text-base" placeholder="Enter Certificate URL" aria-label="Certificate URL" />
                 </div>
               </motion.div>
               <motion.div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
