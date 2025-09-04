@@ -19,6 +19,7 @@ import "swiper/css/navigation";
 import TestimonialCard from "../components/TestimonialCard";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import RazorpayButton from "../components/RazorpayButton";
 
 const InstituteServicesPage = ({ onBack }) => {
   const [billingCycle, setBillingCycle] = useState("monthly");
@@ -329,11 +330,7 @@ const InstituteServicesPage = ({ onBack }) => {
                       </div>
                     )}
                   </div>
-                  <button
-                    className={`w-full py-3 px-6 rounded-xl font-semibold text-lg transition-all duration-300 ${plan.buttonStyle} text-white shadow-lg hover:shadow-xl`}
-                  >
-                    {plan.buttonText}
-                  </button>
+                  <RazorpayButton plan={plan} billingCycle={billingCycle} userType="institute" />
                 </div>
               </div>
             ))}
