@@ -241,7 +241,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\evas1\\Downloads\\Devx Alpha\\Nextute\\backend\\db\\generated\\prisma",
+      "value": "C:\\Users\\hp\\Desktop\\New folder (3)\\Nextute\\backend\\db\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -255,12 +255,11 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\evas1\\Downloads\\Devx Alpha\\Nextute\\backend\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\hp\\Desktop\\New folder (3)\\Nextute\\backend\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null,
-    "schemaEnvPath": "../../../.env"
+    "rootEnvPath": null
   },
   "relativePath": "../../../prisma",
   "clientVersion": "6.11.1",

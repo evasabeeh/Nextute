@@ -194,7 +194,7 @@ const StudentLogin = () => {
   return (
     <div className="min-h-screen bg-[#f2fffc]">
       <img
-        src={logo || "/fallback-logo.png"}
+        src={assets.logo || "/fallback-logo.png"}
         alt="Company Logo"
         className="w-32 sm:w-40 flex justify-start ml-20 cursor-pointer"
         onClick={() => navigate("/")}
@@ -253,8 +253,8 @@ const StudentLogin = () => {
               <img
                 src={
                   errors.loginInput
-                    ? crossTick || "/error-icon.png"
-                    : rightTick || "/tick-icon.png"
+                    ? assets.crossTick || "/error-icon.png"
+                    : assets.rightTick || "/tick-icon.png"
                 }
                 alt={errors.loginInput ? "Error" : "Valid"}
                 className="w-5 h-5 mx-2"
@@ -309,8 +309,8 @@ const StudentLogin = () => {
               <img
                 src={
                   errors.password
-                    ? crossTick || "/error-icon.png"
-                    : rightTick || "/tick-icon.png"
+                    ? assets.crossTick || "/error-icon.png"
+                    : assets.rightTick || "/tick-icon.png"
                 }
                 alt={errors.password ? "Error" : "Valid"}
                 className="w-5 h-5 mx-2"

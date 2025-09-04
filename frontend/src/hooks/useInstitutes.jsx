@@ -46,26 +46,44 @@ const useInstitutes = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(
-          `${VITE_BACKEND_BASE_URL}/api/institutes/all-institutes`,
-          { withCredentials: true }
-        );
-
-        console.log("insitutes data ", res);
+        // Default to localhost:3000 if VITE_BACKEND_BASE_URL is not defined
+        const baseUrl = VITE_BACKEND_BASE_URL || 'http://localhost:3000';
         
-        console.log("Institutes API response:", res.data);
-        if (res.data.status) {
-          setInstitutes(res.data.data);
-          setInstitutesLoaded(true);
-          localStorage.setItem(
-            "cachedInstitutes",
-            JSON.stringify({
-              data: res.data.data,
-              timestamp: Date.now(),
-            })
-          );
+        // Make sure the URL is correct and includes http:// or https://
+        const apiUrl = baseUrl.startsWith('http') 
+          ? baseUrl 
+          : `http://${baseUrl}`;
+          
+        const res = await axios.get(
+          `${apiUrl}/api/institutes/all-institutes`,
+          { 
+            withCredentials: true,
+            // Ensure proper headers are set
+            headers: {
+              'Accept': 'application/json'
+            } 
+          }
+        );
+    
+        // Check if response is valid JSON
+        if (res.data && typeof res.data === 'object') {
+          if (res.data.status) {
+            setInstitutes(res.data.data || []);
+            setInstitutesLoaded(true);
+            localStorage.setItem(
+              "cachedInstitutes",
+              JSON.stringify({
+                data: res.data.data || [],
+                timestamp: Date.now(),
+              })
+            );
+          } else {
+            console.error("API returned error status:", res.data);
+            setError(res.data.message || "Data fetch failed");
+          }
         } else {
-          throw new Error(res.data.message || "Data fetch failed");
+          console.error("Invalid response format:", res.data);
+          setError("Received invalid data format from server");
         }
       } catch (err) {
         console.error("Error fetching institutes:", err);
