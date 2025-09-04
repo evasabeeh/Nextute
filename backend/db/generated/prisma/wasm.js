@@ -184,6 +184,8 @@ exports.Prisma.ReviewScalarFieldEnum = {
 };
 
 exports.Prisma.AdminScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
   email: 'email',
   password: 'password',
   created_at: 'created_at',

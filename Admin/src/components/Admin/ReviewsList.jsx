@@ -76,8 +76,13 @@ const ReviewsList = () => {
   }
 
   const handleDelete = async (id) => {
+    if (!window.confirm('Are you sure you want to delete this review?')) return;
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const res = await fetch(`${apiUrl}/api/feedback/reviews/${id}`, {
+        method: 'DELETE',
+      });
+      if (!res.ok) throw new Error('Failed to delete');
+      setReviews((prev) => prev.filter((review) => review.id !== id));
       toast.success("Review deleted successfully!", {
         position: "top-right",
         style: { background: "#E6EDE2", color: "#144E53", borderRadius: "8px" },
@@ -163,7 +168,7 @@ const ReviewsList = () => {
                         />
                       </svg>
                     </motion.button> */}
-                    {/* <motion.button
+                    <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => handleDelete(review.id)}
@@ -173,7 +178,7 @@ const ReviewsList = () => {
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                       </svg>
-                    </motion.button> */}
+                    </motion.button>
                   </div>
                 </motion.div>
               ))}

@@ -9,6 +9,7 @@ import {
   FaBriefcase,
   FaUserTie,
   FaSignOutAlt,
+  FaUserShield,
 } from "react-icons/fa";
 
 const SidePanel = () => {
@@ -42,10 +43,9 @@ const SidePanel = () => {
       icon: <FaUserTie className="w-5 h-5" />,
     },
     {
-      name: "Logout",
-      path: "#",
-      icon: <FaSignOutAlt className="w-5 h-5" />,
-      action: () => alert("Logged out!"),
+      name: "Admin",
+      path: "/admin/all-admins",
+      icon: <FaUserShield className="w-5 h-5" />,
     },
   ];
 
