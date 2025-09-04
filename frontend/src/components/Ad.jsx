@@ -83,12 +83,15 @@ const Ad = () => {
                 institute.institute_name ||
                 "Unnamed Institute"
               }
+              
               address={
                 institute.contact_details?.headOffice?.address ||
                 "Not Available"
               }
               contact={institute.contact || "+91 91234 56789"}
-              image={institute.basic_info?.logo || coaching}
+              // ... existing code ...
+              image={institute.basic_info?.logo || assets.coaching}
+// ... existing code ...
               tags={
                 Array.isArray(institute.basic_info?.exams)
                   ? institute.basic_info.exams
