@@ -45,4 +45,26 @@ const sendVerificationEmail = async (email, code) => {
   await transporter.sendMail(mailOptions);
 };
 
+
+export const sendAdminAlertEmail = async (action, adminEmail) => {
+  const mailOptions = {
+    from: emailConfig.from,
+    to: process.env.EMAIL_USER,
+    subject: `Admin ${action} Alert`,
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eaeaea; border-radius: 10px;">
+        <h2 style="color: #333;">Admin ${action} Notification</h2>
+        <p>An admin has just <strong>${action}</strong>.</p>
+        <p>Email: <strong>${adminEmail}</strong></p>
+        <p>Time: ${new Date().toLocaleString()}</p>
+        <hr style="margin-top: 30px;" />
+        <div style="font-size: 12px; color: #888; text-align: center;">
+          © ${new Date().getFullYear()} Nextute. All rights reserved.
+        </div>
+      </div>
+    `,
+  };
+  await transporter.sendMail(mailOptions);
+};
+
 export default sendVerificationEmail;

@@ -1,3 +1,4 @@
+import { sendAdminAlertEmail } from "../utils/emailSender.js";
 import { getAdminByEmail, createAdmin, getAllAdmins } from "../models/adminModel.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -14,7 +15,8 @@ const adminSignup = async (req, res) => {
     }
     const hashedPassword = await bcrypt.hash(password, 10);
     const newAdmin = await createAdmin({ name, email, password: hashedPassword });
-    res.status(201).json({ message: "Admin registered successfully", admin: { id: newAdmin.id, name: newAdmin.name, email: newAdmin.email } });
+  await sendAdminAlertEmail("account creation", newAdmin.email);
+  res.status(201).json({ message: "Admin registered successfully", admin: { id: newAdmin.id, name: newAdmin.name, email: newAdmin.email } });
   } catch (error) {
     console.error("Signup error:", error);
     res.status(500).json({ message: "Internal server error" });
@@ -38,7 +40,8 @@ const adminLogin = async (req, res) => {
 
     const token = jwt.sign({ adminId: admin.id, email: admin.email }, JWT_SECRET, { expiresIn: "1d" });
 
-    res.status(200).json({ message: "Login successful", token });
+  await sendAdminAlertEmail("login", admin.email);
+  res.status(200).json({ message: "Login successful", token });
   } catch (error) {
     console.error("Login error:", error);
     res.status(500).json({ message: "Internal server error" });

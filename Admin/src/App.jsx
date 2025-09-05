@@ -1,4 +1,3 @@
-import AllAdmins from "./pages/AllAdmins";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Dashboard from "./components/Admin/Dashboard";
 import InstitutesList from "./components/Admin/InstitutesList";
@@ -17,6 +16,7 @@ import TeamMemberDetails from "./components/Admin/TeamMemberDetails";
 import EditTeamMember from "./components/Admin/EditTeamMember";
 import AdminLogin from "./pages/AdminLogin";
 import AdminSignup from "./pages/AdminSignup";
+import AllAdmins from "./components/Admin/AllAdmins";
 
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem("token");
