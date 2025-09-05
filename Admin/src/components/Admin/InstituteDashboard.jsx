@@ -119,7 +119,10 @@ const InstituteDashboard = () => {
   // Show all institute details (except sensitive fields)
   const hiddenFields = [
     "password_reset_token",
-    "password_reset_expires"
+    "password_reset_expires",
+    "code_expires_at",
+    "created_at",
+    "updated_at"
   ];
   // ...existing code...
 

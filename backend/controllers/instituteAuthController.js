@@ -4,6 +4,7 @@ import sendVerificationEmail from "../utils/emailSender.js";
 import {
   createInstitute,
   updateInstituteSection,
+  updateInstituteDetails as updateInstituteDetailsModel,
   findInstituteByEmail,
   findInstituteByPhone,
   verifyInstitute,
@@ -588,5 +589,18 @@ export const deleteInstitute = async (req, res) => {
       "Server error during institute deletion",
       "DELETE_ERROR"
     );
+  }
+};
+
+
+export const updateInstituteDetails = async (req, res) => {
+  const { id } = req.params;
+  const updateData = req.body;
+  try {
+    const updatedInstitute = await updateInstituteDetailsModel(id, updateData);
+    return res.status(200).json({ status: true, message: "Institute details updated", institute: updatedInstitute });
+  } catch (err) {
+    console.error("Institute update error:", err);
+    return handleError(res, 500, "Server error during institute update", "INSTITUTE_UPDATE_ERROR");
   }
 };

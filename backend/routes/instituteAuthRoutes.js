@@ -18,6 +18,7 @@ import {
   resendVerificationCode,
   deleteInstitute,
 } from "../controllers/instituteAuthController.js";
+import { updateInstituteDetails } from "../controllers/instituteAuthController.js";
 import instituteAuth from "../middlewares/instituteAuthMiddleware.js";
 import { validateEmailDomain } from "../middlewares/emailValidationMiddleware.js";
 import { documentUpload } from "../config/multer.js";
@@ -48,6 +49,7 @@ router.patch(
 );
 
 router.patch("/me/:section", instituteAuth, updateProfileSection);
+router.patch("/:id", updateInstituteDetails);
 
 router.post("/signup", validateEmailDomain, signup);
 router.post("/verify", validateEmailDomain, verifyCode);
@@ -55,6 +57,7 @@ router.post("/resend-verification", resendVerificationCode);
 router.post("/auth/login", login);
 router.post("/logout", instituteAuth, logout);
 
-router.delete("/auth/delete", instituteAuth, deleteInstitute);
+// router.delete("/auth/delete", instituteAuth, deleteInstitute);
+router.delete("/auth/delete", deleteInstitute);
 
 export default router;
