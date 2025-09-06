@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { motion } from "framer-motion";
@@ -13,23 +13,45 @@ const EditInstitute = () => {
   const navigate = useNavigate();
   const { adminData, dataLoading, error, hasRenderedOnce } = useAdminData();
   const [formData, setFormData] = useState({
-    name: "",
-    city: "",
-    courses: "",
-    students: "",
+  institute_id: "",
+  institute_name: "",
+  email: "",
+  contact: "",
+  basic_info: "",
+  contact_details: "",
+  courses: "",
+  faculty_details: "",
+  student_achievements: "",
+  institute_achievements: "",
+  facilities: "",
+  social_media: "",
+  media_gallery: "",
+  is_verified: false,
+  code: ""
   });
   const [formErrors, setFormErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (id && adminData) {
-      const institute = adminData.institutes.find((inst) => inst.id === parseInt(id));
+      const institute = adminData.institutes.find((inst) => inst.id === id);
       if (institute) {
         setFormData({
-          name: institute.name,
-          city: institute.city,
-          courses: institute.courses.toString(),
-          students: institute.students.toString(),
+          institute_id: institute.institute_id || "",
+          institute_name: institute.institute_name || "",
+          email: institute.email || "",
+          contact: institute.contact || "",
+          basic_info: JSON.stringify(institute.basic_info || {}, null, 2),
+          contact_details: JSON.stringify(institute.contact_details || {}, null, 2),
+          courses: JSON.stringify(institute.courses || {}, null, 2),
+          faculty_details: JSON.stringify(institute.faculty_details || {}, null, 2),
+          student_achievements: JSON.stringify(institute.student_achievements || {}, null, 2),
+          institute_achievements: JSON.stringify(institute.institute_achievements || {}, null, 2),
+          facilities: JSON.stringify(institute.facilities || {}, null, 2),
+          social_media: JSON.stringify(institute.social_media || {}, null, 2),
+          media_gallery: JSON.stringify(institute.media_gallery || {}, null, 2),
+          is_verified: Boolean(institute.is_verified),
+          code: institute.code || ""
         });
       }
     }
@@ -37,12 +59,20 @@ const EditInstitute = () => {
 
   const validateForm = () => {
     const errors = {};
-    if (!formData.name.trim()) errors.name = "Name is required";
-    if (!formData.city.trim()) errors.city = "City is required";
-    if (!formData.courses || isNaN(formData.courses) || formData.courses < 0)
-      errors.courses = "Valid number of courses is required";
-    if (!formData.students || isNaN(formData.students) || formData.students < 0)
-      errors.students = "Valid number of students is required";
+    if (!formData.institute_id.trim()) errors.institute_id = "Institute ID is required";
+    if (!formData.institute_name.trim()) errors.institute_name = "Institute Name is required";
+    if (!formData.email.trim()) errors.email = "Email is required";
+    if (!formData.contact.trim()) errors.contact = "Contact is required";
+
+    ["basic_info","contact_details","courses","faculty_details","student_achievements","institute_achievements","facilities","social_media","media_gallery"].forEach(key => {
+      if (formData[key]) {
+        try {
+          JSON.parse(formData[key]);
+        } catch {
+          errors[key] = `Invalid JSON in ${key.replace(/_/g, ' ')}`;
+        }
+      }
+    });
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -52,8 +82,27 @@ const EditInstitute = () => {
     if (!validateForm()) return;
     setIsSubmitting(true);
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // Send only the institute_name field for debugging
+      const payload = { institute_name: formData.institute_name };
+
+      const apiUrl = import.meta.env.VITE_API_URL;
+      const method = id ? "PATCH" : "POST";
+      const url = id ? `${apiUrl}/api/institutes/${id}` : `${apiUrl}/api/institutes`;
+      const res = await fetch(url, {
+        method,
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+      if (!res.ok) {
+        let errorMsg = "Failed to save institute";
+        try {
+          const errorData = await res.json();
+          errorMsg = errorData.message || JSON.stringify(errorData);
+        } catch {}
+        throw new Error(errorMsg);
+      }
       toast.success(id ? "Institute updated!" : "Institute added!", {
         position: "top-right",
         style: { background: "#E6EDE2", color: "#144E53", borderRadius: "8px" },
@@ -107,37 +156,42 @@ const EditInstitute = () => {
             className="bg-white bg-opacity-95 backdrop-blur-xl rounded-2xl shadow-xl p-4 sm:p-6 border border-[#2D7A66]/10"
           >
             <div className="space-y-4 sm:space-y-6">
-              {[
-                { label: "Name", key: "name", type: "text" },
-                { label: "City", key: "city", type: "text" },
-                { label: "Courses", key: "courses", type: "number" },
-                { label: "Students", key: "students", type: "number" },
-              ].map((field, index) => (
-                <motion.div
-                  key={field.key}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.05 }}
-                  className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4"
-                >
-                  <label className="text-sm sm:text-base font-medium text-[#144E53] capitalize w-24">
-                    {field.label}
-                  </label>
-                  <div className="flex-1">
-                    <input
-                      type={field.type}
-                      value={formData[field.key]}
-                      onChange={(e) => setFormData({ ...formData, [field.key]: e.target.value })}
-                      className="w-full p-3 border border-[#2D7A66] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#93E9A2] transition-all bg-[#E6EDE2] text-gray-700 text-sm sm:text-base"
-                      placeholder={`Enter ${field.label}`}
-                      aria-label={field.label}
-                    />
-                    {formErrors[field.key] && (
-                      <p className="text-red-500 text-xs sm:text-sm mt-1">{formErrors[field.key]}</p>
-                    )}
+
+              <motion.div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="sm:col-span-2">
+                  <label className="text-sm sm:text-base font-medium text-[#144E53]">Is Verified</label>
+                  <input type="checkbox" checked={formData.is_verified} onChange={e => setFormData({ ...formData, is_verified: e.target.checked })} className="ml-2" />
+                </div>
+                <div>
+                  <label className="text-sm sm:text-base font-medium text-[#144E53]">Institute ID</label>
+                  <input type="text" value={formData.institute_id} onChange={e => setFormData({ ...formData, institute_id: e.target.value })} className="w-full p-3 border border-[#2D7A66] rounded-lg" placeholder="Enter Institute ID" />
+                </div>
+                <div>
+                  <label className="text-sm sm:text-base font-medium text-[#144E53]">Institute Name</label>
+                  <input type="text" value={formData.institute_name} onChange={e => setFormData({ ...formData, institute_name: e.target.value })} className="w-full p-3 border border-[#2D7A66] rounded-lg" placeholder="Enter Institute Name" />
+                </div>
+                <div>
+                  <label className="text-sm sm:text-base font-medium text-[#144E53]">Email</label>
+                  <input type="email" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} className="w-full p-3 border border-[#2D7A66] rounded-lg" placeholder="Enter Email" />
+                </div>
+                <div>
+                  <label className="text-sm sm:text-base font-medium text-[#144E53]">Contact</label>
+                  <input type="text" value={formData.contact} onChange={e => setFormData({ ...formData, contact: e.target.value })} className="w-full p-3 border border-[#2D7A66] rounded-lg" placeholder="Enter Contact" />
+                </div>
+                <div>
+                  <label className="text-sm sm:text-base font-medium text-[#144E53]">Code</label>
+                  <input type="text" value={formData.code} onChange={e => setFormData({ ...formData, code: e.target.value })} className="w-full p-3 border border-[#2D7A66] rounded-lg" placeholder="Enter Code" />
+                </div>
+                {/* JSON fields as textarea */}
+                {[
+                  "basic_info","contact_details","courses","faculty_details","student_achievements","institute_achievements","facilities","social_media","media_gallery"
+                ].map((key) => (
+                  <div key={key} className="sm:col-span-2">
+                    <label className="text-sm sm:text-base font-medium text-[#144E53]">{key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</label>
+                    <textarea value={formData[key]} onChange={e => setFormData({ ...formData, [key]: e.target.value })} className="w-full p-3 border border-[#2D7A66] rounded-lg min-h-[80px]" placeholder={`Enter ${key.replace(/_/g, ' ')}`}/>
                   </div>
-                </motion.div>
-              ))}
+                ))}
+              </motion.div>
             </div>
             <motion.div
               initial={{ opacity: 0, y: 20 }}

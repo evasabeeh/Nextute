@@ -7,3 +7,7 @@ export const assets = {
   Not_found,
   logo,
 };
+
+
+// "axios": "^1.11.0",
+//   "dotenv": "^17.2.1",

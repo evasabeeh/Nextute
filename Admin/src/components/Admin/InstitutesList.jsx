@@ -68,13 +68,30 @@ const InstitutesList = () => {
 
   const handleDelete = async (id) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const apiUrl = import.meta.env.VITE_API_URL;
+      const res = await fetch(`${apiUrl}/api/institutes/auth/delete`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ id })
+      });
+      if (!res.ok) {
+        let errorMsg = "Failed to delete institute";
+        try {
+          const errorData = await res.json();
+          errorMsg = errorData.message || JSON.stringify(errorData);
+        } catch {}
+        throw new Error(errorMsg);
+      }
       toast.success("Institute deleted successfully!", {
         position: "top-right",
         style: { background: "#E6EDE2", color: "#144E53", borderRadius: "8px" },
       });
+      // Optionally remove from local state
+      setInstitutes(prev => prev.filter(inst => inst.id !== id));
     } catch (err) {
-      toast.error("Failed to delete institute", {
+      toast.error(err.message || "Failed to delete institute", {
         position: "top-right",
         style: { background: "#E6EDE2", color: "#144E53", borderRadius: "8px" },
       });
@@ -119,7 +136,7 @@ const InstitutesList = () => {
             <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-[#144E53]">
               Institutes
             </h1>
-            <motion.button
+            {/* <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => navigate("/admin/institutes/add")}
@@ -140,7 +157,7 @@ const InstitutesList = () => {
                 />
               </svg>
               Add Institute
-            </motion.button>
+            </motion.button> */}
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -218,9 +235,7 @@ const InstitutesList = () => {
                         <motion.button
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
-                          onClick={() => {
-                            /* handle delete here if needed */
-                          }}
+                          onClick={() => handleDelete(inst.id)}
                           className="p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 min-w-[40px] min-h-[40px]"
                           aria-label="Delete Institute"
                         >

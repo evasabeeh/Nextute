@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { motion } from "framer-motion";
 import {
@@ -16,7 +15,6 @@ import Navbar from "../Navbar";
 
 const Dashboard = () => {
   const { adminData, dataLoading, error, hasRenderedOnce } = useAdminData();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const hasVisited = localStorage.getItem("hasVisitedAdminDashboard");
@@ -84,21 +82,6 @@ const Dashboard = () => {
       title: "Team",
       value: Array.isArray(adminData?.team) ? adminData.team.length : 0,
       icon: <FaUserTie className="text-[#2D7A66] w-6 sm:w-8 h-6 sm:h-8" />,
-    },
-  ];
-
-  const recentActivities = [
-    {
-      id: 1,
-      action: "New institute added",
-      details: "Tech Institute joined the platform.",
-      time: "2 hours ago",
-    },
-    {
-      id: 2,
-      action: "Job posted",
-      details: "Software Engineer role added.",
-      time: "5 hours ago",
     },
   ];
 
@@ -188,42 +171,6 @@ const Dashboard = () => {
                     </h3>
                     <p className="text-xl sm:text-2xl md:text-3xl font-bold text-[#144E53]">
                       {card.value}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Recent Activity */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="bg-white bg-opacity-95 backdrop-blur-xl rounded-2xl shadow-xl p-4 sm:p-6 border border-[#2D7A66]/10"
-          >
-            <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-[#144E53] mb-4 sm:mb-6">
-              Recent Activity
-            </h2>
-            <div className="space-y-4 sm:space-y-6">
-              {recentActivities.map((activity, index) => (
-                <motion.div
-                  key={activity.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.1 }}
-                  className="flex items-start gap-3 sm:gap-4 border-b border-[#2D7A66]/10 pb-3 sm:pb-4 last:border-b-0"
-                >
-                  <div className="w-2 h-2 sm:w-3 sm:h-3 bg-[#2D7A66] rounded-full mt-2" />
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-sm sm:text-base font-semibold text-[#144E53] truncate">
-                      {activity.action}
-                    </h3>
-                    <p className="text-xs sm:text-sm text-gray-600 break-words">
-                      {activity.details}
-                    </p>
-                    <p className="text-xs text-[#2D7A66] mt-1">
-                      {activity.time}
                     </p>
                   </div>
                 </motion.div>

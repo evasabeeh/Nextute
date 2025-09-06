@@ -12,6 +12,25 @@ const AdminSignup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      toast.error("Please enter a valid email address.", {
+        position: "top-right",
+        style: { background: "#E6EDE2", color: "#144E53", borderRadius: "8px" },
+      });
+      return;
+    }
+
+    const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/;
+    if (!strongPasswordRegex.test(password)) {
+      toast.error("Password must be at least 8 characters and include uppercase, lowercase, number, and special character.", {
+        position: "top-right",
+        style: { background: "#E6EDE2", color: "#144E53", borderRadius: "8px" },
+      });
+      return;
+    }
+
     setLoading(true);
     try {
       const res = await fetch(`${apiUrl}/api/admin/signup`, {

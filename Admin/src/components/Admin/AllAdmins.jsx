@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { motion } from "framer-motion";
-import Navbar from "../components/Navbar";
-import SidePanel from "../components/Admin/SidePanel";
+import Navbar from "../Navbar";
+import SidePanel from "./SidePanel";
 
 const AllAdmins = () => {
   const [admins, setAdmins] = useState([]);
@@ -26,19 +26,19 @@ const AllAdmins = () => {
     fetchAdmins();
   }, [apiUrl]);
 
-  const handleDelete = async (email) => {
-    if (!window.confirm("Are you sure you want to delete this admin?")) return;
-    try {
-      const res = await fetch(`${apiUrl}/api/admin/${email}`, {
-        method: "DELETE",
-      });
-      if (!res.ok) throw new Error("Failed to delete admin");
-      setAdmins((prev) => prev.filter((a) => a.email !== email));
-      toast.success("Admin deleted successfully!");
-    } catch (err) {
-      toast.error("Failed to delete admin");
-    }
-  };
+  // const handleDelete = async (email) => {
+  //   if (!window.confirm("Are you sure you want to delete this admin?")) return;
+  //   try {
+  //     const res = await fetch(`${apiUrl}/api/admin/${email}`, {
+  //       method: "DELETE",
+  //     });
+  //     if (!res.ok) throw new Error("Failed to delete admin");
+  //     setAdmins((prev) => prev.filter((a) => a.email !== email));
+  //     toast.success("Admin deleted successfully!");
+  //   } catch (err) {
+  //     toast.error("Failed to delete admin");
+  //   }
+  // };
 
   return (
     <>

@@ -89,10 +89,17 @@ const deleteInstituteByEmail = async (email) => {
   });
 };
 
+const updateInstituteDetails = async (id, data) => {
+  return await prisma.institute.update({
+    where: { id },
+    data: { ...data, updated_at: new Date() },
+  });
+};
 
 export {
   createInstitute,
   updateInstituteSection,
+  updateInstituteDetails,
   findInstituteByEmail,
   findInstituteByPhone,
   verifyInstitute,
