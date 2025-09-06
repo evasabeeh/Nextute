@@ -107,20 +107,9 @@ const Header = () => {
                 onClick={() => handleCityClick(city.name, isLast)}
                 className="cursor-pointer h-16 w-16 sm:h-20 sm:w-20 md:h-24 md:w-24 lg:h-28 lg:w-28 object-cover rounded-full border-2 border-[#204B55] shadow-md"
                 role="button"
-                aria-label={
-                  isLast
-                    ? "View more cities"
-                    : `Search institutes in ${city.name}`
-                }
-                style={
-                  isLast
-                    ? {
-                        backdropFilter: "blur(3.1px)",
-                        background: "rgba(255, 255, 255, 0.51)",
-                        filter: "blur(3.1px)",
-                      }
-                    : {}
-                }
+                aria-label={isLast ? "View more cities" : `Search institutes in ${city.name}`}
+                loading="lazy"
+                style={isLast ? { backdropFilter: "blur(3.1px)", background: "rgba(255, 255, 255, 0.51)", filter: "blur(3.1px)" } : {}}
               />
 
               {/* Name or "More" Overlay */}
