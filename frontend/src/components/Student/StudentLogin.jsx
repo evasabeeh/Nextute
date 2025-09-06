@@ -193,22 +193,17 @@ const StudentLogin = () => {
 
   return (
     <div className="min-h-screen bg-[#f2fffc]">
-      // Keep the logo without lazy loading (it's above the fold)
+      
       <img
         src={assets.logo || "/fallback-logo.png"}
         alt="Company Logo"
-        className="w-32 sm:w-40 flex justify-start ml-20 cursor-pointer"
+        className="w-32 sm:w-40 flex justify-start ml-20 "
         onClick={() => navigate("/")}
         aria-label="Navigate to Home"
       />
       
-      // Add lazy loading to other images in the file (like right/cross tick icons)
-      <img
-        src={assets.rightTick}
-        alt="Valid"
-        className="w-5 h-5"
-        loading="lazy"
-      />
+      
+    
 
       <div className="flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8 -mt-4">
         <div className="w-full max-w-md sm:max-w-lg lg:max-w-xl flex flex-col items-center">
