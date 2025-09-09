@@ -15,20 +15,6 @@ const Footer = () => {
             // No lazy loading for logo as it might be visible above the fold
           />
           
-          // Later in the file for social media icons
-          <img
-            src={instagram}
-            alt="Instagram"
-            className="w-6 h-6 sm:w-8 sm:h-8 hover:opacity-80 transition duration-200"
-            loading="lazy"
-          />
-          
-          <img
-            src={linkedin}
-            alt="LinkedIn"
-            className="w-6 h-6 sm:w-8 sm:h-8 hover:opacity-80 transition duration-200"
-            loading="lazy"
-          />
           <div className="text-[#000] font-semibold space-y-1 -mt-16 ml-5 text-sm sm:text-base">
             <p>Contact Us</p>
             <p>Office Address:</p>
