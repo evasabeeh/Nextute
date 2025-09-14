@@ -12,7 +12,7 @@ const InstituteRecommendations = ({ studentData }) => {
       className="bg-white rounded-2xl shadow-lg p-8 bg-opacity-80 backdrop-blur-lg"
     >
       <div className="flex items-center gap-3 mb-6">
-        <img src={assets.course} alt="Course Icon" className="w-6 h-6" />
+      <img src={assets.course} alt="Course Icon" className="w-6 h-6" loading="lazy" />
         <h2 className="text-2xl font-bold text-gray-800">
           Institute Recommendations
         </h2>
@@ -34,6 +34,7 @@ const InstituteRecommendations = ({ studentData }) => {
               src={institute.image || assets.coaching}
               alt={institute.name}
               className="w-full h-32 object-cover rounded-lg mb-4"
+              loading="lazy"
             />
             <h3 className="text-lg font-semibold text-gray-800">
               {institute.name}

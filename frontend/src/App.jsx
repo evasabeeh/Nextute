@@ -1,4 +1,4 @@
-import React, { useContext, Suspense, lazy } from "react";
+import { useContext, Suspense, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 

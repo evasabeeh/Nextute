@@ -1,5 +1,17 @@
-import React from 'react';
-import logo from "../assets/logo.svg";
+const loadRazorpayScript = () => {
+  return new Promise((resolve) => {
+    if (window.Razorpay) {
+      resolve();
+      return;
+    }
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.async = true;
+    script.onload = resolve;
+    document.body.appendChild(script);
+  });
+};
+
 const RazorpayButton = ({ plan, billingCycle, userType }) => {
   const handlePayment = async () => {
     const amount = plan.price[billingCycle];
@@ -7,6 +19,8 @@ const RazorpayButton = ({ plan, billingCycle, userType }) => {
       alert('This is a free plan. No payment required.');
       return;
     }
+
+    await loadRazorpayScript();
 
     const options = {
       key: 'rzp_live_RDdtqHgENYTAKE', // Replace with your Razorpay Key ID

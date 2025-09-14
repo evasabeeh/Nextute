@@ -1,12 +1,12 @@
-import React, { useEffect, useContext } from "react";
+import React, { Suspense, useEffect, useContext } from "react";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 import Ad from "../components/Ad";
-import Testimonial from "../components/Testimonial";
 import Test from "../components/Test";
 import SearchTest from "../components/SearchTest";
 import Footer from "../components/Footer";
 import { AppContext } from "../context/AppContext";
+const Testimonial = React.lazy(() => import("../components/Testimonial"));
 
 const HomePage = () => {
   const { setUserLocation } = useContext(AppContext);
@@ -36,7 +36,9 @@ const HomePage = () => {
       <Navbar />
       <Header />
       <Ad />
-      <Testimonial />
+      <Suspense fallback={<div style={{minHeight:200}}>Loading testimonials...</div>}>
+        <Testimonial />
+      </Suspense>
       <Test />
       <SearchTest />
       <Footer />

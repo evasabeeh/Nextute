@@ -16,14 +16,6 @@ const Navbar = () => {
     logout,
   } = useContext(AppContext);
 
-  // console.log("📥 user in navbar:", user);
-  // console.log("📦 User type set to navbar:", userType);
-
-  // console.log("Header render →", {
-  //   isAuthenticated,
-  //   user,
-  // });
-
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
@@ -203,12 +195,13 @@ const Navbar = () => {
         }`}
       >
         <div className="flex items-center justify-between px-5 py-6 border-b">
-          <img src={logo} alt="logo" className="w-28" />
+          <img src={logo} alt="logo" className="w-28" loading="lazy" />
           <img
             src={cross_icon}
             alt="close"
             onClick={() => setShowMenu(false)}
             className="w-6 h-6 cursor-pointer"
+            loading="lazy"
           />
         </div>
 
