@@ -32,6 +32,8 @@ const InstituteRecommendations = ({ studentData }) => {
           >
             <img
               src={institute.image || assets.coaching}
+              srcSet={`$${institute.image || assets.coachingSmall} 152w, $${institute.image || assets.coachingLarge} 304w`}
+              sizes="(max-width: 640px) 152px, 304px"
               alt={institute.name}
               className="w-full h-32 object-cover rounded-lg mb-4"
               loading="lazy"
