@@ -11,9 +11,13 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            if (id.includes('react')) return 'react';
-            if (id.includes('framer-motion')) return 'framer-motion';
-            if (id.includes('lucide-react')) return 'lucide-react';
+            if (id.match(/react-dom/)) return 'react-dom';
+            if (id.match(/react-router-dom/)) return 'react-router-dom';
+            if (id.match(/framer-motion/)) return 'framer-motion';
+            if (id.match(/lucide-react/)) return 'lucide-react';
+            if (id.match(/swiper/)) return 'swiper';
+            if (id.match(/axios/)) return 'axios';
+            if (id.match(/react/)) return 'react';
             return 'vendor';
           }
         },

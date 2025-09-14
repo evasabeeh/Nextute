@@ -23,17 +23,13 @@ const Test = () => {
       {/* Image Content */}
       <div className="w-full md:w-1/2 h-auto hidden lg:flex items-center justify-center md:justify-end gap-4">
         <img
-          src={assets.test2Small}
-          srcSet={`${assets.test2Small} 144w, ${assets.test2Large} 288w`}
-          sizes="(max-width: 640px) 144px, 288px"
+          src={assets.test2}
           alt="Test 2"
           className="w-[216px] h-[144px] object-contain"
           loading="lazy"
         />
         <img
-          src={assets.test3Small}
-          srcSet={`${assets.test3Small} 144w, ${assets.test3Large} 288w`}
-          sizes="(max-width: 640px) 144px, 288px"
+          src={assets.test3}
           alt="Test 3"
           className="w-[216px] h-[144px] object-contain"
           loading="lazy"
