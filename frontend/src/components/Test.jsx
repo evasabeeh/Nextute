@@ -1,4 +1,3 @@
-import React from "react";
 import * as assets from"../assets/index.js";
 
 const Test = () => {

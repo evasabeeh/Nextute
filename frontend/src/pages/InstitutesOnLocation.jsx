@@ -17,7 +17,7 @@ function parseJSONSafe(str) {
   }
 }
 
-const InstituteOnLocation = () => {
+const InstitutesOnLocation = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const searchParams = new URLSearchParams(location.search);
@@ -440,4 +440,4 @@ const InstituteOnLocation = () => {
   );
 };
 
-export default InstituteOnLocation;
+export default InstitutesOnLocation;

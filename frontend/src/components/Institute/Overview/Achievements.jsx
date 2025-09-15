@@ -1,5 +1,4 @@
-// ...same imports
-import React, { useState } from "react";
+import { useState } from "react";
 import { FaTrophy, FaMedal, FaFileAlt, FaTimes } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 

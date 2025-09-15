@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense, lazy, useContext } from "react";
+import { useState, useEffect, Suspense, lazy, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";

@@ -1,16 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import {
   Calendar,
-  User,
   Clock,
   ArrowRight,
   Search,
-  Tag,
   Eye,
-  MessageCircle,
-  Share2,
   BookOpen,
   TrendingUp,
   Award,
@@ -20,7 +16,6 @@ import {
   Grid,
   List,
   Star,
-  Download,
   Bell,
   Globe,
 } from "lucide-react";
