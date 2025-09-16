@@ -5170,4 +5170,11 @@
 {"level":"info","message":{"ip":"::1","method":"GET","timestamp":"2025-09-05T18:15:41.210Z","url":"/api/institutes/all-institutes"},"timestamp":"2025-09-05T18:15:41.210Z"}
 {"level":"info","message":{"ip":"::1","method":"GET","timestamp":"2025-09-04T22:01:20.498Z","url":"/api/institutes/all-institutes"},"timestamp":"2025-09-04T22:01:20.498Z"}
 {"level":"info","message":{"ip":"::1","method":"GET","timestamp":"2025-09-04T22:26:32.683Z","url":"/api/institutes/all-institutes"},"timestamp":"2025-09-04T22:26:32.683Z"}
-{"level":"info","message":{"ip":"::1","method":"GET","timestamp":"2025-09-04T22:32:34.916Z","url":"/api/institutes/all-institutes"},"timestamp":"2025-09-04T22:32:34.916Z"}
+{"level":"info","message":{"ip":"::1","method":"GET","timestamp":"2025-09-04T22:32:34.916Z","url":"/api/institutes/all-institutes"},"timestamp":"2025-09-04T22:32:34.916Z"}{"level":"info","message":{"ip":"::1","method":"GET","timestamp":"2025-09-16T09:54:53.599Z","url":"/api/institutes/all-institutes"},"timestamp":"2025-09-16T09:54:53.600Z"}
+{"level":"info","message":{"ip":"::1","method":"GET","timestamp":"2025-09-16T09:55:35.518Z","url":"/api/institutes/all-institutes"},"timestamp":"2025-09-16T09:55:35.518Z"}
+{"level":"info","message":{"ip":"::1","method":"GET","timestamp":"2025-09-16T09:55:47.324Z","url":"/api/institutes/all-institutes"},"timestamp":"2025-09-16T09:55:47.324Z"}
+{"level":"info","message":{"ip":"::1","method":"GET","timestamp":"2025-09-16T09:55:50.696Z","url":"/api/institutes/all-institutes"},"timestamp":"2025-09-16T09:55:50.696Z"}
+{"level":"info","message":{"ip":"::1","method":"GET","timestamp":"2025-09-16T09:55:56.546Z","url":"/api/institutes/all-institutes"},"timestamp":"2025-09-16T09:55:56.546Z"}
+{"level":"info","message":{"ip":"::1","method":"GET","timestamp":"2025-09-16T09:56:03.265Z","url":"/api/institutes/all-institutes"},"timestamp":"2025-09-16T09:56:03.265Z"}
+{"level":"info","message":{"ip":"::1","method":"GET","timestamp":"2025-09-16T09:56:05.317Z","url":"/api/institutes/all-institutes"},"timestamp":"2025-09-16T09:56:05.317Z"}
+{"level":"info","message":{"ip":"::1","method":"GET","timestamp":"2025-09-16T09:56:12.938Z","url":"/api/institutes/all-institutes"},"timestamp":"2025-09-16T09:56:12.938Z"}
