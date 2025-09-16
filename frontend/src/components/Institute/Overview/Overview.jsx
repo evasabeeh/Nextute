@@ -1,4 +1,3 @@
-import React from "react";
 import { motion } from "framer-motion";
 import { FaMapMarkerAlt, FaPhone, FaWhatsapp } from "react-icons/fa";
 import { BsChatTextFill } from "react-icons/bs";

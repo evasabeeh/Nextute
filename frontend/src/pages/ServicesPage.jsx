@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from "react";
+import { Suspense, lazy } from "react";
 import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
 import LoadingSpinner from "../components/LoadingSpinner"; // Assuming this path is correct

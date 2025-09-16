@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaStar, FaUserCircle, FaPaperPlane } from "react-icons/fa";
+import { FaStar, FaPaperPlane } from "react-icons/fa";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 

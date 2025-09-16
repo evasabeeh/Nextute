@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import * as assets from "../../../assets/index.js";
-import { Upload, Sparkles } from "lucide-react";
+import { Upload } from "lucide-react";
 import Loader from "./Loader";
 
 const ProfileSection = ({ studentData, isEditing }) => {
   const data = studentData || {};
   const [profile, setProfile] = useState({
     name: data.name || "Student Name",
-    picture: assets.profileImage,
+   picture: assets.profileImage,
     completion: 0,
   });
   const [isLoading, setIsLoading] = useState(true);

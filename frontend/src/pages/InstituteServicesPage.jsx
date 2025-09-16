@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
-  ArrowLeft,
   GraduationCap,
   Building2,
   Trophy,

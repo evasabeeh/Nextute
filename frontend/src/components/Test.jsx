@@ -1,4 +1,3 @@
-import React from "react";
 import * as assets from"../assets/index.js";
 
 const Test = () => {
@@ -21,11 +20,17 @@ const Test = () => {
       </div>
 
       {/* Image Content */}
-      <div className="w-full md:w-1/2 h-auto hidden lg:flex items-center justify-center md:justify-end">
+      <div className="w-full md:w-1/2 h-auto hidden lg:flex items-center justify-center md:justify-end gap-4">
         <img
-          src={assets.SearchBanner2}
-          alt="Interactive learning platform illustration"
-          className="w-full h-auto object-contain max-h-[40vh] sm:max-h-[50vh] md:max-h-[60vh] lg:max-h-[90vh] translate-x-60"
+          src={assets.test2}
+          alt="Test 2"
+          className="w-[216px] h-[144px] object-contain"
+          loading="lazy"
+        />
+        <img
+          src={assets.test3}
+          alt="Test 3"
+          className="w-[216px] h-[144px] object-contain"
           loading="lazy"
         />
       </div>

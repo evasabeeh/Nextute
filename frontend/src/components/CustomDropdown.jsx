@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiChevronDown, HiChevronUp } from "react-icons/hi";
 
@@ -15,13 +15,18 @@ const CustomDropdown = ({ label, value, onChange, options, placeholder }) => {
       }
     };
 
+    let positionTimeout = null;
     const checkDropdownPosition = () => {
-      if (dropdownRef.current) {
-        const rect = dropdownRef.current.getBoundingClientRect();
-        const spaceBelow = window.innerHeight - rect.bottom;
-        const spaceNeeded = Math.min(options.length * 40, 240); // Approx 40px per option, max 240px
-        setOpenUpward(spaceBelow < spaceNeeded && rect.top > spaceNeeded);
-      }
+      if (positionTimeout) return;
+      positionTimeout = setTimeout(() => {
+        if (dropdownRef.current) {
+          const rect = dropdownRef.current.getBoundingClientRect();
+          const spaceBelow = window.innerHeight - rect.bottom;
+          const spaceNeeded = Math.min(options.length * 40, 240); // Approx 40px per option, max 240px
+          setOpenUpward(spaceBelow < spaceNeeded && rect.top > spaceNeeded);
+        }
+        positionTimeout = null;
+      }, 100); // Throttle to every 100ms
     };
 
     document.addEventListener("mousedown", handleClickOutside);

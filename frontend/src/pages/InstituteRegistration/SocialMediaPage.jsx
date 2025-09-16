@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useContext } from "react";
+import { useState, useCallback, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaArrowLeft, FaArrowRight, FaPlus, FaTrash } from "react-icons/fa";
 import { AppContext } from "../../context/AppContext";

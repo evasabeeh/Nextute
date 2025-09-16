@@ -1,8 +1,5 @@
 import { AlertCircle, CheckCircle } from "lucide-react";
 
-
-
-
 const PasswordStrength = ({ password }) => {
   const hasLowercase = /[a-z]/.test(password);
   const hasUppercase = /[A-Z]/.test(password);

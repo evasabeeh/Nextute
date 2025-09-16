@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useMemo } from "react";
+import { useContext, useEffect, useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import TeamCard from "../components/TeamCard";
@@ -121,14 +121,19 @@ const OurTeam = () => {
     };
     fetchTeamMembers();
 
+    let scrollTimeout = null;
     const handleScroll = () => {
-      const sections = document.querySelectorAll(".team-section");
-      sections.forEach((section) => {
-        const rect = section.getBoundingClientRect();
-        if (rect.top < window.innerHeight * 0.8) {
-          section.classList.add("visible");
-        }
-      });
+      if (scrollTimeout) return;
+      scrollTimeout = setTimeout(() => {
+        const sections = document.querySelectorAll(".team-section");
+        sections.forEach((section) => {
+          const rect = section.getBoundingClientRect();
+          if (rect.top < window.innerHeight * 0.8) {
+            section.classList.add("visible");
+          }
+        });
+        scrollTimeout = null;
+      }, 100); // Throttle to every 100ms
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { FaLocationDot } from "react-icons/fa6";
 import { Search } from "lucide-react";
 import { useNavigate } from "react-router-dom";

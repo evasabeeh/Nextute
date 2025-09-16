@@ -11,7 +11,7 @@ const Testimonial = () => {
   const testimonials = [
     {
       id: "t1",
-      text: "The coaching at Excel Academy transformed my approach to learning. The teachers were incredibly supportive, and the study materials were top-notch. Thanks to their guidance, I scored 95% in my board exams and secured a seat in my dream engineering college!",
+      text: "The coaching at Excel Academy transformed my approach to learning. The teachers were incredibly supportive. I scored 95% in my board exams and secured a seat in my dream engineering college!",
       quote:
         "Their personalized mentoring and rigorous mock tests made all the difference.",
       author: "Priya Sharma, JEE Aspirant",
@@ -55,7 +55,7 @@ const Testimonial = () => {
     {
       id: "t7",
       text: "Joining Excel Academy was the best decision for my board exam preparation. Their study materials were concise yet comprehensive, covering every topic thoroughly.",
-      quote: "The teachers' encouragement kept me motivated throughout.",
+      quote: "The teachers' encouragement kept me motivated.",
       author: "Kavya Reddy, Class 12 Student",
       rating: 5,
     },

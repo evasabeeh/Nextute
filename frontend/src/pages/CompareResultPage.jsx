@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 import Navbar from "../components/Navbar";
@@ -6,7 +6,7 @@ import Footer from "../components/Footer";
 import { ChevronLeft, RefreshCw, Star, CheckCircle } from "lucide-react";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import * as assets from "../assets/index.js";
 import LoadingSpinner from "../components/LoadingSpinner";
 import useInstitutes from "../hooks/useInstitutes";
